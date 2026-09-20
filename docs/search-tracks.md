@@ -17,7 +17,7 @@ Everything else is a label, not a filter (`vacancy_labels` in
 | `junior` | The title is junior-only: junior, jr, intern, internship, trainee or their Ukrainian and Russian equivalents, with no senior-level word beside it |
 | `work_mode` | remote, hybrid, onsite or unknown |
 | `workable_from_kyiv` | Remote, or a Kyiv office |
-| `location_needs_check` | The location is missing, or the remote scope names a country or region other than Ukraine |
+| `location_needs_check` | The role may be workable, but the location is missing or the remote scope names a country or region other than Ukraine. Never set on a role that is not workable from Kyiv: there is nothing left to check |
 | `work_authorization` | Requirements that must already be held: local work authorization, a work permit or visa, citizenship or permanent residency, a security clearance. A requirement naming Ukraine, an offer to sponsor a visa, and a line the posting marks as preferred do not count |
 
 The Telegram digest shows the same signals as title marks: 🌱 junior, ⚠️ location

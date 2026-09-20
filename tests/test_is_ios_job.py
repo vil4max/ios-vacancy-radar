@@ -186,8 +186,11 @@ def test_an_office_outside_kyiv_is_collected_and_labelled() -> None:
 
     # The collector hands the vacancy over; the label carries the constraint.
     assert is_inbox_candidate(vacancy)
-    assert vacancy_labels(vacancy)["workable_from_kyiv"] is False
-    assert vacancy_title_marks(vacancy).startswith("🏢")
+    labels = vacancy_labels(vacancy)
+    assert labels["workable_from_kyiv"] is False
+    # Certainly not workable, so there is nothing left to check: one mark, not two.
+    assert labels["location_needs_check"] is False
+    assert vacancy_title_marks(vacancy) == "🏢 Senior iOS Engineer"
 
 
 def test_canonical_company_aliases_nix() -> None:

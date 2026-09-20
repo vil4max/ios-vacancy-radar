@@ -359,8 +359,12 @@ def work_authorization_blockers(description: str = "") -> tuple[str, ...]:
 
 
 def location_attention(location: str | None, remote: str | None = None) -> bool:
-    """An unknown location, or a remote scope outside Ukraine, stays deliverable
-    but needs manual verification of eligibility before applying."""
+    """The role may be workable, but its geography is unknown or names a scope
+    outside Ukraine, so eligibility needs a manual check. A role that is plainly
+    not workable -- an office abroad -- needs no check: that is already certain,
+    and flagging it too would make the flag say nothing."""
+    if not is_work_mode_eligible(location, remote):
+        return False
     if not (location or "").strip():
         return True
     return not is_location_eligible(location, remote)

@@ -70,9 +70,10 @@
         "url": "https://example.com/jobs/ios-mexico"
       },
       "expected_inbox": true,
-      "expected_attention": true,
+      "expected_attention": false,
       "expected_labels": {
-        "workable_from_kyiv": false
+        "workable_from_kyiv": false,
+        "location_needs_check": false
       }
     },
     {

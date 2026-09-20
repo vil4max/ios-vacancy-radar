@@ -42,7 +42,14 @@ is git-ignored here.
 }
 ```
 
-- Entries are keyed by canonical URL, so a key is stable across runs.
+- Entries are keyed by canonical URL, so a key is stable across runs. The key is
+  the identity; `url` is the link as the source published it and may differ from
+  the key, for example by a trailing slash or tracking parameters. Match and
+  store by key, open by `url`.
+- `description` is empty for a source that publishes only titles at list level,
+  such as a Workable widget or a career page of title links. The collector does
+  not fetch detail pages for it, so an empty description means "not collected",
+  not "the posting has no requirements".
 - The collector only appends new entries and prunes entries whose `first_seen`
   is older than 30 days. It never edits an entry and never records what the
   consumer did with it.
