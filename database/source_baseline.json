@@ -1,0 +1,1212 @@
+{
+  "company-ats:airslate": {
+    "best_scanned": 10,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 10,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "airSlate",
+    "search_policy": "ios"
+  },
+  "company-ats:ajax-systems": {
+    "best_scanned": 197,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 197,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Ajax Systems",
+    "search_policy": "ios"
+  },
+  "company-ats:amdaris": {
+    "best_scanned": 12,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 12,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Amdaris",
+    "search_policy": "ios"
+  },
+  "company-ats:appflame": {
+    "best_scanned": 16,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 16,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "appflame",
+    "search_policy": "ios"
+  },
+  "company-ats:betterme": {
+    "best_scanned": 24,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 24,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "BetterMe",
+    "search_policy": "ios"
+  },
+  "company-ats:boosters": {
+    "best_scanned": 13,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 13,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Boosters",
+    "search_policy": "ios"
+  },
+  "company-ats:exadel": {
+    "best_scanned": 46,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 46,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Exadel",
+    "search_policy": "ios"
+  },
+  "company-ats:freedom24": {
+    "best_scanned": 47,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 47,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Freedom24",
+    "search_policy": "ios"
+  },
+  "company-ats:genesis": {
+    "best_scanned": 81,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 81,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Genesis",
+    "search_policy": "ios"
+  },
+  "company-ats:holywater": {
+    "best_scanned": 22,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 22,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Holywater",
+    "search_policy": "ios"
+  },
+  "company-ats:innovecs": {
+    "best_scanned": 14,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 14,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Innovecs",
+    "search_policy": "ios"
+  },
+  "company-ats:kyivstar": {
+    "best_scanned": 117,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 117,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Kyivstar",
+    "search_policy": "ios"
+  },
+  "company-ats:macpaw": {
+    "best_scanned": 20,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 20,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "MacPaw",
+    "search_policy": "ios"
+  },
+  "company-ats:newxel": {
+    "best_scanned": 8,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 8,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Newxel",
+    "search_policy": "ios"
+  },
+  "company-ats:obrio": {
+    "best_scanned": 20,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 20,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Obrio",
+    "search_policy": "ios"
+  },
+  "company-ats:preply": {
+    "best_scanned": 111,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 111,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Preply",
+    "search_policy": "ios"
+  },
+  "company-ats:skelar": {
+    "best_scanned": 98,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 98,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "SKELAR",
+    "search_policy": "ios"
+  },
+  "company-ats:solidgate": {
+    "best_scanned": 52,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 52,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Solidgate",
+    "search_policy": "ios"
+  },
+  "company-ats:universe-group": {
+    "best_scanned": 20,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 20,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Universe Group",
+    "search_policy": "ios"
+  },
+  "company-ats:welltech": {
+    "best_scanned": 16,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 16,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Welltech",
+    "search_policy": "ios"
+  },
+  "company-watchlist:3dlook": {
+    "best_scanned": 5,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 5,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "3DLOOK",
+    "search_policy": "ios"
+  },
+  "company-watchlist:a-listware": {
+    "best_scanned": 29,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 29,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "A-listware",
+    "search_policy": "ios"
+  },
+  "company-watchlist:adaptiq": {
+    "best_scanned": 12,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 12,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Adaptiq",
+    "search_policy": "ios"
+  },
+  "company-watchlist:adtelligent": {
+    "best_scanned": 40,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 40,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Adtelligent",
+    "search_policy": "ios"
+  },
+  "company-watchlist:agileengine": {
+    "best_scanned": 7,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 7,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "AgileEngine",
+    "search_policy": "ios"
+  },
+  "company-watchlist:agiliway": {
+    "best_scanned": 8,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 8,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Agiliway",
+    "search_policy": "ios"
+  },
+  "company-watchlist:aimprosoft": {
+    "best_scanned": 2,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 2,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Aimprosoft",
+    "search_policy": "ios"
+  },
+  "company-watchlist:airslate": {
+    "best_scanned": 3,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-15T11:53:18+00:00",
+    "last_scanned": 3,
+    "last_success_at": "2026-09-15T11:53:18+00:00",
+    "name": "airSlate"
+  },
+  "company-watchlist:ajax-systems": {
+    "best_scanned": 419,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-15T11:53:18+00:00",
+    "last_scanned": 419,
+    "last_success_at": "2026-09-15T11:53:18+00:00",
+    "name": "Ajax Systems"
+  },
+  "company-watchlist:allstars-it": {
+    "best_scanned": 9,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 9,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "ALLSTARSIT",
+    "search_policy": "ios"
+  },
+  "company-watchlist:altexsoft": {
+    "best_scanned": 13,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-07T12:44:36+00:00",
+    "last_scanned": 13,
+    "last_success_at": "2026-09-07T12:44:36+00:00",
+    "name": "AltexSoft"
+  },
+  "company-watchlist:amdaris": {
+    "best_scanned": 21,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-15T11:53:18+00:00",
+    "last_scanned": 2,
+    "last_success_at": "2026-09-15T11:53:18+00:00",
+    "name": "Amdaris"
+  },
+  "company-watchlist:appflame": {
+    "best_scanned": 5,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-15T11:53:18+00:00",
+    "last_scanned": 5,
+    "last_success_at": "2026-09-15T11:53:18+00:00",
+    "name": "appflame"
+  },
+  "company-watchlist:aprior-it": {
+    "best_scanned": 30,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-17T17:08:12+00:00",
+    "last_scanned": 30,
+    "last_success_at": "2026-09-17T17:08:12+00:00",
+    "name": "Apriorit",
+    "search_policy": "ios+ai"
+  },
+  "company-watchlist:autodoc": {
+    "best_scanned": 3,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 3,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "AUTODOC",
+    "search_policy": "ios"
+  },
+  "company-watchlist:avenga": {
+    "best_scanned": 40,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 40,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Avenga",
+    "search_policy": "ios"
+  },
+  "company-watchlist:avirise": {
+    "best_scanned": 3,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 3,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Avirise",
+    "search_policy": "ios"
+  },
+  "company-watchlist:beetroot": {
+    "best_scanned": 19,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 19,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Beetroot",
+    "search_policy": "ios"
+  },
+  "company-watchlist:betterme": {
+    "best_scanned": 1,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-15T11:53:18+00:00",
+    "last_scanned": 1,
+    "last_success_at": "2026-09-15T11:53:18+00:00",
+    "name": "BetterMe"
+  },
+  "company-watchlist:brightgrove": {
+    "best_scanned": 25,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 25,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Brightgrove",
+    "search_policy": "ios"
+  },
+  "company-watchlist:brocoders": {
+    "best_scanned": 1,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 1,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Brocoders",
+    "search_policy": "ios"
+  },
+  "company-watchlist:capgemini-engineering": {
+    "best_scanned": 19,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 19,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Capgemini Engineering",
+    "search_policy": "ios"
+  },
+  "company-watchlist:chi-software": {
+    "best_scanned": 82,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 82,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "CHI Software",
+    "search_policy": "ios"
+  },
+  "company-watchlist:cleveroad": {
+    "best_scanned": 8,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 8,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Cleveroad",
+    "search_policy": "ios"
+  },
+  "company-watchlist:computools": {
+    "best_scanned": 53,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 53,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Computools",
+    "search_policy": "ios"
+  },
+  "company-watchlist:conscensia": {
+    "best_scanned": 5,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 5,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Conscensia",
+    "search_policy": "ios"
+  },
+  "company-watchlist:creatio": {
+    "best_scanned": 92,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 92,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Creatio",
+    "search_policy": "ios"
+  },
+  "company-watchlist:delphi-llc": {
+    "best_scanned": 1,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 1,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Delphi Software",
+    "search_policy": "ios"
+  },
+  "company-watchlist:devart": {
+    "best_scanned": 9,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 9,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Devart",
+    "search_policy": "ios"
+  },
+  "company-watchlist:develux": {
+    "best_scanned": 8,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 8,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Develux",
+    "search_policy": "ios"
+  },
+  "company-watchlist:devico": {
+    "best_scanned": 9,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 9,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Devico",
+    "search_policy": "ios"
+  },
+  "company-watchlist:devtorium": {
+    "best_scanned": 4,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 4,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Devtorium",
+    "search_policy": "ios"
+  },
+  "company-watchlist:digicode": {
+    "best_scanned": 14,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 14,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Digicode",
+    "search_policy": "ios"
+  },
+  "company-watchlist:edvantis": {
+    "best_scanned": 3,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 3,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Edvantis",
+    "search_policy": "ios"
+  },
+  "company-watchlist:eleks": {
+    "best_scanned": 18,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 18,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "ELEKS",
+    "search_policy": "ios"
+  },
+  "company-watchlist:exadel": {
+    "best_scanned": 4,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-15T11:53:18+00:00",
+    "last_scanned": 4,
+    "last_success_at": "2026-09-15T11:53:18+00:00",
+    "name": "Exadel"
+  },
+  "company-watchlist:fintech-farm": {
+    "best_scanned": 14,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 14,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Fintech Farm",
+    "search_policy": "ios"
+  },
+  "company-watchlist:forte-group": {
+    "best_scanned": 3,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 3,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Forte Group",
+    "search_policy": "ios"
+  },
+  "company-watchlist:geeksforless": {
+    "best_scanned": 2,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 2,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "GeeksForLess",
+    "search_policy": "ios"
+  },
+  "company-watchlist:genesis": {
+    "best_scanned": 2,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-15T11:53:18+00:00",
+    "last_scanned": 2,
+    "last_success_at": "2026-09-15T11:53:18+00:00",
+    "name": "Genesis"
+  },
+  "company-watchlist:geniusee": {
+    "best_scanned": 9,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 9,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Geniusee",
+    "search_policy": "ios"
+  },
+  "company-watchlist:headway": {
+    "best_scanned": 24,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 24,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Headway",
+    "search_policy": "ios"
+  },
+  "company-watchlist:indeema": {
+    "best_scanned": 7,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 7,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Indeema",
+    "search_policy": "ios"
+  },
+  "company-watchlist:infocus": {
+    "best_scanned": 1,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 1,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "infocus",
+    "search_policy": "ios"
+  },
+  "company-watchlist:innovecs": {
+    "best_scanned": 35,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-15T11:53:18+00:00",
+    "last_scanned": 34,
+    "last_success_at": "2026-09-15T11:53:18+00:00",
+    "name": "Innovecs"
+  },
+  "company-watchlist:itera-consulting-group-ukraine": {
+    "best_scanned": 17,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 17,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Itera",
+    "search_policy": "ios"
+  },
+  "company-watchlist:label-your-data": {
+    "best_scanned": 53,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 53,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Label Your Data",
+    "search_policy": "ios"
+  },
+  "company-watchlist:leobit": {
+    "best_scanned": 9,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 9,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Leobit",
+    "search_policy": "ios"
+  },
+  "company-watchlist:levi9-ukraine": {
+    "best_scanned": 24,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 24,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Levi9 Ukraine",
+    "search_policy": "ios"
+  },
+  "company-watchlist:lionwood-software": {
+    "best_scanned": 4,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 4,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Lionwood Software",
+    "search_policy": "ios"
+  },
+  "company-watchlist:macpaw": {
+    "best_scanned": 8,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-15T11:53:18+00:00",
+    "last_scanned": 8,
+    "last_success_at": "2026-09-15T11:53:18+00:00",
+    "name": "MacPaw"
+  },
+  "company-watchlist:materialise": {
+    "best_scanned": 7,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 7,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Materialise",
+    "search_policy": "ios"
+  },
+  "company-watchlist:metinvest-digital": {
+    "best_scanned": 3,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 3,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Metinvest Digital",
+    "search_policy": "ios"
+  },
+  "company-watchlist:modus-x": {
+    "best_scanned": 5,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 5,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "MODUS X",
+    "search_policy": "ios"
+  },
+  "company-watchlist:netcracker": {
+    "best_scanned": 3,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 3,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Netcracker",
+    "search_policy": "ios"
+  },
+  "company-watchlist:nix": {
+    "best_scanned": 29,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 29,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "NIX",
+    "search_policy": "ios"
+  },
+  "company-watchlist:nova-digital": {
+    "best_scanned": 2,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 2,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Nova Digital",
+    "search_policy": "ios"
+  },
+  "company-watchlist:p2h": {
+    "best_scanned": 9,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 9,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "P2H",
+    "search_policy": "ios"
+  },
+  "company-watchlist:plarium": {
+    "best_scanned": 0,
+    "empty_runs": 17,
+    "last_nonzero": "2026-09-14T12:27:42+00:00",
+    "last_scanned": 0,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Plarium",
+    "search_policy": "ios"
+  },
+  "company-watchlist:playrix": {
+    "best_scanned": 27,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 27,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Playrix",
+    "search_policy": "ios"
+  },
+  "company-watchlist:playtech": {
+    "best_scanned": 32,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 32,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Playtech",
+    "search_policy": "ios"
+  },
+  "company-watchlist:playtika": {
+    "best_scanned": 16,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 16,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Playtika",
+    "search_policy": "ios"
+  },
+  "company-watchlist:playtini": {
+    "best_scanned": 13,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 13,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Playtini",
+    "search_policy": "ios"
+  },
+  "company-watchlist:preply": {
+    "best_scanned": 25,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-15T11:53:18+00:00",
+    "last_scanned": 25,
+    "last_success_at": "2026-09-15T11:53:18+00:00",
+    "name": "Preply"
+  },
+  "company-watchlist:readdle": {
+    "best_scanned": 15,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 15,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Readdle",
+    "search_policy": "ios"
+  },
+  "company-watchlist:skelar": {
+    "best_scanned": 3,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-15T11:53:18+00:00",
+    "last_scanned": 3,
+    "last_success_at": "2026-09-15T11:53:18+00:00",
+    "name": "SKELAR"
+  },
+  "company-watchlist:smart-business": {
+    "best_scanned": 8,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 8,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "SMART business",
+    "search_policy": "ios"
+  },
+  "company-watchlist:soloway-technologies": {
+    "best_scanned": 8,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 8,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "SoloWay Technologies",
+    "search_policy": "ios"
+  },
+  "company-watchlist:sombra": {
+    "best_scanned": 13,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 13,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Sombra",
+    "search_policy": "ios"
+  },
+  "company-watchlist:spd-technology": {
+    "best_scanned": 3,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 3,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "SPD Technology",
+    "search_policy": "ios"
+  },
+  "company-watchlist:svitla-systems-inc": {
+    "best_scanned": 142,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 142,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Svitla Systems",
+    "search_policy": "ios"
+  },
+  "company-watchlist:tieto-ukraine": {
+    "best_scanned": 45,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 45,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Tieto Ukraine",
+    "search_policy": "ios"
+  },
+  "company-watchlist:ubisoft": {
+    "best_scanned": 8,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 8,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Ubisoft",
+    "search_policy": "ios"
+  },
+  "company-watchlist:uklon": {
+    "best_scanned": 7,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 7,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Uklon",
+    "search_policy": "ios"
+  },
+  "company-watchlist:uptech": {
+    "best_scanned": 3,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 3,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Uptech",
+    "search_policy": "ios"
+  },
+  "company-watchlist:valtech": {
+    "best_scanned": 186,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 186,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Valtech",
+    "search_policy": "ios"
+  },
+  "company-watchlist:vilmate": {
+    "best_scanned": 17,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 17,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Vilmate",
+    "search_policy": "ios"
+  },
+  "company-watchlist:viseven": {
+    "best_scanned": 31,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 31,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Viseven",
+    "search_policy": "ios"
+  },
+  "company-watchlist:volmi": {
+    "best_scanned": 1,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 1,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "VOLMI",
+    "search_policy": "ios"
+  },
+  "company-watchlist:wezom": {
+    "best_scanned": 5,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 5,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Wezom",
+    "search_policy": "ios"
+  },
+  "company-watchlist:wix": {
+    "best_scanned": 9,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 9,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Wix",
+    "search_policy": "ios"
+  },
+  "company-watchlist:yalantis": {
+    "best_scanned": 3,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 3,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Yalantis",
+    "search_policy": "ios"
+  },
+  "company-watchlist:zfort": {
+    "best_scanned": 13,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 13,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "ZFORT Group",
+    "search_policy": "ios"
+  },
+  "company-watchlist:zoolatech": {
+    "best_scanned": 66,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 66,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Zoolatech",
+    "search_policy": "ios"
+  },
+  "company:allstarsit@jobs.dou.ua": {
+    "best_scanned": 1,
+    "last_nonzero": "2026-08-20T09:15:37+00:00",
+    "last_scanned": 1,
+    "name": "ALLSTARSIT"
+  },
+  "company:andersen@asite-api.andersenlab.com": {
+    "best_scanned": 189,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 189,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Andersen",
+    "search_policy": "ios"
+  },
+  "company:avenga@jobs.dou.ua": {
+    "best_scanned": 11,
+    "last_nonzero": "2026-08-20T09:15:37+00:00",
+    "last_scanned": 10,
+    "name": "Avenga"
+  },
+  "company:capgemini engineering@jobs.dou.ua": {
+    "best_scanned": 3,
+    "last_nonzero": "2026-08-20T09:15:37+00:00",
+    "last_scanned": 1,
+    "name": "Capgemini Engineering"
+  },
+  "company:ciklum@ialmme.fa.ocs.oraclecloud.com": {
+    "best_scanned": 1,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 1,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Ciklum",
+    "search_policy": "ios"
+  },
+  "company:dataart@dataart.team": {
+    "best_scanned": 13,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 13,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "DataArt",
+    "search_policy": "ios"
+  },
+  "company:eleks@jobs.dou.ua": {
+    "best_scanned": 11,
+    "last_nonzero": "2026-08-20T09:15:37+00:00",
+    "last_scanned": 11,
+    "name": "ELEKS"
+  },
+  "company:epam@careers.epam.com": {
+    "best_scanned": 589,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 9,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "EPAM",
+    "search_policy": "ios"
+  },
+  "company:geeksforless@jobs.dou.ua": {
+    "best_scanned": 4,
+    "last_nonzero": "2026-08-20T09:15:37+00:00",
+    "last_scanned": 4,
+    "name": "GeeksForLess"
+  },
+  "company:globallogic@globallogic.com": {
+    "best_scanned": 9,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 9,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "GlobalLogic",
+    "search_policy": "ios"
+  },
+  "company:grid dynamics@griddynamics.com": {
+    "best_scanned": 208,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 208,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Grid Dynamics",
+    "search_policy": "ios"
+  },
+  "company:infopulse@careers.tieto.com": {
+    "best_scanned": 9,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 9,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Infopulse",
+    "search_policy": "ios"
+  },
+  "company:intellias@career.intellias.com": {
+    "best_scanned": 1,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 1,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Intellias",
+    "search_policy": "ios"
+  },
+  "company:levi9@jobs.dou.ua": {
+    "best_scanned": 5,
+    "last_nonzero": "2026-08-20T09:15:37+00:00",
+    "last_scanned": 5,
+    "name": "Levi9"
+  },
+  "company:luxoft@career.luxoft.com": {
+    "best_scanned": 20,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 20,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Luxoft",
+    "search_policy": "ios"
+  },
+  "company:mind studios@themindstudios.com": {
+    "best_scanned": 0,
+    "empty_runs": 91,
+    "last_scanned": 0,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Mind Studios",
+    "search_policy": "ios"
+  },
+  "company:miratech@jobs.dou.ua": {
+    "best_scanned": 3,
+    "last_nonzero": "2026-08-20T09:15:37+00:00",
+    "last_scanned": 3,
+    "name": "Miratech"
+  },
+  "company:mwdn@jobs.mwdn.com": {
+    "best_scanned": 33,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 33,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "MWDN",
+    "search_policy": "ios"
+  },
+  "company:n-ix@careers.n-ix.com": {
+    "best_scanned": 1,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 1,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "N-iX",
+    "search_policy": "ios"
+  },
+  "company:nortal@nortal.career.page": {
+    "best_scanned": 10,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 10,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Nortal",
+    "search_policy": "ios"
+  },
+  "company:onix systems@onix-systems.com": {
+    "best_scanned": 8,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 8,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Onix Systems",
+    "search_policy": "ios"
+  },
+  "company:rbi retail innovation@rbi-ri.com.ua": {
+    "best_scanned": 4,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 4,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "RBI Retail Innovation",
+    "search_policy": "ios"
+  },
+  "company:sigma software@career.sigma.software": {
+    "best_scanned": 41,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 41,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Sigma Software",
+    "search_policy": "ios"
+  },
+  "company:softserve@career.softserveinc.com": {
+    "best_scanned": 214,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 214,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "SoftServe",
+    "search_policy": "ios"
+  },
+  "company:spd technology@jobs.dou.ua": {
+    "best_scanned": 6,
+    "last_nonzero": "2026-08-20T09:15:37+00:00",
+    "last_scanned": 6,
+    "name": "SPD Technology"
+  },
+  "company:svitla systems@jobs.dou.ua": {
+    "best_scanned": 5,
+    "last_nonzero": "2026-08-20T09:15:37+00:00",
+    "last_scanned": 5,
+    "name": "Svitla Systems"
+  },
+  "company:trinetix@jobs.dou.ua": {
+    "best_scanned": 0,
+    "last_scanned": 0,
+    "name": "Trinetix"
+  },
+  "company:zone3000@zone3000.net": {
+    "best_scanned": 38,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 38,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "ZONE3000",
+    "search_policy": "ios"
+  },
+  "djinni": {
+    "best_scanned": 21,
+    "last_nonzero": "2026-08-20T09:15:37+00:00",
+    "last_scanned": 15,
+    "name": "Djinni"
+  },
+  "dou-ios-rss": {
+    "best_scanned": 15,
+    "last_nonzero": "2026-08-20T09:15:37+00:00",
+    "last_scanned": 9,
+    "name": "DOU iOS/macOS"
+  },
+  "hirify:saved-search": {
+    "best_scanned": 15,
+    "empty_runs": 0,
+    "last_nonzero": "2026-09-20T18:33:26+00:00",
+    "last_scanned": 14,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Hirify (saved search)",
+    "search_policy": "ios"
+  },
+  "telegram:hirifyme_bot": {
+    "best_scanned": 0,
+    "empty_runs": 13,
+    "last_nonzero": "2026-09-15T17:08:11+00:00",
+    "last_scanned": 0,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Telegram @hirifyme_bot",
+    "search_policy": "ios"
+  },
+  "telegram:itfreelancers": {
+    "best_scanned": 0,
+    "empty_runs": 7,
+    "last_nonzero": "2026-09-18T11:30:52+00:00",
+    "last_scanned": 0,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Telegram @itfreelancers",
+    "search_policy": "ios"
+  },
+  "telegram:itrecruit_ua": {
+    "best_scanned": 0,
+    "empty_runs": 7,
+    "last_nonzero": "2026-09-18T11:30:52+00:00",
+    "last_scanned": 0,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Telegram @itrecruit_ua",
+    "search_policy": "ios"
+  },
+  "telegram:mobile_jobs": {
+    "best_scanned": 0,
+    "empty_runs": 7,
+    "last_nonzero": "2026-09-18T11:30:52+00:00",
+    "last_scanned": 0,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Telegram @mobile_jobs",
+    "search_policy": "ios"
+  },
+  "telegram:remotejobss": {
+    "best_scanned": 0,
+    "empty_runs": 7,
+    "last_nonzero": "2026-09-18T11:30:52+00:00",
+    "last_scanned": 0,
+    "last_success_at": "2026-09-20T18:33:26+00:00",
+    "name": "Telegram @remotejobss",
+    "search_policy": "ios"
+  }
+}

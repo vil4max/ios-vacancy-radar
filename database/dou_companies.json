@@ -1,0 +1,76 @@
+{
+  "updated_at": "2026-08-18T00:00:00+00:00",
+  "source": "https://jobs.dou.ua/top50/",
+  "companies": [
+    {
+      "name": "ALLSTARSIT",
+      "slug": "allstars-it",
+      "site_url": null,
+      "vacancies_url": "https://jobs.dou.ua/companies/allstars-it/vacancies/",
+      "vacancy_count": 1
+    },
+    {
+      "name": "Avenga",
+      "slug": "avenga",
+      "site_url": null,
+      "vacancies_url": "https://jobs.dou.ua/companies/avenga/vacancies/",
+      "vacancy_count": 1
+    },
+    {
+      "name": "Capgemini Engineering",
+      "slug": "capgemini-engineering",
+      "site_url": null,
+      "vacancies_url": "https://jobs.dou.ua/companies/capgemini-engineering/vacancies/",
+      "vacancy_count": 1
+    },
+    {
+      "name": "ELEKS",
+      "slug": "eleks",
+      "site_url": null,
+      "vacancies_url": "https://jobs.dou.ua/companies/eleks/vacancies/",
+      "vacancy_count": 1
+    },
+    {
+      "name": "GeeksForLess",
+      "slug": "geeksforless",
+      "site_url": null,
+      "vacancies_url": "https://jobs.dou.ua/companies/geeksforless/vacancies/",
+      "vacancy_count": 1
+    },
+    {
+      "name": "Levi9",
+      "slug": "levi9",
+      "site_url": null,
+      "vacancies_url": "https://jobs.dou.ua/companies/levi9/vacancies/",
+      "vacancy_count": 1
+    },
+    {
+      "name": "Miratech",
+      "slug": "miratech",
+      "site_url": null,
+      "vacancies_url": "https://jobs.dou.ua/companies/miratech/vacancies/",
+      "vacancy_count": 1
+    },
+    {
+      "name": "SPD Technology",
+      "slug": "spd-technology",
+      "site_url": null,
+      "vacancies_url": "https://jobs.dou.ua/companies/spd-technology/vacancies/",
+      "vacancy_count": 1
+    },
+    {
+      "name": "Svitla Systems",
+      "slug": "svitla-systems-inc",
+      "site_url": null,
+      "vacancies_url": "https://jobs.dou.ua/companies/svitla-systems-inc/vacancies/",
+      "vacancy_count": 1
+    },
+    {
+      "name": "Trinetix",
+      "slug": "trinetix",
+      "site_url": null,
+      "vacancies_url": "https://jobs.dou.ua/companies/trinetix/vacancies/",
+      "vacancy_count": 1
+    }
+  ]
+}

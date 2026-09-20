@@ -1,0 +1,149 @@
+name: Collect iOS Jobs
+
+on:
+  workflow_dispatch:
+  # Scheduled Kyiv 11/15 via .github/workflows/hourly-trigger.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: collect-ios-jobs-${{ github.repository }}
+  cancel-in-progress: false
+  queue: max
+
+jobs:
+  collect:
+    permissions:
+      contents: write
+      actions: write
+    concurrency:
+      group: career-state-writer-${{ github.repository }}
+      cancel-in-progress: false
+      queue: max
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      # Search results -- the discovery history and the hand-over feed -- live in
+      # a private repository, never in this public one. There is no public
+      # fallback: without the store the run must stop, because starting from an
+      # empty history would announce every known vacancy again.
+      STATE_ROOT: state
+      HAS_STATE_REPO: ${{ secrets.STATE_REPO != '' && secrets.STATE_REPO_TOKEN != '' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Require the private state store
+        run: |
+          if [ "$HAS_STATE_REPO" != "true" ]; then
+            echo "::error::STATE_REPO and STATE_REPO_TOKEN secrets are required; see docs/operations.md"
+            exit 1
+          fi
+
+      - name: Check out the private state store
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ secrets.STATE_REPO }}
+          token: ${{ secrets.STATE_REPO_TOKEN }}
+          path: state
+          fetch-depth: 0
+
+      - name: Prepare directories
+        run: mkdir -p database "$STATE_ROOT/database"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: 'pip install --require-hashes --only-binary :all: --no-binary pyaes -r requirements.lock'
+
+      - name: Refresh runtime state
+        id: refresh_state
+        run: |
+          set -euo pipefail
+          python3 scripts/runtime_state.py refresh database/source_baseline.json database/collect_slots.json database/telegram_cursors.json
+          python3 scripts/runtime_state.py refresh database/seen.json database/vacancy_feed.json --root "$STATE_ROOT" --snapshot diagnostics/base.json
+
+      - name: Run Python pipeline
+        id: pipe
+        env:
+          REQUIRE_TELEGRAM_DELIVERY: "1"
+          SEEN_PATH: state/database/seen.json
+          FEED_PATH: state/database/vacancy_feed.json
+          COLLECT_DIAGNOSTICS_PATH: diagnostics/collect.json
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
+          TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
+          TELEGRAM_SESSION: ${{ secrets.TELEGRAM_SESSION }}
+          SEED_SEEN_ONLY: ${{ vars.SEED_SEEN_ONLY }}
+          CAREER_AGENT_SEEN_GATE: ${{ vars.CAREER_AGENT_SEEN_GATE }}
+        run: |
+          echo "COLLECT_STARTED_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
+          python3 scripts/run_pipeline.py
+
+      - name: Mark Kyiv collect slot completed
+        id: slot
+        if: success() && steps.pipe.outcome == 'success'
+        run: python3 scripts/mark_collect_slot.py
+
+      - name: Upload collection diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: collect-diagnostics-${{ github.run_id }}-${{ github.run_attempt }}
+          path: diagnostics/collect.json
+          if-no-files-found: warn
+          retention-days: 7
+
+      - name: Publish runtime state
+        id: commit_seen
+        if: ${{ !cancelled() && (steps.pipe.outcome == 'success' || steps.pipe.outcome == 'failure') }}
+        run: |
+          set -euo pipefail
+          python3 scripts/runtime_state.py publish
+          python3 scripts/runtime_state.py publish --root "$STATE_ROOT" --snapshot diagnostics/base.json
+
+      - name: Upload collection recovery state
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: collect-recovery-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            database/source_baseline.json
+            database/telegram_cursors.json
+            database/collect_slots.json
+
+            diagnostics/runtime-state*.json
+          if-no-files-found: warn
+          retention-days: 7
+
+      - name: Notify failure on Telegram
+        if: failure()
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          STEP_PIPE_CONCLUSION: ${{ steps.pipe.conclusion }}
+          STEP_SLOT_CONCLUSION: ${{ steps.slot.conclusion }}
+          STEP_COMMIT_CONCLUSION: ${{ steps.commit_seen.conclusion }}
+        run: |
+          set -euo pipefail
+          if [ -z "${TELEGRAM_TOKEN}" ] || [ -z "${TELEGRAM_CHAT_ID}" ]; then
+            echo "TELEGRAM_* missing — skip failure alert"
+            exit 0
+          fi
+          reason="unknown step"
+          if [ "${STEP_PIPE_CONCLUSION}" = "failure" ]; then reason="pipeline / Telegram notify"; fi
+          if [ "${STEP_SLOT_CONCLUSION}" = "failure" ]; then reason="mark collect slot"; fi
+          if [ "${STEP_COMMIT_CONCLUSION}" = "failure" ]; then reason="commit seen/slots"; fi
+          text="$(printf '⚠️ Collect iOS Jobs failed (%s)\n%s/%s/actions/runs/%s' \
+            "${reason}" \
+            "${GITHUB_SERVER_URL}" "${GITHUB_REPOSITORY}" "${GITHUB_RUN_ID}")"
+          curl -fsS -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${text}" \
+            -d "disable_web_page_preview=true" >/dev/null

@@ -1,0 +1,252 @@
+[
+  {
+    "name": "Infopulse",
+    "slug": "infopulse",
+    "career_url": "https://careers.tieto.com/jobs?q=iOS"
+  },
+  {
+    "name": "Onix Systems",
+    "slug": "onix-systems",
+    "career_url": "https://onix-systems.com/careers"
+  },
+  {
+    "name": "RBI",
+    "slug": "rbi",
+    "career_url": "https://www.rbi-ri.com.ua/career"
+  },
+  {
+    "name": "Mind Studios",
+    "slug": "mind-studios",
+    "career_url": "https://themindstudios.com/careers/"
+  },
+  {
+    "name": "MWDN",
+    "slug": "mwdn",
+    "career_url": "https://jobs.mwdn.com/careers/"
+  },
+  {
+    "name": "Innovecs",
+    "slug": "innovecs",
+    "career_url": "https://jobs.innovecs.com/vacancies/"
+  },
+  {
+    "name": "Exadel",
+    "slug": "exadel",
+    "career_url": "https://exadel.com/careers/"
+  },
+  {
+    "name": "Beetroot",
+    "slug": "beetroot",
+    "career_url": "https://career.beetroot.co/"
+  },
+  {
+    "name": "Cleveroad",
+    "slug": "cleveroad",
+    "career_url": "https://career.cleveroad.com/vacancies"
+  },
+  {
+    "name": "Agiliway",
+    "slug": "agiliway",
+    "career_url": "https://www.agiliway.com/career/"
+  },
+  {
+    "name": "Devtorium",
+    "slug": "devtorium",
+    "career_url": "https://devtorium.com/careers/"
+  },
+  {
+    "name": "Vilmate",
+    "slug": "vilmate",
+    "career_url": "https://careers.vilmate.com/"
+  },
+  {
+    "name": "Lionwood Software",
+    "slug": "lionwood-software",
+    "career_url": "https://lionwood.software/career/"
+  },
+  {
+    "name": "SoloWay Technologies",
+    "slug": "soloway-technologies",
+    "career_url": "https://soloway.tech/vacancies/"
+  },
+  {
+    "name": "Amdaris",
+    "slug": "amdaris",
+    "career_url": "https://amdaris.com/careers/"
+  },
+  {
+    "name": "Uklon",
+    "slug": "uklon",
+    "career_url": "https://uklon.com.ua/careers/"
+  },
+  {
+    "name": "Playtika",
+    "slug": "playtika",
+    "career_url": "https://www.playtika.com/careers/"
+  },
+  {
+    "name": "Ubisoft",
+    "slug": "ubisoft",
+    "career_url": "https://www.ubisoft.com/en-us/company/careers/search"
+  },
+  {
+    "name": "Materialise",
+    "slug": "materialise",
+    "career_url": "https://www.materialise.com/en/careers"
+  },
+  {
+    "name": "Viseven",
+    "slug": "viseven",
+    "career_url": "https://viseven.com/careers"
+  },
+  {
+    "name": "airSlate",
+    "slug": "airslate",
+    "career_url": "https://www.airslate.com/careers"
+  },
+  {
+    "name": "Creatio",
+    "slug": "creatio",
+    "career_url": "https://www.creatio.com/company/careers/job-openings"
+  },
+  {
+    "name": "MacPaw",
+    "slug": "macpaw",
+    "career_url": "https://macpaw.com/careers"
+  },
+  {
+    "name": "Readdle",
+    "slug": "readdle",
+    "career_url": "https://readdle.com/careers"
+  },
+  {
+    "name": "Preply",
+    "slug": "preply",
+    "career_url": "https://preply.com/en/careers"
+  },
+  {
+    "name": "appflame",
+    "slug": "appflame",
+    "career_url": "https://appflame.com/ua/karera/"
+  },
+  {
+    "name": "Headway",
+    "slug": "headway",
+    "career_url": "https://careers.headway.inc/jobs"
+  },
+  {
+    "name": "Valtech",
+    "slug": "valtech",
+    "career_url": "https://www.valtech.com/career/jobs/"
+  },
+  {
+    "name": "PUMB",
+    "slug": "pumb",
+    "career_url": "https://career.pumb.ua/vacancy"
+  },
+  {
+    "name": "Adaptiq",
+    "slug": "adaptiq",
+    "career_url": "https://adaptiq.co/careers/"
+  },
+  {
+    "name": "Devart",
+    "slug": "devart",
+    "career_url": "https://www.devart.com/vacancies/"
+  },
+  {
+    "name": "Universe Group",
+    "slug": "universe-group",
+    "career_url": "https://jobs.ashbyhq.com/universe"
+  },
+  {
+    "name": "Obrio",
+    "slug": "obrio",
+    "career_url": "https://jobs.ashbyhq.com/obrio"
+  },
+  {
+    "name": "Welltech",
+    "slug": "welltech",
+    "career_url": "https://jobs.ashbyhq.com/welltech"
+  },
+  {
+    "name": "Boosters",
+    "slug": "boosters",
+    "career_url": "https://jobs.ashbyhq.com/boosters"
+  },
+  {
+    "name": "Holywater",
+    "slug": "holywater",
+    "career_url": "https://jobs.ashbyhq.com/holywater"
+  },
+  {
+    "name": "Solidgate",
+    "slug": "solidgate",
+    "career_url": "https://jobs.ashbyhq.com/solidgate"
+  },
+  {
+    "name": "Kyivstar",
+    "slug": "kyivstar",
+    "career_url": "https://jobs.lever.co/kyivstar"
+  },
+  {
+    "name": "Newxel",
+    "slug": "newxel",
+    "career_url": "https://jobs.ashbyhq.com/newxel"
+  },
+  {
+    "name": "Levi9 Ukraine",
+    "slug": "levi9-ukraine",
+    "career_url": "https://jobs.ua.levi9.com/"
+  },
+  {
+    "name": "Uptech",
+    "slug": "uptech",
+    "career_url": "https://www.uptech.team/career"
+  },
+  {
+    "name": "A-listware",
+    "slug": "a-listware",
+    "career_url": "https://a-listware.com/career"
+  },
+  {
+    "name": "Devico",
+    "slug": "devico",
+    "career_url": "https://devico.io/careers"
+  },
+  {
+    "name": "AgileEngine",
+    "slug": "agileengine",
+    "career_url": "https://join.agileengine.com/ukraine/"
+  },
+  {
+    "name": "Brocoders",
+    "slug": "brocoders",
+    "career_url": "https://brocoders.com/careers"
+  },
+  {
+    "name": "Avirise",
+    "slug": "avirise",
+    "career_url": "https://avirise.app/uk/career/"
+  },
+  {
+    "name": "Playtini",
+    "slug": "playtini",
+    "career_url": "https://playtini.ua/jobs"
+  },
+  {
+    "name": "3DLOOK",
+    "slug": "3dlook",
+    "career_url": "https://3dlook.ai/careers/"
+  },
+  {
+    "name": "Fintech Farm",
+    "slug": "fintech-farm",
+    "career_url": "https://www.fintech-farm.com/careers"
+  },
+  {
+    "name": "Freedom24",
+    "slug": "freedom24",
+    "career_url": "https://apply.workable.com/freedomfinanceeu/"
+  }
+]

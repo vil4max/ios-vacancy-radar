@@ -1,0 +1,303 @@
+{
+  "schema_version": 1,
+  "notes": "Curated admission regression set, not an estimate of live market precision or candidate qualification. Public descriptions are short paraphrases; other cases are synthetic.",
+  "cases": [
+    {
+      "id": "altexsoft-python-paraphrase",
+      "kind": "public-paraphrase",
+      "raw": {
+        "company": "Example Engineering",
+        "title": "Principal Software Engineer - Python (Team Lead)",
+        "description": "Requirements\nRequired strong Python expertise and at least seven years of Python backend development. Lead an engineering team using Django or FastAPI. Use AI coding assistants during delivery.\nNice to have\nIntegrating AI APIs into products.",
+        "location": "Poland, Germany, Hungary, Romania",
+        "remote": "remote",
+        "url": "https://example.com/jobs/altexsoft-python-paraphrase"
+      },
+      "expected_inbox": false,
+      "source_url": "https://www.altexsoft.com/vacancy/principal-software-engineer---python-team-lead/",
+      "observed_at": "2026-09-09",
+      "review_note": "Mandatory Python specialization and country restrictions; source excerpt paraphrased, not a saved job page."
+    },
+    {
+      "id": "ios-remote",
+      "kind": "synthetic",
+      "raw": {
+        "company": "Example Engineering",
+        "title": "Senior iOS Engineer",
+        "description": "Build SwiftUI applications and maintain UIKit modules.",
+        "location": "Ukraine",
+        "remote": "remote",
+        "url": "https://example.com/jobs/ios-remote"
+      },
+      "expected_inbox": true
+    },
+    {
+      "id": "ios-kyiv-office",
+      "kind": "synthetic",
+      "raw": {
+        "company": "Example Engineering",
+        "title": "Senior Swift Engineer",
+        "description": "Deliver native iOS applications.",
+        "location": "Kyiv",
+        "remote": "onsite",
+        "url": "https://example.com/jobs/ios-kyiv-office"
+      },
+      "expected_inbox": true
+    },
+    {
+      "id": "ios-unknown-location",
+      "kind": "synthetic",
+      "raw": {
+        "company": "Example Engineering",
+        "title": "Senior iOS Engineer",
+        "description": "Develop native iOS applications.",
+        "location": null,
+        "remote": "unknown",
+        "url": "https://example.com/jobs/ios-unknown-location"
+      },
+      "expected_inbox": true,
+      "expected_attention": true
+    },
+    {
+      "id": "ios-mexico",
+      "kind": "synthetic",
+      "raw": {
+        "company": "Example Engineering",
+        "title": "Senior iOS Engineer",
+        "description": "Develop Swift applications.",
+        "location": "Mexico",
+        "remote": "onsite",
+        "url": "https://example.com/jobs/ios-mexico"
+      },
+      "expected_inbox": true,
+      "expected_attention": true,
+      "expected_labels": {
+        "workable_from_kyiv": false
+      }
+    },
+    {
+      "id": "ios-us-remote",
+      "kind": "synthetic",
+      "raw": {
+        "company": "Example Engineering",
+        "title": "Senior iOS Engineer",
+        "description": "Develop Swift applications.",
+        "location": "US only",
+        "remote": "remote",
+        "url": "https://example.com/jobs/ios-us-remote"
+      },
+      "expected_inbox": true,
+      "expected_attention": true
+    },
+    {
+      "id": "ios-us-work-authorization",
+      "kind": "synthetic",
+      "raw": {
+        "company": "Example Engineering",
+        "title": "Senior iOS Engineer",
+        "description": "Develop Swift applications.\nRequirements\nMust be authorized to work in the United States.",
+        "location": "US only",
+        "remote": "remote",
+        "url": "https://example.com/jobs/ios-us-work-authorization"
+      },
+      "expected_inbox": true,
+      "expected_attention": true,
+      "expected_labels": {
+        "work_authorization": [
+          "local work authorization required"
+        ]
+      }
+    },
+    {
+      "id": "ios-eu-remote",
+      "kind": "synthetic",
+      "raw": {
+        "company": "Example Engineering",
+        "title": "Senior iOS Engineer",
+        "description": "Develop Swift applications.",
+        "location": "Limassol, Cyprus",
+        "remote": "remote",
+        "url": "https://example.com/jobs/ios-eu-remote"
+      },
+      "expected_inbox": true,
+      "expected_attention": true
+    },
+    {
+      "id": "ios-worldwide",
+      "kind": "synthetic",
+      "raw": {
+        "company": "Example Engineering",
+        "title": "Senior iOS Engineer",
+        "description": "Develop Swift applications.",
+        "location": "Worldwide",
+        "remote": "remote",
+        "url": "https://example.com/jobs/ios-worldwide"
+      },
+      "expected_inbox": true
+    },
+    {
+      "id": "ios-lead",
+      "kind": "synthetic",
+      "raw": {
+        "company": "Example Engineering",
+        "title": "Lead iOS Engineer",
+        "description": "Develop Swift applications.",
+        "location": "Ukraine",
+        "remote": "remote",
+        "url": "https://example.com/jobs/ios-lead"
+      },
+      "expected_inbox": true,
+      "expected_attention": false
+    },
+    {
+      "id": "ios-middle",
+      "kind": "synthetic",
+      "raw": {
+        "company": "Example Engineering",
+        "title": "Middle iOS Developer",
+        "description": "Develop Swift applications.",
+        "location": "Ukraine",
+        "remote": "remote",
+        "url": "https://example.com/jobs/ios-middle"
+      },
+      "expected_inbox": true,
+      "expected_attention": false
+    },
+    {
+      "id": "ios-junior",
+      "kind": "synthetic",
+      "raw": {
+        "company": "Example Engineering",
+        "title": "Junior iOS Engineer",
+        "description": "Develop Swift applications.",
+        "location": "Ukraine",
+        "remote": "remote",
+        "url": "https://example.com/jobs/ios-junior"
+      },
+      "expected_inbox": true,
+      "expected_attention": false,
+      "expected_labels": {
+        "junior": true
+      }
+    },
+    {
+      "id": "macos-cpp",
+      "kind": "synthetic",
+      "raw": {
+        "company": "Example Engineering",
+        "title": "Senior macOS C++ Engineer",
+        "description": "Build AppKit desktop applications.",
+        "location": "Ukraine",
+        "remote": "remote",
+        "url": "https://example.com/jobs/macos-cpp"
+      },
+      "expected_inbox": false
+    },
+    {
+      "id": "react-native",
+      "kind": "synthetic",
+      "raw": {
+        "company": "Example Engineering",
+        "title": "Senior React Native Engineer",
+        "description": "Build cross-platform applications for iOS and Android.",
+        "location": "Ukraine",
+        "remote": "remote",
+        "url": "https://example.com/jobs/react-native"
+      },
+      "expected_inbox": false
+    },
+    {
+      "id": "ai-marketing-analyst",
+      "kind": "synthetic",
+      "raw": {
+        "company": "Example Product",
+        "title": "Marketing Analyst",
+        "description": "Work with our engineering team to measure AI-powered onboarding experiments and growth dashboards for the product.",
+        "location": "Kyiv",
+        "url": "https://example.com/jobs/ai-marketing-analyst"
+      },
+      "expected_inbox": false
+    }
+  ],
+  "duplicate_groups": [
+    {
+      "id": "multi-geo",
+      "raw": [
+        {
+          "company": "Example Engineering",
+          "title": "Senior iOS Engineer",
+          "description": "Build SwiftUI applications.",
+          "remote": "remote",
+          "source": "fixture",
+          "url": "https://example.com/mexico",
+          "location": "Mexico"
+        },
+        {
+          "company": "Example Engineering",
+          "title": "Senior iOS Engineer",
+          "description": "Build SwiftUI applications.",
+          "remote": "remote",
+          "source": "fixture",
+          "url": "https://example.com/kyiv",
+          "location": "Kyiv"
+        }
+      ],
+      "expected_urls": [
+        "https://example.com/kyiv"
+      ]
+    },
+    {
+      "id": "tracking-alias",
+      "raw": [
+        {
+          "company": "Example Engineering",
+          "title": "Senior iOS Engineer",
+          "description": "Build SwiftUI applications.",
+          "remote": "remote",
+          "source": "fixture",
+          "url": "https://example.com/remote",
+          "location": "Ukraine"
+        },
+        {
+          "company": "Example Engineering",
+          "title": "Senior iOS Engineer",
+          "description": "Build SwiftUI applications.",
+          "remote": "remote",
+          "source": "fixture",
+          "url": "https://example.com/remote?utm_source=email",
+          "location": "Ukraine"
+        }
+      ],
+      "expected_urls": [
+        "https://example.com/remote"
+      ]
+    },
+    {
+      "id": "distinct-roles",
+      "raw": [
+        {
+          "company": "Example Engineering",
+          "title": "Senior iOS Engineer",
+          "description": "Build SwiftUI applications.",
+          "remote": "remote",
+          "source": "fixture",
+          "url": "https://example.com/senior",
+          "location": "Ukraine"
+        },
+        {
+          "company": "Example Engineering",
+          "title": "Lead iOS Engineer",
+          "description": "Build SwiftUI applications.",
+          "remote": "remote",
+          "source": "fixture",
+          "url": "https://example.com/lead",
+          "location": "Kyiv"
+        }
+      ],
+      "expected_urls": [
+        "https://example.com/senior",
+        "https://example.com/lead"
+      ]
+    }
+  ]
+}

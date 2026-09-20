@@ -1,0 +1,88 @@
+name: Collect Schedule Trigger
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Hourly :17 UTC across Kyiv daytime UTC band (EET/EEST).
+    # Gate uses due Kyiv slot 11/15 with catch-up until the next slot
+    # (GHA schedule lag) and skips if database/collect_slots.json already has it.
+    - cron: "17 6-16 * * *"
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: collect-schedule-trigger-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  trigger:
+    if: vars.COLLECT_SCHEDULE_ENABLED == '1'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Refresh schedule state
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git checkout origin/main -- database/collect_slots.json
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Kyiv collect-slot gate
+        id: gate
+        run: |
+          set -euo pipefail
+          if [ "${GITHUB_EVENT_NAME}" != "schedule" ]; then
+            echo "skip_gate=false" >> "$GITHUB_OUTPUT"
+            echo "Manual trigger — gate bypassed"
+            exit 0
+          fi
+          set +e
+          output="$(python3 scripts/should_run_collect.py)"
+          status=$?
+          set -e
+          echo "$output"
+          kyiv_hour="$(printf '%s\n' "$output" | awk -F= '/^kyiv_hour=/{print $2; exit}')"
+          echo "kyiv_hour=${kyiv_hour}" >> "$GITHUB_OUTPUT"
+          if [ "$status" -eq 0 ]; then
+            echo "skip_gate=false" >> "$GITHUB_OUTPUT"
+            elif [ "$status" -eq 1 ]; then
+            echo "skip_gate=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Collect schedule gate failed with exit status ${status}" >&2
+            exit "$status"
+          fi
+
+      - name: Trigger Collect iOS Jobs
+        id: dispatch_collect
+        if: steps.gate.outputs.skip_gate != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          repo="${GITHUB_REPOSITORY}"
+          attempt=1
+          max_attempts=5
+          delay=15
+          while true; do
+            echo "Dispatch Collect attempt ${attempt}/${max_attempts}"
+            if gh workflow run "Collect iOS Jobs" --repo "${repo}" --ref main; then
+              echo "Collect iOS Jobs dispatched successfully"
+              break
+            fi
+            if [ "${attempt}" -ge "${max_attempts}" ]; then
+              echo "Failed to dispatch Collect iOS Jobs after ${max_attempts} attempts" >&2
+              exit 1
+            fi
+            echo "Dispatch failed; retrying in ${delay}s"
+            sleep "${delay}"
+            attempt=$((attempt + 1))
+            delay=$((delay * 2))
+          done

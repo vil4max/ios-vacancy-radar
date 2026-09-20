@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  python-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: 'pip install --require-hashes --only-binary :all: --no-binary pyaes -r requirements-dev.lock'
+
+      - name: Lint with ruff
+        run: python3 -m ruff check .
+
+      - name: Run unit tests
+        run: python3 -m pytest -q
+
+      - name: Check curated vacancy admission quality
+        run: |
+          set -euo pipefail
+          status=0
+          python3 scripts/evaluate_search_quality.py | tee search-quality.json || status=$?
+          {
+            echo '### Curated admission regression benchmark'
+            echo 'Offline fixtures only; these metrics do not measure live market coverage.'
+            echo '```json'
+            cat search-quality.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit "$status"
+
+      - name: Verify imports
+        run: python3 -c "from collector.companies import collect_all; from storage.seen import load_seen; from storage.vacancy_feed import append_feed; from reporter.hourly import format_hourly_new_vacancies"
