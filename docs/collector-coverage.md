@@ -7,7 +7,7 @@
 | Python `collector/companies.py` | Orchestrates all company/ATS collectors in parallel |
 | Python `collector/generic.py` | Shared HTML helpers (WP REST, HTML regex, BeautifulSoup links) |
 | Python `collector/bespoke.py` | Custom career APIs (Andersen, Ciklum, Sigma, DataArt, Grid Dynamics, RBI, …) |
-| Python `collector/epam.py` | EPAM sitemap discovery + vacancy `__NEXT_DATA__` (location + remote) |
+| Python `collector/epam.py` | EPAM sitemap discovery + vacancy `__NEXT_DATA__` (location + remote); `scanned` counts every vacancy URL in the sitemap |
 | Python `collector/company_watchlist.py` | Generic official-page monitor and explicit unresolved-source failures |
 | Python `collector/dou_service_ratings.py` | Research-only DOU service-company rating → `database/dou_service_companies.json` watchlist |
 | Python `collector/dou_top50.py` | Research-only DOU Top 50 discovery; adds companies only when an official career URL is verified |

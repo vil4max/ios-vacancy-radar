@@ -6,6 +6,7 @@ import pytest
 
 from collector import epam
 from collector.epam import discover_ios_vacancy_urls, parse_vacancy_page
+from storage.source_health import classify_degraded
 
 
 def _html_with_job(job: dict) -> str:
@@ -229,7 +230,21 @@ def test_collect_epam_is_healthy_when_sitemap_has_no_candidates(monkeypatch: pyt
     result = epam.collect_epam()
 
     assert result.status == "healthy"
-    assert result.items_scanned == 0
+    assert result.items_scanned == 1
+    assert result.jobs == []
+
+
+def test_collect_epam_scans_the_whole_sitemap_not_only_ios_slugs(monkeypatch: pytest.MonkeyPatch) -> None:
+    detail = _html_with_job({"name": "Senior iOS Engineer", "uid": "blt1", "metadata": {}})
+    sitemap = _sitemap("ios-engineer-blt1_en", *(f"java-developer-blt{n}_en" for n in range(2, 12)))
+    monkeypatch.setattr(epam, "fetch_text", lambda url, **_k: sitemap if url.endswith(".gz") else detail)
+    baseline = {"company:epam@careers.epam.com": {"best_scanned": 12, "search_policy": "ios"}}
+
+    result = epam.collect_epam()
+
+    assert result.items_scanned == 11
+    assert classify_degraded([result], baseline) == []
+    assert len(result.jobs) == 1
 
 
 def test_collect_epam_tolerates_some_broken_detail_pages(monkeypatch: pytest.MonkeyPatch) -> None:

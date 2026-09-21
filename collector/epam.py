@@ -63,6 +63,10 @@ def _map_remote(vacancy_types: list[str]) -> str:
     return "unknown"
 
 
+def count_vacancy_urls(sitemap_xml: str) -> int:
+    return len({match.group(1) for match in _VACANCY_LOC.finditer(sitemap_xml)})
+
+
 def discover_ios_vacancy_urls(sitemap_xml: str) -> list[str]:
     urls: list[str] = []
     seen: set[str] = set()
@@ -138,9 +142,12 @@ def collect_epam() -> SourceResult:
     started = time.perf_counter()
     try:
         sitemap = fetch_text(_SITEMAP_URL)
+        # Health is measured on the whole sitemap: the iOS slug filter leaves a
+        # handful of candidates whose count swings with hiring, not with breakage.
+        listed = count_vacancy_urls(sitemap)
         candidates = discover_ios_vacancy_urls(sitemap)
         if not candidates:
-            return source_ok(_COMPANY, _SOURCE_URL, [], started, scanned=0, source_id=_SOURCE_ID)
+            return source_ok(_COMPANY, _SOURCE_URL, [], started, scanned=listed, source_id=_SOURCE_ID)
 
         jobs: list[dict[str, Any]] = []
         errors = 0
@@ -168,7 +175,7 @@ def collect_epam() -> SourceResult:
             _SOURCE_URL,
             jobs,
             started,
-            scanned=len(candidates) - errors,
+            scanned=listed - errors,
             source_id=_SOURCE_ID,
         )
     except Exception as error:  # noqa: BLE001
