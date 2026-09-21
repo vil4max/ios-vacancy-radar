@@ -1,0 +1,772 @@
+[
+  {
+    "name": "247 Labs Inc.",
+    "slug": "247-labs-inc",
+    "career_url": "https://247labs.com/careers/"
+  },
+  {
+    "name": "2K-Group",
+    "slug": "2k-group",
+    "career_url": "https://www.2kgroup.com/vacancies"
+  },
+  {
+    "name": "2muchcoffee",
+    "slug": "2muchcoffee",
+    "career_url": "https://2muchcoffee.com/careers"
+  },
+  {
+    "name": "3dEYE Inc.",
+    "slug": "3deye-inc",
+    "career_url": "https://www.3deye.ai/careers"
+  },
+  {
+    "name": "3MDEB SP. Z O.O.",
+    "slug": "3mdeb",
+    "career_url": "https://3mdeb.com/careers/"
+  },
+  {
+    "name": "4D Pipeline",
+    "slug": "4d-pipeline",
+    "career_url": "https://www.4dpipeline.com/jobs"
+  },
+  {
+    "name": "4K-Soft",
+    "slug": "4k-soft",
+    "career_url": "http://4k-soft.com/careers"
+  },
+  {
+    "name": "5w155",
+    "slug": "5w155",
+    "career_url": "https://5w155.ch/careers"
+  },
+  {
+    "name": "711media",
+    "slug": "711media",
+    "career_url": "http://www.711media.com/jobs-in-stuttgart"
+  },
+  {
+    "name": "93-тя окрема механізована бригада \"Холодний Яр\"",
+    "slug": "93-tya-okrema-mehanizovana-brigada-holodnii-yar",
+    "career_url": "https://www.93ombr.army/vacancies"
+  },
+  {
+    "name": "Agilistry",
+    "slug": "agilistry",
+    "career_url": "https://agilistrysoft.com/vacancies"
+  },
+  {
+    "name": "Agilites",
+    "slug": "agilites",
+    "career_url": "https://agilites.com/careers.html"
+  },
+  {
+    "name": "AIBY",
+    "slug": "aiby",
+    "career_url": "https://aiby.com/careers/"
+  },
+  {
+    "name": "Aionys",
+    "slug": "aionys",
+    "career_url": "https://aionys.com/career"
+  },
+  {
+    "name": "ITxess",
+    "slug": "ajtiekses",
+    "career_url": "http://itxess.com/jobs/"
+  },
+  {
+    "name": "Aks.ua",
+    "slug": "aks-ua",
+    "career_url": "http://aks.ua/uk/job.html"
+  },
+  {
+    "name": "Akurateco",
+    "slug": "akurateco",
+    "career_url": "http://akurateco.com/careers"
+  },
+  {
+    "name": "Akveo",
+    "slug": "akveo",
+    "career_url": "http://www.akveo.com/careers"
+  },
+  {
+    "name": "Aladdinb2b",
+    "slug": "aladdinb2b",
+    "career_url": "https://aladdinb2b.com/careers/"
+  },
+  {
+    "name": "Algoface",
+    "slug": "algoface",
+    "career_url": "https://www.algoface.ai/careers/"
+  },
+  {
+    "name": "Ameware Group",
+    "slug": "ameware-group",
+    "career_url": "https://amewaregroup.com/jobs"
+  },
+  {
+    "name": "AMI Dynamics",
+    "slug": "ami-dynamics",
+    "career_url": "https://amidynamics.com/careers/"
+  },
+  {
+    "name": "Amrita Studio",
+    "slug": "amrita-studio",
+    "career_url": "https://amrita.studio/career"
+  },
+  {
+    "name": "Anatomize",
+    "slug": "anatomize",
+    "career_url": "https://anatomize.tech/other/jobs"
+  },
+  {
+    "name": "AnyforSoft",
+    "slug": "anyforsoft",
+    "career_url": "https://anyforsoft.com/careers"
+  },
+  {
+    "name": "AnyHR.agency",
+    "slug": "anyhr-io",
+    "career_url": "https://anyhr.peopleforce.io/careers"
+  },
+  {
+    "name": "Apexive",
+    "slug": "apexive",
+    "career_url": "http://apexive.com/career"
+  },
+  {
+    "name": "Apme",
+    "slug": "apme",
+    "career_url": "https://apme.io/vacancies.html"
+  },
+  {
+    "name": "Appello",
+    "slug": "appello",
+    "career_url": "http://appello.com.au/careers"
+  },
+  {
+    "name": "APPVALES",
+    "slug": "appvales",
+    "career_url": "https://appvales.com/careers"
+  },
+  {
+    "name": "Arkuda Digital",
+    "slug": "arkuda-digital",
+    "career_url": "https://www.arkudadigital.com/about-company-provider-upnp-dlna/arkuda-careers/"
+  },
+  {
+    "name": "Arrible",
+    "slug": "arrible",
+    "career_url": "https://arrible.com/career/"
+  },
+  {
+    "name": "ARTJOKER",
+    "slug": "artjoker",
+    "career_url": "https://artjoker.ua/career/"
+  },
+  {
+    "name": "ASANA",
+    "slug": "asana",
+    "career_url": "https://asana.com/jobs/all"
+  },
+  {
+    "name": "ASTA.MOBI",
+    "slug": "asta-mobi",
+    "career_url": "http://asta.mobi/vacancies"
+  },
+  {
+    "name": "Aston VIP",
+    "slug": "aston-vip",
+    "career_url": "https://aston.ae/careers/"
+  },
+  {
+    "name": "АТБ-маркет",
+    "slug": "atb",
+    "career_url": "https://www.atbmarket.com/career"
+  },
+  {
+    "name": "Attract Group",
+    "slug": "attract-group",
+    "career_url": "http://attractgroup.com/career/"
+  },
+  {
+    "name": "Okta",
+    "slug": "auth0",
+    "career_url": "https://www.okta.com/company/careers"
+  },
+  {
+    "name": "Авеб",
+    "slug": "aveb",
+    "career_url": "http://aweb.ua/vacancies"
+  },
+  {
+    "name": "AVIC",
+    "slug": "avic",
+    "career_url": "https://avic.com.ua/vacancies"
+  },
+  {
+    "name": "AUTOBAZA / База Автозвука",
+    "slug": "baza-atozvuka",
+    "career_url": "https://avtozvuk.ua/ua/vacancies"
+  },
+  {
+    "name": "BazaIT",
+    "slug": "bazait",
+    "career_url": "https://app.bazait.com/search/jobs"
+  },
+  {
+    "name": "Binariks",
+    "slug": "binariks",
+    "career_url": "https://binariks.com/career/"
+  },
+  {
+    "name": "Bit media Ukraine",
+    "slug": "bit-media",
+    "career_url": "http://www.bitmedia.at/karriere"
+  },
+  {
+    "name": "Blackthorn Vision",
+    "slug": "blackthorn-vision",
+    "career_url": "https://blackthorn-vision.com/open-positions/"
+  },
+  {
+    "name": "Bluefield Technologies",
+    "slug": "bluefield-technologies",
+    "career_url": "http://bluefield.tech/careers"
+  },
+  {
+    "name": "Blynk",
+    "slug": "blynk",
+    "career_url": "https://blynk.io/platform/device-authentification-and-provisioning"
+  },
+  {
+    "name": "Boosty Labs",
+    "slug": "boosty-labs",
+    "career_url": "https://boostylabs.com/career"
+  },
+  {
+    "name": "BPC Ukraine",
+    "slug": "bpc-ukraine",
+    "career_url": "https://www.bpcbt.com/careers"
+  },
+  {
+    "name": "Bragi",
+    "slug": "bragi",
+    "career_url": "https://www.bragi.com/careers"
+  },
+  {
+    "name": "Brainence",
+    "slug": "brainence",
+    "career_url": "https://brainence.com/career/"
+  },
+  {
+    "name": "Brander",
+    "slug": "brander",
+    "career_url": "http://brander.ua/vacancies"
+  },
+  {
+    "name": "Build Succeeded",
+    "slug": "build-succeeded",
+    "career_url": "https://build-succeeded.io/jobs_open"
+  },
+  {
+    "name": "Bulktech",
+    "slug": "bulktech",
+    "career_url": "https://bulktech.co.uk/careers"
+  },
+  {
+    "name": "Business Care Agency",
+    "slug": "business-care-agency",
+    "career_url": "https://bcareagency.com/vacancies/"
+  },
+  {
+    "name": "Candy Grill",
+    "slug": "candygrill",
+    "career_url": "http://candygrill.com/en/jobs"
+  },
+  {
+    "name": "CapableBits",
+    "slug": "capablebits",
+    "career_url": "https://www.capablebits.ai/careers"
+  },
+  {
+    "name": "Chalice LTD",
+    "slug": "chalice",
+    "career_url": "http://www.chalice.cc/about/career"
+  },
+  {
+    "name": "Change Invest",
+    "slug": "change-invest",
+    "career_url": "https://www.getchange.com/careers"
+  },
+  {
+    "name": "Che IT Group",
+    "slug": "che-it-group",
+    "career_url": "http://www.cheitgroup.com/career"
+  },
+  {
+    "name": "Checklist.com",
+    "slug": "checklist-com",
+    "career_url": "https://checklist.com/jobs"
+  },
+  {
+    "name": "Chili Labs",
+    "slug": "chili-labs",
+    "career_url": "https://chililabs.io/career"
+  },
+  {
+    "name": "CHOICE",
+    "slug": "choice",
+    "career_url": "https://choiceqr.com/uk/vacancy/"
+  },
+  {
+    "name": "CIGen",
+    "slug": "cigen",
+    "career_url": "https://www.cigen.io/career"
+  },
+  {
+    "name": "Civitta",
+    "slug": "civitta",
+    "career_url": "https://civitta.com/career/"
+  },
+  {
+    "name": "ClickUp",
+    "slug": "clickup",
+    "career_url": "http://clickup.com/careers"
+  },
+  {
+    "name": "Clover Dynamics",
+    "slug": "clover-dynamics",
+    "career_url": "http://www.cloverdynamics.com/careers"
+  },
+  {
+    "name": "COAX Software",
+    "slug": "coaxsoftware",
+    "career_url": "http://coaxsoft.com/vacancies"
+  },
+  {
+    "name": "Codebridge Technology, Inc.",
+    "slug": "codebridge-technology",
+    "career_url": "https://codebridge.tech/career"
+  },
+  {
+    "name": "CodeDealer",
+    "slug": "codedealer",
+    "career_url": "https://codedealer.pro/career"
+  },
+  {
+    "name": "Codegenix.io",
+    "slug": "codegenix-io",
+    "career_url": "https://codegenix.io/careers/index.html"
+  },
+  {
+    "name": "CodeIT",
+    "slug": "codeit",
+    "career_url": "https://codeit.us/careers"
+  },
+  {
+    "name": "DevCom",
+    "slug": "dev-com",
+    "career_url": "https://devcom.com/career/"
+  },
+  {
+    "name": "Deveit sp. z o.o.",
+    "slug": "deveit-sp-z-o-o",
+    "career_url": "https://deveit.com/career/"
+  },
+  {
+    "name": "Devoted Studios",
+    "slug": "devoted-studios",
+    "career_url": "https://venturebeat.com/games/finding-game-jobs-and-other-sessions-from-gamesbeat-next-the-deanbeat/"
+  },
+  {
+    "name": "Devox Software",
+    "slug": "devox-software",
+    "career_url": "https://devoxsoftware.com/careers/"
+  },
+  {
+    "name": "DICEUS",
+    "slug": "diceus",
+    "career_url": "https://diceus.com/careers/"
+  },
+  {
+    "name": "Добробут",
+    "slug": "dobrobut",
+    "career_url": "https://www.dobrobut.com/en/career"
+  },
+  {
+    "name": "EchoGlobal",
+    "slug": "echoua",
+    "career_url": "https://echoglobal.tech/jobs/"
+  },
+  {
+    "name": "Ekreative",
+    "slug": "ekreative",
+    "career_url": "https://www.ekreative.com/company/"
+  },
+  {
+    "name": "ElifTech",
+    "slug": "eliftech",
+    "career_url": "http://www.eliftech.com/career/open-positions/"
+  },
+  {
+    "name": "Erbis",
+    "slug": "erbis",
+    "career_url": "https://www.erbis.com/about-us/careers/"
+  },
+  {
+    "name": "Exoft",
+    "slug": "exoft",
+    "career_url": "https://www.exoft.net/career/"
+  },
+  {
+    "name": "Gamingtec",
+    "slug": "gamingtec",
+    "career_url": "https://gamingtec.com/careers"
+  },
+  {
+    "name": "Glorium Technologies",
+    "slug": "glorium-technologies-corp",
+    "career_url": "http://www.gloriumtech.com/career/"
+  },
+  {
+    "name": "ГО “Військова школа “Боривітер”",
+    "slug": "go-viiskova-shkola-boriviter",
+    "career_url": "https://boryviter.center/uk/careers/"
+  },
+  {
+    "name": "Grand Car",
+    "slug": "grand-car",
+    "career_url": "https://www.grandcar.ua/career/"
+  },
+  {
+    "name": "Infineon Technologies",
+    "slug": "infineon-technologies",
+    "career_url": "https://www.infineon.com/careers"
+  },
+  {
+    "name": "Inoxoft",
+    "slug": "inoxoft",
+    "career_url": "https://inoxoft.com/vacancies/"
+  },
+  {
+    "name": "IntellectEU",
+    "slug": "intellecttechnologies-llc",
+    "career_url": "http://www.intellecteu.com/careers"
+  },
+  {
+    "name": "Intelvision",
+    "slug": "intelvision",
+    "career_url": "https://intelvision.pro/careers/"
+  },
+  {
+    "name": "InterLink LLC",
+    "slug": "interlink",
+    "career_url": "https://interlink-ua.com/interlink-vacancies/"
+  },
+  {
+    "name": "inVerita",
+    "slug": "inveritasoft",
+    "career_url": "https://inveritasoft.com/vacancies"
+  },
+  {
+    "name": "iSpace Apple Premium Reseller",
+    "slug": "ion-apple-premium-reseller",
+    "career_url": "http://iSpace.ua/vacancy"
+  },
+  {
+    "name": "ITExpert - IT Recruitment agency",
+    "slug": "itexpert-recruitment-agency",
+    "career_url": "https://itexpert.work/technologies/c-net-developer-wanted-how-to-choose-the-perfect-candidate-job-posting-template/"
+  },
+  {
+    "name": "JustMarkets Tech",
+    "slug": "justmarkets",
+    "career_url": "https://justmarkets.tech/jobs"
+  },
+  {
+    "name": "Kevych Solutions",
+    "slug": "kevych-solutions",
+    "career_url": "https://kevychsolutions.com/ua/career"
+  },
+  {
+    "name": "Kultprosvet",
+    "slug": "kultprosvet",
+    "career_url": "https://kultprosvet.net/jobs"
+  },
+  {
+    "name": "Lampa Software",
+    "slug": "lampa",
+    "career_url": "https://lampa.dev/career"
+  },
+  {
+    "name": "LITSLINK",
+    "slug": "litslink",
+    "career_url": "https://litslink.com/careers"
+  },
+  {
+    "name": "LoopMe",
+    "slug": "loopme",
+    "career_url": "https://loopme.com/careers"
+  },
+  {
+    "name": "Meduzzen",
+    "slug": "meduzzen",
+    "career_url": "https://meduzzen.com/careers/"
+  },
+  {
+    "name": "MEV",
+    "slug": "mev",
+    "career_url": "http://mev.com/careers"
+  },
+  {
+    "name": "MindK",
+    "slug": "mindk",
+    "career_url": "https://mindk.com/careers/"
+  },
+  {
+    "name": "Mirko",
+    "slug": "mirko",
+    "career_url": "https://mirko.in.ua/careers"
+  },
+  {
+    "name": "Mobilunity",
+    "slug": "mobilunity",
+    "career_url": "http://mobilunity.com/vacancy/"
+  },
+  {
+    "name": "nCube Ltd.",
+    "slug": "ncube",
+    "career_url": "https://ncube.com/career"
+  },
+  {
+    "name": "NextChallenge",
+    "slug": "nextchallenge",
+    "career_url": "https://nextchallenge.com/vacancies"
+  },
+  {
+    "name": "NineTwoThree Studio",
+    "slug": "ninetwothree",
+    "career_url": "https://www.ninetwothree.co/careers"
+  },
+  {
+    "name": "Noltic",
+    "slug": "noltic",
+    "career_url": "http://noltic.com/people#career-section"
+  },
+  {
+    "name": "NovaPay",
+    "slug": "novapay",
+    "career_url": "https://novapay.ua/vacancy/analitik-viddilu-kontroliu-ta-upravli/"
+  },
+  {
+    "name": "nove8",
+    "slug": "nove8",
+    "career_url": "https://nove8.peopleforce.io/careers"
+  },
+  {
+    "name": "SKIFTECH",
+    "slug": "nvk-skif-tov",
+    "career_url": "https://skiftech.net/career"
+  },
+  {
+    "name": "OGD Solutions",
+    "slug": "ogd-solutions",
+    "career_url": "http://ogd-solutions.com/career"
+  },
+  {
+    "name": "Onseo",
+    "slug": "onseo",
+    "career_url": "https://onseostudio.com/index.php/careers/"
+  },
+  {
+    "name": "Ozzylogik LTD",
+    "slug": "ozzylogik-ltd",
+    "career_url": "https://ozzylogik.com/career"
+  },
+  {
+    "name": "Paybis",
+    "slug": "paybis-com",
+    "career_url": "https://paybis.com/career/"
+  },
+  {
+    "name": "Pecode",
+    "slug": "pecode-software",
+    "career_url": "https://pecode.peopleforce.io/careers"
+  },
+  {
+    "name": "Peiko",
+    "slug": "peiko",
+    "career_url": "https://peiko.space/vacancies"
+  },
+  {
+    "name": "Petcube, Inc.",
+    "slug": "petcube-inc",
+    "career_url": "https://petcube.com/careers/"
+  },
+  {
+    "name": "PFP agency",
+    "slug": "pfp-agency",
+    "career_url": "https://pfp-agency.com.ua/ua/vacancies"
+  },
+  {
+    "name": "PNN Soft",
+    "slug": "pnn",
+    "career_url": "https://pnnsoft.com/software-development-company/vacancies"
+  },
+  {
+    "name": "Proffiz",
+    "slug": "proffiz",
+    "career_url": "https://proffiz.com/career-join-us/"
+  },
+  {
+    "name": "QA Madness",
+    "slug": "qamadness",
+    "career_url": "https://www.qamadness.com/careers/"
+  },
+  {
+    "name": "Qubit Labs",
+    "slug": "qubit-labs",
+    "career_url": "https://qubit-labs.com/job-description-generator/"
+  },
+  {
+    "name": "Quintagroup",
+    "slug": "quintagroup",
+    "career_url": "https://quintagroup.com/careers"
+  },
+  {
+    "name": "Reintech",
+    "slug": "reintech",
+    "career_url": "https://reintech.io/jobs"
+  },
+  {
+    "name": "Relevant Software",
+    "slug": "relevant-software",
+    "career_url": "https://relevant.software/work-at-relevant/#vacancies"
+  },
+  {
+    "name": "RemoDevs",
+    "slug": "remodevs",
+    "career_url": "https://remodevs.com/careers/"
+  },
+  {
+    "name": "RetroStyle Games",
+    "slug": "retrostyle-games",
+    "career_url": "https://retrostylegames.com/careers/"
+  },
+  {
+    "name": "Roiheads",
+    "slug": "roiheads",
+    "career_url": "https://roiheads.com/career"
+  },
+  {
+    "name": "Metacarbon",
+    "slug": "saga-design-team",
+    "career_url": "https://metacarbon.com/career"
+  },
+  {
+    "name": "SCIMUS",
+    "slug": "scimus-solution",
+    "career_url": "https://thescimus.com/careers/"
+  },
+  {
+    "name": "SevenPro",
+    "slug": "sevenpro",
+    "career_url": "https://seven-pro.com/careers/"
+  },
+  {
+    "name": "SharksCode",
+    "slug": "sharkscode",
+    "career_url": "https://sharkscode.com/careers/"
+  },
+  {
+    "name": "Skylum",
+    "slug": "skylum-software",
+    "career_url": "https://skylum.com/careers"
+  },
+  {
+    "name": "SoftHouseGroup",
+    "slug": "softhousegroup",
+    "career_url": "https://softhousegroup.com/career/"
+  },
+  {
+    "name": "Solidium Technology",
+    "slug": "solidium-technology",
+    "career_url": "https://solidium.peopleforce.io/careers"
+  },
+  {
+    "name": "SQUAD",
+    "slug": "squad",
+    "career_url": "https://squad.tech/careers"
+  },
+  {
+    "name": "StartupSoft",
+    "slug": "startup-soft",
+    "career_url": "https://www.startupsoft.com/career/"
+  },
+  {
+    "name": "Stepico Games",
+    "slug": "stepico-games",
+    "career_url": "https://stepico.com/careers/"
+  },
+  {
+    "name": "Synergetica",
+    "slug": "synergetica",
+    "career_url": "http://synergetica.ua/careers"
+  },
+  {
+    "name": "Trident Media",
+    "slug": "trident-media",
+    "career_url": "https://trident-media.agency/vacancy/"
+  },
+  {
+    "name": "UKRSIBTECH",
+    "slug": "ukrsibbank",
+    "career_url": "https://ukrsibbank.com/career/"
+  },
+  {
+    "name": "Uvik Software",
+    "slug": "uvik-software",
+    "career_url": "https://uvik.net/career/"
+  },
+  {
+    "name": "Values Value",
+    "slug": "values-value",
+    "career_url": "https://ingamejob.com/en/company/values-value"
+  },
+  {
+    "name": "Fishing Planet",
+    "slug": "vega-capital-management",
+    "career_url": "https://fishingplanet.com/career/"
+  },
+  {
+    "name": "Volpis",
+    "slug": "volpis",
+    "career_url": "https://volpis.com/careers/"
+  },
+  {
+    "name": "VRG Soft",
+    "slug": "vrg-soft",
+    "career_url": "https://vrgsoft.net/career/"
+  },
+  {
+    "name": "Whimsy Games",
+    "slug": "whimsy-games",
+    "career_url": "https://whimsygames.co/career/"
+  },
+  {
+    "name": "Wildix",
+    "slug": "wildix",
+    "career_url": "https://www.wildix.com/careers/"
+  },
+  {
+    "name": "Xerion",
+    "slug": "xerion",
+    "career_url": "https://xerion.team/vacancies"
+  },
+  {
+    "name": "YozmaTech",
+    "slug": "yozma-tech",
+    "career_url": "https://yozmatech.com/career/"
+  }
+]
