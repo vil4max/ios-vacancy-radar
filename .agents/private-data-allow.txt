@@ -1,0 +1,12 @@
+# Reviewed false positives for the PUBLIC ios-vacancy-radar repository.
+# Each rule is a Python regex matched against "path:text". Keep rules narrow:
+# they describe the collector's own vocabulary, never owner data.
+# This file quotes the flagged words in its rules; it is reviewed by definition.
+^\.agents/private-data-allow\.txt:
+# A public employer's career site or page is a source the collector reads.
+\bcareer (?:site|sites|page|pages)\b
+# Collector code that drops salary text from a vacancy title and keeps no pay.
+^collector/dou_rss\.py:.*(?:[Ss]alary segments are dropped|a salary is not a location|<locations, salary, remote>)
+^commit [0-9a-f]+:.*Salary segments are dropped: the collector does not extract
+# Vacancy hashtags and keywords of public Telegram channels, in code and synthetic fixtures.
+^(?:collector/telegram_channels|tests/test_telegram_channels)\.py:.*ваканси
