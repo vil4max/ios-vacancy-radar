@@ -2,7 +2,7 @@
 
 GitHub Actions runs the collector through `collect.yml`. `hourly-trigger.yml` dispatches due Kyiv slots at 11:00 and 15:00, using `collect_slots.json` to avoid completing a slot twice.
 
-The collector reads public company career pages and ATS endpoints. Optional Telegram sources need separate reader credentials. Missing optional reader access is reported independently of company coverage: each Telegram source is marked degraded, the run status becomes degraded, and the digest names the channels on a "Telegram без ключей" line.
+The collector reads public company career pages, ATS endpoints and the public jobs.dou.ua RSS feeds. Optional Telegram sources need separate reader credentials. Missing optional reader access is reported independently of company coverage: each Telegram source is marked degraded, the run status becomes degraded, and the digest names the channels on a "Telegram без ключей" line.
 
 A @hirifyme_bot message that looks like a vacancy but carries no hirify.me job link is skipped rather than failing the channel. The reader cursor moves past it, so the `skipped` count in the collection diagnostics is the only record; a growing count means the bot changed its message format.
 

@@ -4,10 +4,10 @@ from collections import Counter
 
 import pytest
 
-from collector import ats_boards, bespoke, companies, company_watchlist, epam, generic, hirify
+from collector import ats_boards, bespoke, companies, company_watchlist, dou_rss, epam, generic, hirify
 from collector.types import STATUS_FAILED, SourceResult
 
-_NETWORK_MODULES = (ats_boards, companies, company_watchlist, generic, bespoke, epam, hirify)
+_NETWORK_MODULES = (ats_boards, companies, company_watchlist, generic, bespoke, dou_rss, epam, hirify)
 
 
 class Offline(RuntimeError):
@@ -101,9 +101,10 @@ def test_companies_registered_more_than_once_keep_one_display_name(offline: None
     assert inconsistent == {}
 
 
-def test_registry_uses_official_company_sources_only() -> None:
+def test_registry_reads_aggregators_only_through_their_public_feeds() -> None:
     module_names = {collector.__module__ for collector in companies._python_collectors()}
 
+    assert "collector.dou_rss" in module_names
     assert "collector.dou" not in module_names
     assert "collector.djinni" not in module_names
 
