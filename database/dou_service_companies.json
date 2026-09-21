@@ -825,7 +825,7 @@
       "company_site_url": null,
       "career_url": "https://company.plarium.com/en/career/",
       "career_url_source": "override",
-      "enabled": true
+      "enabled": false
     },
     {
       "name": "Netcracker",
