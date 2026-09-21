@@ -212,11 +212,13 @@ def select_fresh(vacancies: list[Vacancy], seen: dict, *, seen_gate: bool) -> li
     known_roles = seen_roles(seen)
     for vacancy in vacancies:
         key = seen_key(vacancy)
-        role = role_family_key(vacancy.company, vacancy.title)
-        if not key or key in seen or role in known_roles:
+        # An unknown employer cannot match a role reported under another post.
+        role = role_family_key(vacancy.company, vacancy.title) if vacancy.company.strip() else None
+        if not key or key in seen or (role is not None and role in known_roles):
             continue
         fresh.append(vacancy)
-        known_roles.add(role)
+        if role is not None:
+            known_roles.add(role)
     return fresh
 
 

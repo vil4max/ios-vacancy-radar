@@ -41,8 +41,9 @@ def feed_entry(vacancy: Vacancy, *, first_seen: str) -> dict[str, Any]:
         "published_at": vacancy.published_at.isoformat() if vacancy.published_at else None,
         "first_seen": first_seen,
         # One role reaches the feed from several sources; the consumer reads
-        # one description per role_key instead of one per URL.
-        "role_key": " | ".join(role_family_key(vacancy.company, vacancy.title)),
+        # one description per role_key instead of one per URL. Without a known
+        # company there is no role to share, so the key is null.
+        "role_key": " | ".join(role_family_key(vacancy.company, vacancy.title)) if vacancy.company.strip() else None,
         "labels": vacancy_labels(vacancy),
         "language": posting_language(f"{vacancy.title} {text}"),
         "description": text[:DESCRIPTION_LIMIT],

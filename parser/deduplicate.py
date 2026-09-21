@@ -75,6 +75,9 @@ def deduplicate_with_report(vacancies: list[Vacancy]) -> tuple[list[Vacancy], in
     role_keys: dict[tuple[str, str], str] = {}
     role_groups: dict[tuple[str, str], list[Vacancy]] = {}
     for key, vacancy in list(by_identity.items()):
+        # Without a known employer, equal titles do not prove one opening.
+        if not vacancy.company.strip():
+            continue
         role = role_key(vacancy.company, vacancy.title)
         role_groups.setdefault(role, []).append(vacancy)
         previous = by_role.get(role)

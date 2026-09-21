@@ -47,3 +47,11 @@ def test_repost_under_new_hirify_id_is_not_new() -> None:
     )
     other_company = make_vacancy(company="Other Co", url="https://hirify.me/jobs/200003-senior-ios-developer")
     assert run_pipeline.select_fresh([repost, other_company], seen, seen_gate=True) == [other_company]
+
+
+def test_unknown_company_post_is_fresh_despite_a_seen_title() -> None:
+    seen = {"https://t.me/mobile_jobs/1": {"company": "", "title": "Senior iOS Developer"}}
+    first = make_vacancy(company="", url="https://t.me/mobile_jobs/2", source="telegram")
+    second = make_vacancy(company="", url="https://t.me/itrecruit_ua/3", source="telegram")
+
+    assert run_pipeline.select_fresh([first, second], seen, seen_gate=True) == [first, second]

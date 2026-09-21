@@ -465,9 +465,10 @@ def infer_remote(title: str, location: str | None, description: str | None) -> s
 
 def normalize_raw(raw: dict[str, Any]) -> Vacancy | None:
     title = str(raw.get("title", "")).strip()
-    company = str(raw.get("company", "")).strip()
+    # An empty company means the source did not name the employer.
+    company = str(raw.get("company") or "").strip()
     url = str(raw.get("url", "")).strip()
-    if not title or not company or not url:
+    if not title or not url:
         return None
 
     description = raw.get("description")

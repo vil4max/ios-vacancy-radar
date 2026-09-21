@@ -121,3 +121,10 @@ def test_notify_without_new_vacancies_sends_the_heartbeat(monkeypatch: pytest.Mo
 
     assert notify_hourly_inbox([], stats=_stats(), now=EVENING)
     assert sent == ["📭 Новых нет · 🟢 23:00 · ⏭ завтра 11:00"]
+
+
+def test_unknown_company_shows_the_title_alone() -> None:
+    vacancy = make_vacancy(company="", source="telegram", url="https://t.me/mobile_jobs/9")
+    message = format_hourly_new_vacancies([vacancy], stats=_stats(), now=MORNING)
+
+    assert "1. Senior iOS Developer" in message

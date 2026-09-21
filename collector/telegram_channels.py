@@ -122,14 +122,36 @@ _SKIP_APPLY_HOSTS = (
     "telegram.org",
 )
 
-_COMPANY_PATTERNS: tuple[re.Pattern[str], ...] = (
-    re.compile(r"(?im)^(.{2,80}?)\s+шука[єе]\b"),
-    re.compile(r"(?im)^(.{2,80}?)\s+is hiring\b"),
-    re.compile(r"(?im)^(.{2,80}?)\s+are hiring\b"),
+# Labelled fields name the employer outright; they win over hiring phrases.
+_COMPANY_FIELD_PATTERNS: tuple[re.Pattern[str], ...] = (
     re.compile(r"(?im)^[^\w#]*company\s*[:\-]\s*(.+)$"),
     re.compile(r"(?im)^[^\w#]*компані[яя]\s*[:\-]\s*(.+)$"),
+    re.compile(r"(?im)^[^\w#]*компания\s*[:\-]\s*(.+)$"),
     re.compile(r"(?im)^[^\w#]*название\s+компании\s*[:\-]\s*(.+)$"),
+    re.compile(r"(?im)^[^\w#]*назва\s+компанії\s*[:\-]\s*(.+)$"),
 )
+# "<Company> is hiring / ищет / шукає ...": the subject is often a pronoun or a
+# generic noun ("We are looking for"), which _HIRING_SUBJECT_STOPWORDS rejects.
+_COMPANY_HIRING_PATTERNS: tuple[re.Pattern[str], ...] = (
+    re.compile(r"(?im)^(.{2,80}?)\s+шука(?:[єе]|ють)\b"),
+    re.compile(r"(?im)^(.{2,80}?)\s+ищ(?:ет|ут)\b"),
+    re.compile(r"(?im)^(.{2,80}?)\s+(?:is|are)\s+hiring\b"),
+    re.compile(r"(?im)^(.{2,80}?)\s+(?:(?:is|are)\s+)?looking\s+for\b"),
+)
+_HIRING_SUBJECT_STOPWORDS: frozenset[str] = frozenset(
+    {
+        "we", "we're", "i", "our", "the", "a", "an", "this", "who", "they", "client",
+        "team", "startup", "product", "hiring", "job", "vacancy",
+        "мы", "ми", "я", "наш", "наша", "наші", "наши", "команда", "клиент", "клієнт",
+        "вакансія", "вакансия", "in", "if", "as", "for", "currently", "now", "hi", "hello",
+    }
+)
+# Words that belong to a sentence, not to an employer name.
+_HIRING_SUBJECT_SENTENCE_WORDS: frozenset[str] = frozenset(
+    {"you", "your", "we", "our", "will", "be", "role", "position", "who", "which"}
+)
+_COMPANY_WORD_LIMIT = 6
+_COMPANY_PREFIX = re.compile(r"(?i)^(?:company|компания|компанія)\s+")
 
 
 def credentials_configured() -> bool:
@@ -267,15 +289,35 @@ def _message_urls(message: Any, text: str) -> list[str]:
     return urls
 
 
+def _clean_company(raw: str) -> str:
+    company = re.sub(r"\s+", " ", raw).strip(" -–—|🎯🚀⚓️🏢")
+    company = re.sub(r"^(?:#\S+\s*)+", "", company)
+    company = re.sub(r"^[^\w\"«(]+", "", company)
+    return company.strip(" .,:;!-–—")
+
+
+def _is_plausible_hiring_subject(company: str) -> bool:
+    words = [word.lower().replace("’", "'").strip("\"'«»,.") for word in company.split()]
+    if not words or len(words) > _COMPANY_WORD_LIMIT:
+        return False
+    if words[0] in _HIRING_SUBJECT_STOPWORDS:
+        return False
+    return not any(word in _HIRING_SUBJECT_SENTENCE_WORDS for word in words)
+
+
 def extract_company(text: str) -> str | None:
-    for pattern in _COMPANY_PATTERNS:
+    """The employer named in a post, or None: a guess would mislabel the role."""
+    for pattern in _COMPANY_FIELD_PATTERNS:
         match = pattern.search(text)
-        if not match:
-            continue
-        company = re.sub(r"\s+", " ", match.group(1)).strip(" -–—|🎯🚀⚓️🏢")
-        company = re.sub(r"^#\S+\s*", "", company).strip()
-        if 2 <= len(company) <= 80:
-            return company
+        if match:
+            company = _clean_company(match.group(1))
+            if 2 <= len(company) <= 80:
+                return company
+    for pattern in _COMPANY_HIRING_PATTERNS:
+        for match in pattern.finditer(text):
+            company = _COMPANY_PREFIX.sub("", _clean_company(match.group(1)))
+            if 2 <= len(company) <= 80 and _is_plausible_hiring_subject(company):
+                return company
     return None
 
 
@@ -316,7 +358,8 @@ def job_from_message(
     company = (
         _strip_line_noise(hirify_match.group("company"))
         if hirify_match
-        else extract_company(text) or "Telegram"
+        # Unknown stays empty: a placeholder would read as the employer.
+        else extract_company(text) or ""
     )
     apply_url = _preferred_apply_url(apply_urls or []) or extract_apply_url(text)
     hirify_id_match = _HIRIFY_JOB_URL.match(apply_url or "")

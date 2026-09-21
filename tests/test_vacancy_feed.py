@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 
 import pytest
 
+from parser.normalize import normalize_many
 from storage.vacancy_feed import append_feed, load_feed, prune_feed, save_feed
 from scripts import run_pipeline
 from scripts import runtime_state as state
@@ -104,3 +105,17 @@ def test_search_results_cannot_be_published_in_the_public_checkout(tmp_path, pat
     with pytest.raises(ValueError, match="separate --root store"):
         state.validate_paths([path], root=tmp_path, work=tmp_path)
     state.validate_paths([path], root=tmp_path / "state", work=tmp_path)
+
+
+def test_unknown_company_has_no_role_key(tmp_path) -> None:
+    vacancy = normalize_many([{
+        "company": "", "title": "Senior iOS Developer", "url": "https://t.me/mobile_jobs/7",
+        "source": "telegram", "description": "Swift",
+    }])[0]
+    feed = load_feed(tmp_path / "missing.json")
+
+    append_feed(feed, [vacancy], first_seen=NOW)
+
+    entry = feed["vacancies"]["https://t.me/mobile_jobs/7"]
+    assert entry["company"] == ""
+    assert entry["role_key"] is None

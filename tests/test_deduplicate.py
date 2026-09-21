@@ -98,3 +98,13 @@ def test_role_selection_is_independent_of_collection_order() -> None:
     a = make_vacancy(url="https://example.com/a")
     b = make_vacancy(url="https://example.com/b")
     assert deduplicate([a, b])[0][0].url == deduplicate([b, a])[0][0].url
+
+
+def test_same_title_without_known_company_is_not_one_role() -> None:
+    first = make_vacancy(company="", url="https://t.me/mobile_jobs/1", source="telegram")
+    second = make_vacancy(company="", url="https://t.me/itrecruit_ua/2", source="telegram")
+
+    unique, removed = deduplicate([first, second])
+
+    assert removed == 0
+    assert {vacancy.url for vacancy in unique} == {first.url, second.url}

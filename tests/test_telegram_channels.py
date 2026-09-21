@@ -3,6 +3,8 @@ from __future__ import annotations
 import asyncio
 from datetime import datetime, timezone
 
+import pytest
+
 from collector.telegram_channels import (
     _fetch_channel_jobs,
     _source_ok,
@@ -422,3 +424,42 @@ def test_hirify_without_new_messages_is_healthy() -> None:
 
     assert checkpoint == 501
     assert classify_degraded([result], baseline) == []
+
+
+MOBILE_JOBS_RU_HIRING = """
+#вакансия
+🚀 iOS Developer (Swift, AI-assisted)
+🌍 Remote · продукты для США и Европы
+Example Apps ищет iOS-разработчика в международную команду.
+Swift / SwiftUI, подписки, аналитика
+""".strip()
+
+
+def test_company_is_parsed_from_russian_hiring_line() -> None:
+    job = job_from_message("mobile_jobs", 20, MOBILE_JOBS_RU_HIRING)
+    assert job is not None
+    assert job["company"] == "Example Apps"
+    assert job["title"] == "iOS Developer (Swift, AI-assisted)"
+
+
+@pytest.mark.parametrize(
+    ("text", "company"),
+    [
+        ("Company Example Tech looking for Middle iOS Developer", "Example Tech"),
+        ("Example Code Global is looking for an iOS Engineer", "Example Code Global"),
+        ("Example Inc. is hiring an iOS engineer", "Example Inc"),
+        ("🏢 Компания: Example Bank", "Example Bank"),
+        ("‼️🆕 We’re looking for a Senior Swift Engineer", None),
+        ("Мы ищем iOS разработчика", None),
+        ("Наша команда шукає iOS розробника", None),
+        ("In this role you will be looking for ways to speed up the iOS app", None),
+    ],
+)
+def test_extract_company_ignores_pronouns_and_sentences(text: str, company: str | None) -> None:
+    assert extract_company(text) == company
+
+
+def test_unknown_company_stays_empty_instead_of_the_channel_name() -> None:
+    job = job_from_message("itfreelancers", 50, ITFREELANCERS_IOS)
+    assert job is not None
+    assert job["company"] == ""
