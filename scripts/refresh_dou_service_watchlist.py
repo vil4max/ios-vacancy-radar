@@ -11,6 +11,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from collector.dou_service_ratings import (
+    default_discovered_path,
     default_service_ratings_path,
     enrich_official_urls,
     fetch_service_ratings,
@@ -57,6 +58,12 @@ def main(argv: list[str] | None = None) -> int:
         career_urls=overrides,
     )
     manual_added = merge_manual_companies(companies, load_manual_additions())
+    discovered = load_manual_additions(default_discovered_path(ROOT))
+    discovered_added = merge_manual_companies(companies, discovered)
+    discovered_slugs = {str(entry.get("slug")) for entry in discovered}
+    for company in companies:
+        if company.get("career_url_source") == "manual" and company["slug"] in discovered_slugs:
+            company["career_url_source"] = "discovery"
     preserve_watchlist_state(companies, existing_companies)
     by_band: dict[str, int] = {}
     for company in companies:
@@ -67,6 +74,7 @@ def main(argv: list[str] | None = None) -> int:
     print(f"DOU service watchlist: total={len(companies)} {summary}".rstrip())
     print(f"DOU Top 50 additions with verified career URLs: {top50_added}")
     print(f"Manual additions with official career URLs: {manual_added}")
+    print(f"Discovered mobile companies: {discovered_added}")
     if args.resolve_careers:
         final_career_count = sum(bool(company.get("career_url")) for company in companies)
         print(

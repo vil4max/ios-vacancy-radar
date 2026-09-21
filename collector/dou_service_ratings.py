@@ -31,6 +31,11 @@ def default_manual_additions_path(root: Path | None = None) -> Path:
     return base / "database" / "company_manual_additions.json"
 
 
+def default_discovered_path(root: Path | None = None) -> Path:
+    base = root or Path(__file__).resolve().parents[1]
+    return base / "database" / "company_discovered.json"
+
+
 def load_career_overrides(path: Path | None = None) -> dict[str, str]:
     source = path or default_career_overrides_path()
     payload = json.loads(source.read_text(encoding="utf-8"))
@@ -40,7 +45,11 @@ def load_career_overrides(path: Path | None = None) -> dict[str, str]:
 
 
 def load_manual_additions(path: Path | None = None) -> list[dict[str, str]]:
-    payload = json.loads((path or default_manual_additions_path()).read_text(encoding="utf-8"))
+    source = path or default_manual_additions_path()
+    # The discovered list starts empty until scripts/discover_mobile_companies.py writes it.
+    if not source.exists():
+        return []
+    payload = json.loads(source.read_text(encoding="utf-8"))
     if not isinstance(payload, list):
         raise ValueError("manual company additions must be a JSON list")
     return [company for company in payload if isinstance(company, dict)]
