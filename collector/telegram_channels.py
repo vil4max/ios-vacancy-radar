@@ -345,6 +345,7 @@ def _source_ok(
     *,
     scanned: int,
     checkpoint: int | None = None,
+    skipped: int = 0,
 ) -> SourceResult:
     return SourceResult(
         source_id=f"telegram:{channel}",
@@ -360,6 +361,7 @@ def _source_ok(
         # A cursor-based channel legitimately reads nothing when no posts arrived.
         empty_is_healthy=channel == _HIRIFY_CHANNEL,
         checkpoint=checkpoint,
+        items_skipped=skipped,
     )
 
 
@@ -403,8 +405,10 @@ async def _fetch_channel_jobs(
     channel: str,
     *,
     after_message_id: int | None = None,
-) -> tuple[list[dict[str, Any]], int | None, int]:
+) -> tuple[list[dict[str, Any]], int | None, int, int]:
+    """Return jobs, the new checkpoint, messages read and messages skipped."""
     jobs: list[dict[str, Any]] = []
+    skipped = 0
     if channel == _HIRIFY_CHANNEL and after_message_id is None:
         messages = await client.get_messages(channel, limit=1)
     elif channel == _HIRIFY_CHANNEL:
@@ -430,7 +434,7 @@ async def _fetch_channel_jobs(
         1 for message in messages if message is not None and getattr(message, "id", None)
     )
     if channel == _HIRIFY_CHANNEL and after_message_id is None:
-        return [], latest_message_id, scanned
+        return [], latest_message_id, scanned, 0
     for message in messages:
         if message is None or not getattr(message, "id", None):
             continue
@@ -447,10 +451,10 @@ async def _fetch_channel_jobs(
         if job:
             jobs.append(job)
         elif channel == _HIRIFY_CHANNEL and _is_hirify_vacancy_candidate(text):
-            raise ValueError(
-                f"Hirify vacancy message {message.id} has no parseable hirify.me job URL"
-            )
-    return jobs, latest_message_id, scanned
+            # One malformed bot message must not fail the channel; the cursor
+            # moves past it, so the count is the only trace it leaves.
+            skipped += 1
+    return jobs, latest_message_id, scanned, skipped
 
 
 async def _collect_channels(
@@ -468,13 +472,15 @@ async def _collect_channels(
         for channel in channels:
             started = time.perf_counter()
             try:
-                jobs, checkpoint, scanned = await _fetch_channel_jobs(
+                jobs, checkpoint, scanned, skipped = await _fetch_channel_jobs(
                     client,
                     channel,
                     after_message_id=cursors.get(channel) if channel == _HIRIFY_CHANNEL else None,
                 )
                 results.append(
-                    _source_ok(channel, jobs, started, scanned=scanned, checkpoint=checkpoint)
+                    _source_ok(
+                        channel, jobs, started, scanned=scanned, checkpoint=checkpoint, skipped=skipped
+                    )
                 )
             except Exception as error:  # noqa: BLE001
                 results.append(_source_failed(channel, error, started))

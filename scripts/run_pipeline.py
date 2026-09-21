@@ -183,6 +183,7 @@ def collect_vacancies(
         sources.append({
             "id": source.source_id, "name": source.source_name, "status": source.status,
             "reason": safe_error(source.error or ""), "scanned": source.items_scanned,
+            "skipped": source.items_skipped,
             "raw": len(source.jobs), "normalized": len(normalized),
             "normalization_rejected": len(source.jobs) - len(normalized),
             "inbox_eligible": sum(is_inbox_candidate(item) for item in normalized),

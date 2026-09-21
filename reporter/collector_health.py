@@ -57,13 +57,13 @@ def write_collect_diagnostics(report: dict[str, Any], *, summary: bool = False) 
     lines = ["## Vacancy collection", "", f"Status: **{report.get('status', 'unknown')}**", ""]
     for key, value in report.get("counts", {}).items():
         lines.append(f"- {key}: {value}")
-    lines.extend(["", "| Source | Status | Scanned | Normalized | Inbox eligible | Reason |",
-                  "|---|---|---:|---:|---:|---|"])
+    lines.extend(["", "| Source | Status | Scanned | Skipped | Normalized | Inbox eligible | Reason |",
+                  "|---|---|---:|---:|---:|---:|---|"])
     for source in report.get("sources", []):
         def cell(value: object) -> str:
             return str(value).replace("|", " / ").replace("\n", " ").replace("<", "&lt;")
         lines.append("| " + " | ".join(cell(source.get(key, "")) for key in (
-            "name", "status", "scanned", "normalized", "inbox_eligible", "reason",
+            "name", "status", "scanned", "skipped", "normalized", "inbox_eligible", "reason",
         )) + " |")
     with Path(summary_path).open("a", encoding="utf-8") as stream:
         stream.write("\n".join(lines) + "\n")

@@ -3,8 +3,6 @@ from __future__ import annotations
 import asyncio
 from datetime import datetime, timezone
 
-import pytest
-
 from collector.telegram_channels import (
     _fetch_channel_jobs,
     _source_ok,
@@ -342,7 +340,7 @@ class _FakeClient:
 
 def test_hirify_first_collection_only_initializes_checkpoint() -> None:
     client = _FakeClient([_FakeMessage(501, HIRIFY_IOS)])
-    jobs, checkpoint, scanned = asyncio.run(_fetch_channel_jobs(client, "hirifyme_bot"))
+    jobs, checkpoint, scanned, _ = asyncio.run(_fetch_channel_jobs(client, "hirifyme_bot"))
     assert jobs == []
     assert checkpoint == 501
     assert scanned == 1
@@ -353,7 +351,7 @@ def test_hirify_reads_only_messages_after_checkpoint() -> None:
     message = _FakeMessage(502, HIRIFY_IOS)
     message.entities = [type("Entity", (), {"url": "https://hirify.me/jobs/123456-role"})()]
     client = _FakeClient([message])
-    jobs, checkpoint, _ = asyncio.run(
+    jobs, checkpoint, _, _ = asyncio.run(
         _fetch_channel_jobs(client, "hirifyme_bot", after_message_id=501)
     )
     assert client.calls == [{"min_id": 501, "reverse": True}]
@@ -361,13 +359,21 @@ def test_hirify_reads_only_messages_after_checkpoint() -> None:
     assert checkpoint == 502
 
 
-def test_hirify_does_not_advance_past_vacancy_without_job_url() -> None:
-    client = _FakeClient([_FakeMessage(502, HIRIFY_IOS)])
+def test_hirify_skips_and_counts_vacancy_without_job_url() -> None:
+    broken = _FakeMessage(502, HIRIFY_IOS)
+    parsed = _FakeMessage(503, HIRIFY_IOS)
+    parsed.entities = [type("Entity", (), {"url": "https://hirify.me/jobs/123456-role"})()]
+    client = _FakeClient([broken, parsed])
 
-    with pytest.raises(ValueError, match="no parseable hirify.me job URL"):
-        asyncio.run(
-            _fetch_channel_jobs(client, "hirifyme_bot", after_message_id=501)
-        )
+    jobs, checkpoint, scanned, skipped = asyncio.run(
+        _fetch_channel_jobs(client, "hirifyme_bot", after_message_id=501)
+    )
+    result = _source_ok("hirifyme_bot", jobs, 0.0, scanned=scanned, checkpoint=checkpoint, skipped=skipped)
+
+    assert [job["source_job_id"] for job in jobs] == ["hirify:123456"]
+    assert (checkpoint, scanned, skipped) == (503, 2, 1)
+    assert result.status == "healthy"
+    assert result.items_skipped == 1
 
 
 def test_hirify_reads_every_message_after_checkpoint_without_batch_loss() -> None:
@@ -384,10 +390,11 @@ def test_hirify_reads_every_message_after_checkpoint_without_batch_loss() -> Non
         messages.append(message)
     client = _FakeClient(messages)
 
-    jobs, checkpoint, scanned = asyncio.run(
+    jobs, checkpoint, scanned, skipped = asyncio.run(
         _fetch_channel_jobs(client, "hirifyme_bot", after_message_id=501)
     )
 
+    assert skipped == 0
     assert len(jobs) == 101
     assert checkpoint == 602
     assert scanned == 101
@@ -395,7 +402,7 @@ def test_hirify_reads_every_message_after_checkpoint_without_batch_loss() -> Non
 
 def test_channel_reports_scanned_messages_so_health_stays_healthy() -> None:
     client = _FakeClient([_FakeMessage(900, "Hello"), _FakeMessage(901, "World")])
-    jobs, _, scanned = asyncio.run(_fetch_channel_jobs(client, "itrecruit_ua"))
+    jobs, _, scanned, _ = asyncio.run(_fetch_channel_jobs(client, "itrecruit_ua"))
     result = _source_ok("itrecruit_ua", jobs, 0.0, scanned=scanned, checkpoint=901)
     baseline = {"telegram:itrecruit_ua": {"best_scanned": 0, "empty_runs": 77}}
 
@@ -407,7 +414,7 @@ def test_channel_reports_scanned_messages_so_health_stays_healthy() -> None:
 
 def test_hirify_without_new_messages_is_healthy() -> None:
     client = _FakeClient([])
-    jobs, checkpoint, scanned = asyncio.run(
+    jobs, checkpoint, scanned, _ = asyncio.run(
         _fetch_channel_jobs(client, "hirifyme_bot", after_message_id=501)
     )
     result = _source_ok("hirifyme_bot", jobs, 0.0, scanned=scanned, checkpoint=checkpoint)

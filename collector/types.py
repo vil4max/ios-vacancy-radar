@@ -21,6 +21,8 @@ class SourceResult:
     items_scanned: int = 0
     empty_is_healthy: bool = False
     checkpoint: int | None = None
+    # Items read but not parseable; the source stays usable and reports the count.
+    items_skipped: int = 0
     # Target roles whose detail page rejected automated access; shown for manual review.
     manual_review: list[dict[str, str]] = field(default_factory=list)
 

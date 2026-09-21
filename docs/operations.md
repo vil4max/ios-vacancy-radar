@@ -4,6 +4,8 @@ GitHub Actions runs the collector through `collect.yml`. `hourly-trigger.yml` di
 
 The collector reads public company career pages and ATS endpoints. Optional Telegram sources need separate reader credentials. Missing optional reader access is reported independently of company coverage.
 
+A @hirifyme_bot message that looks like a vacancy but carries no hirify.me job link is skipped rather than failing the channel. The reader cursor moves past it, so the `skipped` count in the collection diagnostics is the only record; a growing count means the bot changed its message format.
+
 Production sets `REQUIRE_TELEGRAM_DELIVERY=1`: missing outbound bot credentials fail before collection. Failed delivery must be repaired before enabling scheduled runs.
 
 The Telegram digest is a short notice: the new vacancies with their links, and one status line. When sources fail it names them and nothing more. Inspect the collection diagnostics artifact for the reasons, URLs and counters, and the Actions summary for errors. Runtime recovery handles only public discovery state. Do not upload credentials or the private store as artifacts.
