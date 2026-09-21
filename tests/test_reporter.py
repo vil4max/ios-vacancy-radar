@@ -123,6 +123,16 @@ def test_notify_without_new_vacancies_sends_the_heartbeat(monkeypatch: pytest.Mo
     assert sent == ["📭 Новых нет · 🟢 23:00 · ⏭ завтра 11:00"]
 
 
+def test_missing_telegram_credentials_are_named_in_the_digest() -> None:
+    message = format_hourly_heartbeat(
+        stats=_stats(telegram_skipped=2, telegram_skipped_names=("itrecruit_ua", "mobile_jobs")),
+        now=MORNING,
+    )
+
+    assert "🔑 Telegram без ключей: itrecruit_ua, mobile_jobs" in message
+    assert "🟢" not in message
+
+
 def test_unknown_company_shows_the_title_alone() -> None:
     vacancy = make_vacancy(company="", source="telegram", url="https://t.me/mobile_jobs/9")
     message = format_hourly_new_vacancies([vacancy], stats=_stats(), now=MORNING)

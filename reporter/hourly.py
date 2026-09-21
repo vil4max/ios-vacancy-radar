@@ -53,6 +53,8 @@ def _problem_lines(stats: CollectReportStats) -> list[str]:
     ]
     if channels:
         lines.append(f"⚠️ Telegram: {_short_list(channels)}")
+    if stats.telegram_skipped_names:
+        lines.append(f"🔑 Telegram без ключей: {_short_list(list(stats.telegram_skipped_names))}")
     return lines
 
 

@@ -68,6 +68,7 @@ def summarize_source_checks(
     telegram_ok = 0
     telegram_total = 0
     telegram_skipped = 0
+    telegram_skipped_names: list[str] = []
     telegram_ok_names: list[str] = []
     failed_sources: list[SourceFailure] = []
     telegram_cursor_updates: dict[str, int] = {}
@@ -89,6 +90,7 @@ def summarize_source_checks(
                 )
             elif skipped:
                 telegram_skipped += 1
+                telegram_skipped_names.append(_telegram_channel_label(source))
             elif source.status == STATUS_DEGRADED:
                 degraded_names.append(source.source_name)
             else:
@@ -127,6 +129,7 @@ def summarize_source_checks(
         "telegram_ok": telegram_ok,
         "telegram_total": telegram_total,
         "telegram_skipped": telegram_skipped,
+        "telegram_skipped_names": tuple(telegram_skipped_names),
         "telegram_ok_names": tuple(telegram_ok_names),
         "degraded_source_names": tuple(degraded_names),
         "failed_sources": tuple(failed_sources),
@@ -267,6 +270,9 @@ def process_new_vacancies(
         telegram_ok=int(health.get("telegram_ok", 0) or 0),
         telegram_total=int(health.get("telegram_total", 0) or 0),
         telegram_skipped=int(health.get("telegram_skipped", 0) or 0),
+        telegram_skipped_names=tuple(
+            str(name) for name in (health.get("telegram_skipped_names") or ())
+        ),
         telegram_ok_names=tuple(
             str(name) for name in (health.get("telegram_ok_names") or ())
         ),
@@ -354,6 +360,7 @@ def main() -> int:
     partial = bool(
         failed_source_names
         or source_health.get("degraded_source_names")
+        or source_health.get("telegram_skipped_names")
         or source_health.get("manual_check_sources")
     )
     report["status"] = "failed" if failed else "degraded" if partial else "healthy"

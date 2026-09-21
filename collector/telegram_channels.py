@@ -421,12 +421,13 @@ def _source_failed(channel: str, error: Exception, started: float) -> SourceResu
 
 
 def _source_skipped(channel: str, reason: str, started: float) -> SourceResult:
+    # Not read at all, so the run is partial even though nothing crashed.
     return SourceResult(
         source_id=f"telegram:{channel}",
         source_name=f"Telegram @{channel}",
         source_url=f"https://t.me/{channel}",
         jobs=[],
-        status="healthy",
+        status="degraded",
         error=reason,
         response_ms=int((time.perf_counter() - started) * 1000),
     )

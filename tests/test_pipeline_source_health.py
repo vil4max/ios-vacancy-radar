@@ -241,6 +241,7 @@ def test_summarize_counts_telegram_separately() -> None:
     assert health["telegram_ok"] == 1
     assert health["telegram_total"] == 3
     assert health["telegram_skipped"] == 1
+    assert health["telegram_skipped_names"] == ("two",)
     assert health["telegram_ok_names"] == ("one",)
 
 

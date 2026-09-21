@@ -23,6 +23,8 @@ class CollectReportStats:
     telegram_ok: int = 0
     telegram_total: int = 0
     telegram_skipped: int = 0
+    # Channels not read because the reader credentials are missing.
+    telegram_skipped_names: tuple[str, ...] = ()
     telegram_ok_names: tuple[str, ...] = ()
     degraded_source_names: tuple[str, ...] = ()
     failed_sources: tuple[SourceFailure, ...] = ()
