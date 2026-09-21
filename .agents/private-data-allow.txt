@@ -10,3 +10,11 @@
 ^commit [0-9a-f]+:.*Salary segments are dropped: the collector does not extract
 # Vacancy hashtags and keywords of public Telegram channels, in code and synthetic fixtures.
 ^(?:collector/telegram_channels|tests/test_telegram_channels)\.py:.*ваканси
+# Watchlist careers pages (where the radar reads), including future discovery runs.
+^database/(?:company_discovered|dou_service_companies|company_manual_additions)\.json:\s*"career_url": "https?://
+# Discovery state: one slug and inspection date per line.
+^database/company_discovery_state\.json:\s*"[a-z0-9_-]+": "\d{4}-\d{2}-\d{2}",?$
+# Discovery code: the "career" row key and the vacancy-list link words.
+^collector/mobile_discovery\.py:.*(?:"career"|career\[|вакансі)
+# Discovery tests: the row key and a synthetic benefit text.
+^tests/test_mobile_discovery\.py:.*(?:\["career"\]|Mobile communication compensation)
