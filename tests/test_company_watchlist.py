@@ -208,6 +208,64 @@ def test_svitla_api_paginates_and_keeps_ios_job(monkeypatch) -> None:
     assert result.jobs[0]["url"] == "https://svitla.com/career/job/middle-ios-developer"
 
 
+def _mobilunity_card(title: str, slug: str, country: str = "Ukraine") -> str:
+    return f"""
+    <div class="one-vacancy">
+        <div class="svacancy-header">
+            <div class="svacancy-badges">
+                <div class="vacancy-country"><img alt="{country}"></div>
+            </div>
+        </div>
+        <div class="svacancy-content">
+            <h5 class="svacancy-name"><a href="https://mobilunity.com/vacancy/{slug}/">{title}</a></h5>
+            <div class="svacancy-excerpt"><p>Synthetic listing for tests.</p></div>
+        </div>
+    </div>
+    """
+
+
+def test_mobilunity_paginates_and_skips_filter_chips(monkeypatch) -> None:
+    # The tag sidebar's filter chips all share the listing's own URL (a real site quirk, not a
+    # test fixture simplification) -- the fix must key off card markup, not "does this href look
+    # job-shaped", or a chip like "iOS 1" becomes a fake vacancy.
+    page_one = f"""
+    <script>var paramsVacancy = {{"ajaxVacancy":"https://mobilunity.com/wp-admin/admin-ajax.php","nonce":"deadbeef01"}};</script>
+    <ul class="vacancy-term-list term-list-tech">
+        <li><a href="/vacancy/?tech=ios" class="vacancy-term-item"><span class="term-name">iOS</span><span class="term-count">1</span></a></li>
+    </ul>
+    <div class="vacancies-wrap" data-max="2">
+        {_mobilunity_card("iOS Platform Engineer", "ios-platform-engineer")}
+        <div class="one-vacancy">
+            <div class="svacancy-content">
+                <h5 class="svacancy-name"><a href="https://mobilunity.com/vacancy/backend-engineer/">Backend Engineer</a></h5>
+            </div>
+        </div>
+    </div>
+    """
+    page_two = _mobilunity_card("iOS Release Engineer", "ios-release-engineer", country="Poland")
+    monkeypatch.setattr(company_watchlist, "fetch_text", lambda _url: page_one)
+    monkeypatch.setattr(
+        company_watchlist,
+        "post_form_data",
+        lambda _url, form, **_kwargs: page_two if form.get("current_page") == "2" else (_ for _ in ()).throw(
+            AssertionError(f"unexpected form: {form}")
+        ),
+    )
+
+    result = collect_watchlist_company(
+        {"name": "Mobilunity", "slug": "mobilunity", "career_url": "http://mobilunity.com/vacancy/"}
+    )
+
+    assert result.status == "healthy"
+    assert result.items_scanned == 3
+    titles = {job["title"] for job in result.jobs}
+    assert titles == {"iOS Platform Engineer", "iOS Release Engineer"}
+    assert all(job["url"].startswith("https://mobilunity.com/vacancy/") for job in result.jobs)
+    assert all("tech=" not in job["url"] for job in result.jobs)
+    second = next(job for job in result.jobs if job["title"] == "iOS Release Engineer")
+    assert second["location"] == "Poland"
+
+
 def test_label_your_data_uses_workable_widget(monkeypatch) -> None:
     from collector import ats_boards
 

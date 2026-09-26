@@ -38,6 +38,8 @@ _VALTECH_API_URL = (
 )
 _VALTECH_PAGE_LIMIT = 100
 _ADAPTIQ_PAGE_LIMIT = 20
+_MOBILUNITY_AJAX_URL = "https://mobilunity.com/wp-admin/admin-ajax.php"
+_MOBILUNITY_NONCE_RE = re.compile(r'paramsVacancy\s*=\s*\{[^}]*"nonce"\s*:\s*"([A-Za-z0-9]+)"')
 _CAREER_CARD_SELECTORS = {
     "adaptiq.co": ("a.position-card[href]", ".title", ".job-main-description__right p"),
     "careers.eleks.com": ("a.vacancy-item[href]", ".vacancy-item__title", ".vacancy-item__location"),
@@ -339,6 +341,73 @@ def _collect_adaptiq(company, career_url):
     return list(jobs.values()), scanned, errors
 
 
+def _mobilunity_cards(company: str, page_url: str, document) -> list[dict[str, Any]]:
+    # Filter/tag chips on this page all share the listing's own URL (a site bug, not JS-rendered
+    # variation), so scoping to real cards -- rather than walking every <a> -- is what keeps them out.
+    jobs = []
+    for card in document.select("div.one-vacancy"):
+        anchor = card.select_one("h5.svacancy-name a[href]")
+        if anchor is None:
+            continue
+        title = anchor.get_text(" ", strip=True)
+        url = urljoin(page_url, str(anchor["href"]))
+        path = urlsplit(url).path
+        if (
+            not title
+            or urlsplit(url).hostname != "mobilunity.com"
+            or not path.startswith("/vacancy/")
+            or path == "/vacancy/"
+        ):
+            continue
+        description_node = card.select_one(".svacancy-excerpt")
+        description = (description_node.get_text(" ", strip=True) if description_node else None) or None
+        if not is_target_job(title, description):
+            continue
+        location_node = card.select_one(".vacancy-country img[alt]")
+        jobs.append({
+            "company": company, "title": title, "url": url, "source": "company",
+            "description": description,
+            "location": (str(location_node["alt"]).strip() if location_node else None) or None,
+        })
+    return jobs
+
+
+def _collect_mobilunity(company: str, career_url: str) -> tuple[list[dict[str, Any]], int, list[str]]:
+    if career_url != "http://mobilunity.com/vacancy/":
+        raise ValueError("Unexpected Mobilunity vacancies URL")
+    html = fetch_text(career_url)
+    document = BeautifulSoup(html, "lxml")
+    wrap = document.select_one(".vacancies-wrap[data-max]")
+    if wrap is None:
+        raise ValueError("Mobilunity vacancies wrap missing")
+    max_pages = int(wrap["data-max"])
+    nonce_match = _MOBILUNITY_NONCE_RE.search(html)
+    if nonce_match is None:
+        raise ValueError("Mobilunity ajax nonce missing")
+    nonce = nonce_match.group(1)
+
+    jobs: dict[str, dict[str, Any]] = {}
+    scanned = len(document.select("div.one-vacancy"))
+    for job in _mobilunity_cards(company, career_url, document):
+        jobs[job["url"]] = job
+
+    errors: list[str] = []
+    for page in range(2, max_pages + 1):
+        try:
+            fragment = post_form_data(_MOBILUNITY_AJAX_URL, {
+                "action": "vacancyFilter", "nonce": nonce, "current_page": str(page),
+                "filter": "", "search": "",
+            })
+        except Exception as error:  # noqa: BLE001
+            errors.append(f"Mobilunity page {page}: {error}")
+            continue
+        page_document = BeautifulSoup(fragment, "lxml")
+        scanned += len(page_document.select("div.one-vacancy"))
+        for job in _mobilunity_cards(company, career_url, page_document):
+            jobs[job["url"]] = job
+    return list(jobs.values()), scanned, errors
+
+
 def _collect_conscensia(company: str) -> tuple[list[dict[str, Any]], int]:
     try:
         payload = fetch_json(_CONSCENSIA_API_URL)
@@ -576,6 +645,8 @@ def collect_watchlist_company(company: dict[str, Any]) -> SourceResult:
         errors = []
         if slug == "adaptiq":
             jobs, scanned, errors = _collect_adaptiq(name, career_url)
+        elif slug == "mobilunity":
+            jobs, scanned, errors = _collect_mobilunity(name, career_url)
         else:
             try:
                 html = fetch_text(career_url)
