@@ -1,0 +1,32 @@
+# Reviewed false positives for the PUBLIC ios-vacancy-radar repository.
+# Each rule is a Python regex matched against "path:text". Keep rules narrow:
+# they describe the collector's own vocabulary, never owner data.
+# This file quotes the flagged words in its rules; it is reviewed by definition.
+^\.agents/private-data-allow\.txt:
+# A public employer's career site or page is a source the collector reads.
+\bcareer (?:site|sites|page|pages)\b
+# Collector code that drops salary text from a vacancy title and keeps no pay.
+^collector/dou_rss\.py:.*(?:[Ss]alary segments are dropped|a salary is not a location|<locations, salary, remote>)
+^commit [0-9a-f]+:.*Salary segments are dropped: the collector does not extract
+# Vacancy hashtags and keywords of public Telegram channels, in code and synthetic fixtures.
+^(?:collector/telegram_channels|tests/test_telegram_channels)\.py:.*ваканси
+# Watchlist careers pages (where the radar reads), including future discovery runs.
+^database/(?:company_discovered|dou_service_companies|company_manual_additions)\.json:\s*"career_url": "https?://
+# Discovery state: one slug and inspection date per line.
+^database/company_discovery_state\.json:\s*"[a-z0-9_-]+": "\d{4}-\d{2}-\d{2}",?$
+# Discovery code: the "career" row key and the vacancy-list link words.
+^collector/mobile_discovery\.py:.*(?:"career"|career\[|вакансі)
+# Discovery tests: the row key and a synthetic benefit text.
+^tests/test_mobile_discovery\.py:.*(?:\["career"\]|Mobile communication compensation)
+# Reviewed 2026-09-30 for the new owner-marker set: the collector's own vocabulary, never owner data.
+# CI concurrency group name.
+^\.github/workflows/collect\.yml:.*career-state-writer
+# Collector and script code: employer career-page URLs, token lists, Ukrainian vacancy words, state temp-dir prefix.
+^(?:collector|scripts|reporter)/[a-z_]+\.py:.*(?:career|вакан)
+# Watchlist and baseline data: employer career-page URLs and source keys.
+^database/(?:company_career_overrides|dou_service_companies|source_baseline)\.json:.*(?:https?://|career\.)
+# Synthetic fixtures and assertions of the collector tests.
+^tests/[a-z_]+\.py:.*(?:https?://|career|вакан|Вакан|Зарплат|зарплат|salary|\+380000000000|компенс|compensation|[Rr]ecruiter)
+# Documentation of the collector's scope and its public boundary.
+^docs/(?:collector-coverage|search-quality)\.md:.*(?:career|recruiter)
+^(?:AGENTS|README)\.md:.*(?:career|salary|compensation)

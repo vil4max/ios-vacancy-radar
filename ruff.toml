@@ -1,0 +1,13 @@
+# Ruff configuration for iOS Hunter.
+# Keep the CI lint gate on the stable default rule set (E4/E7/E9/F) so it
+# catches genuine errors without imposing an opinionated style on legacy code.
+# F401 (unused import) and E731 (lambda assignment) are enforced too.
+
+lint.select = ["E4", "E7", "E9", "F", "F401", "E731"]
+
+# scripts/* intentionally import config/database modules after bootstrapping
+# sys.path (see the `ROOT`/`sys.path.insert` prologue). E402 is expected there.
+lint.per-file-ignores = { "scripts/*" = ["E402"] }
+
+[lint.isort]
+known-first-party = ["collector", "config", "database", "integrations", "parser", "planner", "project_sync", "reporter", "analytics", "scripts"]

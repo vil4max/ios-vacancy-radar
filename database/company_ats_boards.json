@@ -1,0 +1,85 @@
+{
+  "note": "Verified public ATS boards; see scripts/discover_ats_boards.py. Keys are watchlist slugs.",
+  "boards": {
+    "airslate": {
+      "ats": "lever",
+      "token": "airslate"
+    },
+    "ajax-systems": {
+      "ats": "lever",
+      "token": "ajax"
+    },
+    "amdaris": {
+      "ats": "greenhouse",
+      "token": "amdaris"
+    },
+    "appflame": {
+      "ats": "greenhouse",
+      "token": "appflame"
+    },
+    "betterme": {
+      "ats": "breezy",
+      "token": "betterme"
+    },
+    "boosters": {
+      "ats": "ashby",
+      "token": "boosters"
+    },
+    "exadel": {
+      "ats": "greenhouse",
+      "token": "exadelinc"
+    },
+    "freedom24": {
+      "ats": "workable",
+      "token": "freedomfinanceeu"
+    },
+    "genesis": {
+      "ats": "breezy",
+      "token": "gen-tech"
+    },
+    "holywater": {
+      "ats": "ashby",
+      "token": "holywater"
+    },
+    "innovecs": {
+      "ats": "greenhouse",
+      "token": "innovecs"
+    },
+    "kyivstar": {
+      "ats": "lever",
+      "token": "kyivstar"
+    },
+    "macpaw": {
+      "ats": "recruitee",
+      "token": "macpaw"
+    },
+    "newxel": {
+      "ats": "ashby",
+      "token": "newxel"
+    },
+    "obrio": {
+      "ats": "ashby",
+      "token": "obrio"
+    },
+    "preply": {
+      "ats": "ashby",
+      "token": "preply"
+    },
+    "skelar": {
+      "ats": "ashby",
+      "token": "SKELAR"
+    },
+    "solidgate": {
+      "ats": "ashby",
+      "token": "solidgate"
+    },
+    "universe-group": {
+      "ats": "ashby",
+      "token": "universe"
+    },
+    "welltech": {
+      "ats": "ashby",
+      "token": "welltech"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.cache/
+.coverage
+.pytest_cache/
+.ruff_cache/
+
+# Local agent markers and plans
+.agents/project-context.yaml
+.cursor/plans/
+.cursor/project-context
+.cursor/project-context.yaml
+.cursor/**/*.bak*
+
+# Local collection diagnostics (uploaded by Actions, never committed)
+/diagnostics/
+
+# Local credentials
+.env
+.env.*
+*.session
+*.session-journal
+
+# Checkout of the private runtime-state repository (see docs/operations.md).
+# It must never become a directory of this public repository.
+/state/
+# Search results live only in the private store; a local run may create them.
+/database/seen.json
+/database/vacancy_feed.json
