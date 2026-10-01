@@ -415,8 +415,6 @@ def test_valtech_api_paginates_and_keeps_ios_job(monkeypatch) -> None:
 
 
 def test_discovered_career_urls_match_the_watchlist() -> None:
-    # The refresh rebuilds a discovered company from company_discovered.json, so
-    # a URL fixed only in the watchlist would be reverted by the next refresh.
     from collector.dou_service_ratings import default_discovered_path, load_manual_additions
 
     discovered = {entry["slug"]: entry["career_url"] for entry in load_manual_additions(default_discovered_path())}
