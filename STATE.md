@@ -40,17 +40,27 @@ in the log; delivery accepted 1 message. Persistent across the last three runs:
 | Temporary | Luxoft (502, also 502 from a workstation) | succeeded 2026-09-30 16:27 UTC |
 | Parser or content out of date, to verify | Ciklum (0 items, 17 empty runs), AltexSoft (0 items, 4 runs; listing blocked 2026-09-09), Geniusee, Blynk, Qubit Labs, Aladdinb2b, Aston VIP (0 items after earlier non-zero) | `source_baseline.json` |
 
-Smallest in-repo fix candidates: Aks.ua `career_url` to the `https://www.aks.ua`
-address (the `http` URL redirects there and the target answers 200 to an honest
-probe); SoftHouseGroup: disable or re-verify the address. Bot walls are not
-worked around.
+Actions of 2026-10-01 (owner decision relayed by the orchestrator):
+
+- The 403 sources already go to the digest line "Блокируют автосбор" and are not
+  counted in "Sources failed" (`is_access_blocked` in `collector/results.py`),
+  so no change was needed. Only Luxoft (502), Checklist.com (429), Agilites
+  (Retry-After) and SoftHouseGroup (404) counted as failed in the latest run.
+- Aks.ua: careers-page address switched to the https www form. A workstation reads
+  both forms as healthy, so the runner 403 may be address-independent; the next
+  runs show whether it changed anything.
+- SoftHouseGroup: disabled in the watchlist with a dated reason, until its
+  careers path is re-verified.
 
 ## Open questions
 
-- Whether the 403 sources should be marked as blocked in the watchlist so they
-  stop counting as failures (owner decision; no change made).
+- Zero-item sources: Ciklum (17 empty runs), AltexSoft (4 runs), Geniusee,
+  Blynk, Qubit Labs, Aladdinb2b, Aston VIP. Parsers stay untouched without a
+  brief. Next check: 2026-10-08, against `source_baseline.json` and the live
+  pages one at a time.
+- The Aks.ua runner 403 and the SoftHouseGroup address: re-check on 2026-10-08.
 
 ## Next step
 
 1. Confirm the 15:00 Kyiv slot is dispatched by about 15:15.
-2. Verify the zero-item sources against their live pages one at a time.
+2. Read the next scheduled run and compare the failed and blocked lines.
