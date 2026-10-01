@@ -248,6 +248,10 @@ def preserve_watchlist_state(
         slug = str(company.get("slug") or "")
         existing = existing_by_slug.get(slug) or {}
         company["enabled"] = bool(existing.get("enabled", company.get("enabled", True)))
+        # The reason is the only record of why a company was switched off, and
+        # the refresh rebuilds every entry from the rating page and discovery.
+        if not company["enabled"] and existing.get("disabled_reason"):
+            company["disabled_reason"] = existing["disabled_reason"]
         for field in ("company_site_url", "career_url", "career_url_source"):
             if not company.get(field) and existing.get(field):
                 company[field] = existing[field]

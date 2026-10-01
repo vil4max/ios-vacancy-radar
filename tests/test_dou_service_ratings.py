@@ -132,3 +132,21 @@ def test_preserve_watchlist_state_keeps_manual_values() -> None:
     assert [company["enabled"] for company in companies] == [True, False, True]
     assert companies[1]["career_url"] == "https://example.test/careers"
     assert companies[1]["career_url_source"] == "override"
+
+
+def test_preserve_watchlist_state_keeps_the_reason_a_company_is_disabled() -> None:
+    companies = [
+        {"slug": "off", "enabled": True},
+        {"slug": "back-on", "enabled": True},
+    ]
+
+    preserve_watchlist_state(
+        companies,
+        [
+            {"slug": "off", "enabled": False, "disabled_reason": "2026-10-01: careers path returns 404"},
+            {"slug": "back-on", "enabled": True, "disabled_reason": "stale"},
+        ],
+    )
+
+    assert companies[0]["disabled_reason"] == "2026-10-01: careers path returns 404"
+    assert "disabled_reason" not in companies[1]
