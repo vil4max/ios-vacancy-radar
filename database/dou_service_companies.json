@@ -3129,7 +3129,8 @@
       "company_site_url": null,
       "career_url": "https://softhousegroup.com/career/",
       "career_url_source": "discovery",
-      "enabled": true
+      "enabled": false,
+      "disabled_reason": "2026-10-01: the careers path returns 404 on every run since 2026-09-30; re-enable after the address is re-verified"
     },
     {
       "name": "Solidium Technology",
