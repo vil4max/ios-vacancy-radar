@@ -65,7 +65,8 @@ is git-ignored here.
   neither merged with each other nor with a known company's role.
 - `source` names where the entry came from: `company` for a career page or ATS
   board, `dou` for the jobs.dou.ua RSS feeds, `telegram` for a Telegram channel,
-  and `hirify.me` for Hirify. New values may appear without a version change.
+  `hirify.me` for Hirify, and `findmyremote.ai` for the findmyremote.ai listing.
+  New values may appear without a version change.
 - `labels.level` is parsed from the title: junior, middle, senior, lead, staff,
   principal or unknown. The highest tier named wins, and head and architect
   titles sit with lead.

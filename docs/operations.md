@@ -2,9 +2,11 @@
 
 GitHub Actions runs the collector through `collect.yml`. `hourly-trigger.yml` dispatches due Kyiv slots at 06:00 and 15:00, using `collect_slots.json` to avoid completing a slot twice.
 
-The collector reads public company career pages, ATS endpoints and the public jobs.dou.ua RSS feeds. Optional Telegram sources need separate reader credentials. Missing optional reader access is reported independently of company coverage: each Telegram source is marked degraded, the run status becomes degraded, and the digest names the channels on a "Telegram без ключей" line.
+The collector reads public company career pages, ATS endpoints, the public jobs.dou.ua RSS feeds and the first page of one findmyremote.ai listing (robots.txt respected; see [collector coverage](collector-coverage.md)). Optional Telegram sources need separate reader credentials. Missing optional reader access is reported independently of company coverage: each Telegram source is marked degraded, the run status becomes degraded, and the digest names the channels on a "Telegram без ключей" line.
 
 A @hirifyme_bot message that looks like a vacancy but carries no hirify.me job link is skipped rather than failing the channel. The reader cursor moves past it, so the `skipped` count in the collection diagnostics is the only record; a growing count means the bot changed its message format.
+
+A degraded findmyremote.ai source means the listing page no longer matches the parser. Compare the live page's job cards with `tests/fixtures/findmyremote_listing.html`, fix `collector/findmyremote.py` and the fixture together, and do not add requests to other paths of the site to compensate.
 
 Production sets `REQUIRE_TELEGRAM_DELIVERY=1`: missing outbound bot credentials fail before collection. Failed delivery must be repaired before enabling scheduled runs.
 
