@@ -4,10 +4,22 @@ from collections import Counter
 
 import pytest
 
-from collector import ats_boards, bespoke, companies, company_watchlist, dou_rss, epam, generic, hirify
+from collector import (
+    ats_boards,
+    bespoke,
+    companies,
+    company_watchlist,
+    dou_rss,
+    epam,
+    findmyremote,
+    generic,
+    hirify,
+)
 from collector.types import STATUS_FAILED, SourceResult
 
-_NETWORK_MODULES = (ats_boards, companies, company_watchlist, generic, bespoke, dou_rss, epam, hirify)
+_NETWORK_MODULES = (
+    ats_boards, companies, company_watchlist, generic, bespoke, dou_rss, epam, hirify, findmyremote,
+)
 
 
 class Offline(RuntimeError):

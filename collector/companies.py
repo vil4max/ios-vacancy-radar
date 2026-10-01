@@ -24,6 +24,7 @@ from collector.bespoke import (
 )
 from collector.dou_rss import collect_dou_ai_rss, collect_dou_ios_rss
 from collector.epam import collect_epam
+from collector.findmyremote import collect_findmyremote
 from collector.hirify import collect_hirify
 from collector.company_watchlist import collect_watchlist_company, load_company_watchlist
 from collector.telegram_channels import collect_telegram_channels
@@ -79,7 +80,8 @@ def _python_collectors() -> list[Callable[[], SourceResult]]:
         for slug, collector in _WATCHLIST_BESPOKE_COLLECTORS
         if enabled_by_slug.get(slug, True)
     ]
-    return bespoke_collectors + _watchlist_collectors() + [collect_hirify, collect_dou_ios_rss, collect_dou_ai_rss]
+    board_collectors = [collect_hirify, collect_findmyremote, collect_dou_ios_rss, collect_dou_ai_rss]
+    return bespoke_collectors + _watchlist_collectors() + board_collectors
 
 
 def _crashed_collector_result(collector: Callable[[], SourceResult], error: Exception) -> SourceResult:

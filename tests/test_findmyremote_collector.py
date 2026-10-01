@@ -234,6 +234,12 @@ def test_one_unreadable_card_is_skipped_and_counted(monkeypatch) -> None:
     assert [job["title"] for job in result.jobs] == ["Senior iOS Engineer"]
 
 
+def test_collect_findmyremote_is_registered_in_the_pipeline() -> None:
+    from collector.companies import _python_collectors
+
+    assert findmyremote.collect_findmyremote in _python_collectors()
+
+
 def test_repeated_card_link_is_read_once(monkeypatch) -> None:
     _serve(monkeypatch, f"<html><body>{_card()}{_card()}</body></html>")
 
