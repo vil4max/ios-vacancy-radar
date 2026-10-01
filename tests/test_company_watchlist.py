@@ -412,3 +412,16 @@ def test_valtech_api_paginates_and_keeps_ios_job(monkeypatch) -> None:
     assert [job["title"] for job in result.jobs] == ["Senior/Lead iOS Developer"]
     assert result.jobs[0]["location"] == "Sofia"
     assert result.jobs[0]["url"] == "https://www.valtech.com/career/jobs/4961788101/"
+
+
+def test_discovered_career_urls_match_the_watchlist() -> None:
+    # The refresh rebuilds a discovered company from company_discovered.json, so
+    # a URL fixed only in the watchlist would be reverted by the next refresh.
+    from collector.dou_service_ratings import default_discovered_path, load_manual_additions
+
+    discovered = {entry["slug"]: entry["career_url"] for entry in load_manual_additions(default_discovered_path())}
+    watchlist = {company["slug"]: company.get("career_url") for company in company_watchlist.load_company_watchlist()}
+
+    mismatched = sorted(slug for slug, url in discovered.items() if slug in watchlist and watchlist[slug] != url)
+
+    assert mismatched == []
