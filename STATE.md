@@ -60,6 +60,11 @@ Actions of 2026-10-01 (owner decision relayed by the orchestrator):
   pages one at a time.
 - The Aks.ua runner 403 and the SoftHouseGroup address: re-check on 2026-10-08.
 
+- Moving the private state store to another repository is on hold (owner,
+  2026-10-02). The plan is kept in the agent bank. No step of it is run, not
+  even pausing the local dispatch agent, until the orchestrator brings the
+  owner's word. The collector stays on its current store.
+
 ## Next step
 
 1. Confirm the 15:00 Kyiv slot is dispatched by about 15:15.
