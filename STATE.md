@@ -9,7 +9,7 @@ The `ios-vacancy-radar` session owns the operation of this repository
 (decision of 2026-10-01) and answers questions about the collector.
 
 - Keep the on-time scheduler working: the local launchd agent
-  `local.ios-hunter.collect-kick`, the `Collect Schedule Trigger` workflow and
+  `local.ios-vacancy-radar.collect-lag-catchup`, the `Collect Schedule Trigger` workflow and
   the slot state in `database/collect_slots.json`.
 - Read run statistics: workflow runs, slot timing, per-source health and the
   Telegram delivery result of each run.

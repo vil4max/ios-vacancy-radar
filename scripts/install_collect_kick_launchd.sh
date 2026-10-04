@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-LABEL="${IOS_HUNTER_LAUNCHD_LABEL:-local.ios-hunter.collect-kick}"
+LABEL="${RADAR_COLLECT_CATCHUP_LABEL:-local.ios-vacancy-radar.collect-lag-catchup}"
 PLIST_DIR="${HOME}/Library/LaunchAgents"
 PLIST_PATH="${PLIST_DIR}/${LABEL}.plist"
 KICK_SCRIPT="${ROOT}/scripts/kick_collect_if_due.sh"
@@ -49,9 +49,9 @@ case "$1" in
   <key>StartInterval</key>
   <integer>600</integer>
   <key>StandardOutPath</key>
-  <string>${HOME}/Library/Logs/ios-hunter-collect-kick.launchd.out.log</string>
+  <string>${HOME}/Library/Logs/ios-vacancy-radar-collect-lag-catchup.launchd.out.log</string>
   <key>StandardErrorPath</key>
-  <string>${HOME}/Library/Logs/ios-hunter-collect-kick.launchd.err.log</string>
+  <string>${HOME}/Library/Logs/ios-vacancy-radar-collect-lag-catchup.launchd.err.log</string>
 </dict>
 </plist>
 EOF
@@ -60,7 +60,7 @@ EOF
     launchctl enable "gui/$(id -u)/${LABEL}" 2>/dev/null || true
     echo "Installed ${PLIST_PATH}"
     echo "Checks every 10 minutes; Python gates dispatch to overdue Kyiv slots between 06:15 and 21:00."
-    echo "Log: ~/Library/Logs/ios-hunter-collect-kick.log"
+    echo "Log: ~/Library/Logs/ios-vacancy-radar-collect-lag-catchup.log"
     ;;
   uninstall)
     launchctl bootout "gui/$(id -u)/${LABEL}" 2>/dev/null || true

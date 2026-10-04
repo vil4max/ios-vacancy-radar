@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 LOG_DIR="${HOME}/Library/Logs"
-LOG_FILE="${IOS_HUNTER_KICK_LOG:-${LOG_DIR}/ios-hunter-collect-kick.log}"
+LOG_FILE="${RADAR_COLLECT_CATCHUP_LOG:-${LOG_DIR}/ios-vacancy-radar-collect-lag-catchup.log}"
 SLOTS_TMP="$(mktemp)"
 cleanup() { rm -f "${SLOTS_TMP}"; }
 trap cleanup EXIT
@@ -74,7 +74,7 @@ if [[ "${gate_status}" -ne 0 ]]; then
   log "ERROR: gate exit ${gate_status}"
   exit "${gate_status}"
 fi
-if [[ "${IOS_HUNTER_KICK_DRY_RUN:-0}" == "1" ]]; then
+if [[ "${RADAR_COLLECT_CATCHUP_DRY_RUN:-0}" == "1" ]]; then
   log "DRY RUN: would dispatch Collect iOS Jobs"
   exit 0
 fi

@@ -8,12 +8,9 @@ Repository visibility: **PUBLIC**.
 The project is **iOS Vacancy Radar**. The earlier working name "iOS Hunter"
 is retired: do not reintroduce it in documentation, identifiers, user agents,
 or fixtures. Existing occurrences are legacy and may be renamed only in a
-change that also updates the matching configuration and tests. Several of them
-are bound to runtime state rather than prose — the outbound user agent in
-`collector/dou_catalog.py`, and the launchd label, log
-paths and `IOS_HUNTER_*` environment variables in `scripts/kick_collect_if_due.sh`
-and `scripts/install_collect_kick_launchd.sh` — so renaming them changes
-observable behaviour or breaks an installed agent.
+change that also updates the matching configuration and tests. The remaining
+one is bound to runtime state rather than prose — the outbound user agent in
+`collector/dou_catalog.py` — so renaming it changes observable behaviour.
 
 ## Data handling
 
