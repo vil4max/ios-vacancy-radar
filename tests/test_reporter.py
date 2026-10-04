@@ -27,7 +27,7 @@ def _stats(**overrides) -> CollectReportStats:
 
 
 def test_healthy_heartbeat_is_one_line() -> None:
-    assert format_hourly_heartbeat(stats=_stats(), now=EVENING) == "📭 Новых нет · 🟢 23:00 · ⏭ завтра 06:00"
+    assert format_hourly_heartbeat(stats=_stats(), now=EVENING) == "📭 Новых нет · 🟢 23:00 · ⏭ завтра 08:00"
 
 
 def test_new_vacancies_notice_lists_titles_links_and_one_status_line() -> None:
@@ -43,7 +43,7 @@ def test_new_vacancies_notice_lists_titles_links_and_one_status_line() -> None:
         "   https://example.com/jobs/1\n"
         "2. Beta — ⚠️ iOS Developer\n"
         "   https://example.com/jobs/2\n"
-        "🟢 11:02 · ⏭ 15:00"
+        "🟢 11:02 · ⏭ 14:00"
     )
 
 
@@ -65,7 +65,7 @@ def test_digest_carries_no_counters_reasons_or_source_urls() -> None:
         "🔒 Блокируют автосбор: Epsilon\n"
         "⚠️ Без результата: Zeta\n"
         "⚠️ Telegram: mobile_jobs\n"
-        "🕐 11:02 · ⏭ 15:00"
+        "🕐 11:02 · ⏭ 14:00"
     )
     assert "http" not in message and "403" not in message and "110" not in message
 
@@ -120,7 +120,7 @@ def test_notify_without_new_vacancies_sends_the_heartbeat(monkeypatch: pytest.Mo
     monkeypatch.setattr("reporter.hourly.send_message", sent.append)
 
     assert notify_hourly_inbox([], stats=_stats(), now=EVENING)
-    assert sent == ["📭 Новых нет · 🟢 23:00 · ⏭ завтра 06:00"]
+    assert sent == ["📭 Новых нет · 🟢 23:00 · ⏭ завтра 08:00"]
 
 
 def test_missing_telegram_credentials_are_named_in_the_digest() -> None:

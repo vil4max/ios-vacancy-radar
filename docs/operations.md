@@ -1,6 +1,6 @@
 # Operations
 
-GitHub Actions runs the collector through `collect.yml`. `hourly-trigger.yml` dispatches due Kyiv slots at 06:00 and 15:00, using `collect_slots.json` to avoid completing a slot twice.
+GitHub Actions runs the collector through `collect.yml`. `hourly-trigger.yml` dispatches due Kyiv slots at 08:00 and 14:00, using `collect_slots.json` to avoid completing a slot twice.
 
 The collector reads public company career pages, ATS endpoints, the public jobs.dou.ua RSS feeds and the first page of one findmyremote.ai listing (robots.txt respected; see [collector coverage](collector-coverage.md)). Optional Telegram sources need separate reader credentials. Missing optional reader access is reported independently of company coverage: each Telegram source is marked degraded, the run status becomes degraded, and the digest names the channels on a "Telegram без ключей" line.
 

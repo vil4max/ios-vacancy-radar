@@ -18,46 +18,46 @@ _KYIV = ZoneInfo("Europe/Kyiv")
 
 
 def test_due_collect_slot_catchup() -> None:
-    assert due_collect_slot(datetime(2026, 7, 28, 5, 59, tzinfo=_KYIV)) is None
-    assert due_collect_slot(datetime(2026, 7, 28, 6, 0, tzinfo=_KYIV)) == 6
-    assert due_collect_slot(datetime(2026, 7, 28, 13, 30, tzinfo=_KYIV)) == 6
-    assert due_collect_slot(datetime(2026, 7, 28, 14, 59, tzinfo=_KYIV)) == 6
-    assert due_collect_slot(datetime(2026, 7, 28, 15, 0, tzinfo=_KYIV)) == 15
-    assert due_collect_slot(datetime(2026, 7, 28, 23, 5, tzinfo=_KYIV)) == 15
+    assert due_collect_slot(datetime(2026, 7, 28, 7, 59, tzinfo=_KYIV)) is None
+    assert due_collect_slot(datetime(2026, 7, 28, 8, 0, tzinfo=_KYIV)) == 8
+    assert due_collect_slot(datetime(2026, 7, 28, 11, 30, tzinfo=_KYIV)) == 8
+    assert due_collect_slot(datetime(2026, 7, 28, 13, 59, tzinfo=_KYIV)) == 8
+    assert due_collect_slot(datetime(2026, 7, 28, 14, 0, tzinfo=_KYIV)) == 14
+    assert due_collect_slot(datetime(2026, 7, 28, 23, 5, tzinfo=_KYIV)) == 14
 
 
 def test_due_collect_slot_for_local_kick_waits_lag() -> None:
-    assert due_collect_slot_for_local_kick(datetime(2026, 7, 28, 6, 0, tzinfo=_KYIV)) is None
-    assert due_collect_slot_for_local_kick(datetime(2026, 7, 28, 6, 14, tzinfo=_KYIV)) is None
-    assert due_collect_slot_for_local_kick(datetime(2026, 7, 28, 6, 15, tzinfo=_KYIV)) == 6
-    assert due_collect_slot_for_local_kick(datetime(2026, 7, 28, 15, 14, tzinfo=_KYIV)) is None
-    assert due_collect_slot_for_local_kick(datetime(2026, 7, 28, 15, 15, tzinfo=_KYIV)) == 15
-    assert due_collect_slot_for_local_kick(datetime(2026, 7, 28, 5, 59, tzinfo=_KYIV)) is None
+    assert due_collect_slot_for_local_kick(datetime(2026, 7, 28, 8, 0, tzinfo=_KYIV)) is None
+    assert due_collect_slot_for_local_kick(datetime(2026, 7, 28, 8, 14, tzinfo=_KYIV)) is None
+    assert due_collect_slot_for_local_kick(datetime(2026, 7, 28, 8, 15, tzinfo=_KYIV)) == 8
+    assert due_collect_slot_for_local_kick(datetime(2026, 7, 28, 14, 14, tzinfo=_KYIV)) is None
+    assert due_collect_slot_for_local_kick(datetime(2026, 7, 28, 14, 15, tzinfo=_KYIV)) == 14
+    assert due_collect_slot_for_local_kick(datetime(2026, 7, 28, 7, 59, tzinfo=_KYIV)) is None
 
 
 def test_is_collect_business_hour_window() -> None:
     assert is_collect_business_hour(datetime(2026, 7, 28, 2, 0, tzinfo=_KYIV)) is False
-    assert is_collect_business_hour(datetime(2026, 7, 28, 6, 0, tzinfo=_KYIV)) is True
+    assert is_collect_business_hour(datetime(2026, 7, 28, 8, 0, tzinfo=_KYIV)) is True
     assert is_collect_business_hour(datetime(2026, 7, 28, 13, 30, tzinfo=_KYIV)) is True
-    assert is_collect_business_hour(datetime(2026, 7, 28, 15, 0, tzinfo=_KYIV)) is True
+    assert is_collect_business_hour(datetime(2026, 7, 28, 14, 0, tzinfo=_KYIV)) is True
 
 
 def test_next_scheduled_collect_before_window() -> None:
     now = datetime(2026, 7, 28, 2, 0, tzinfo=_KYIV)
-    assert next_scheduled_collect(now) == datetime(2026, 7, 28, 6, 0, tzinfo=_KYIV)
-    assert format_next_check_short(now) == "⏭ 06:00"
+    assert next_scheduled_collect(now) == datetime(2026, 7, 28, 8, 0, tzinfo=_KYIV)
+    assert format_next_check_short(now) == "⏭ 08:00"
 
 
 def test_next_scheduled_collect_between_slots() -> None:
-    now = datetime(2026, 7, 28, 6, 10, tzinfo=_KYIV)
-    assert next_scheduled_collect(now) == datetime(2026, 7, 28, 15, 0, tzinfo=_KYIV)
-    assert format_next_check_short(now) == "⏭ 15:00"
+    now = datetime(2026, 7, 28, 8, 10, tzinfo=_KYIV)
+    assert next_scheduled_collect(now) == datetime(2026, 7, 28, 14, 0, tzinfo=_KYIV)
+    assert format_next_check_short(now) == "⏭ 14:00"
 
 
 def test_next_scheduled_collect_after_window() -> None:
-    now = datetime(2026, 7, 28, 15, 5, tzinfo=_KYIV)
-    assert next_scheduled_collect(now) == datetime(2026, 7, 29, 6, 0, tzinfo=_KYIV)
-    assert format_next_check_short(now) == "⏭ завтра 06:00"
+    now = datetime(2026, 7, 28, 14, 5, tzinfo=_KYIV)
+    assert next_scheduled_collect(now) == datetime(2026, 7, 29, 8, 0, tzinfo=_KYIV)
+    assert format_next_check_short(now) == "⏭ завтра 08:00"
 
 
 def test_trigger_cron_band_covers_every_slot_in_summer_and_winter_time() -> None:

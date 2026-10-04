@@ -2,7 +2,7 @@ name: Collect iOS Jobs
 
 on:
   workflow_dispatch:
-  # Scheduled Kyiv 06/15 via .github/workflows/hourly-trigger.yml
+  # Scheduled Kyiv 08/14 via .github/workflows/hourly-trigger.yml
 
 permissions:
   contents: read

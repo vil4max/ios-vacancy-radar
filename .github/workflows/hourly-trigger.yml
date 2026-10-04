@@ -3,11 +3,11 @@ name: Collect Schedule Trigger
 on:
   workflow_dispatch:
   schedule:
-    # Hourly :17 UTC across the Kyiv daytime band: 03 UTC is Kyiv 06 in EEST
-    # (UTC+3), 04 UTC is Kyiv 06 in EET (UTC+2).
-    # Gate uses due Kyiv slot 06/15 with catch-up until the next slot
+    # Hourly :17 UTC across the Kyiv daytime band: 05 UTC is Kyiv 08 in EEST
+    # (UTC+3), 06 UTC is Kyiv 08 in EET (UTC+2).
+    # Gate uses due Kyiv slot 08/14 with catch-up until the next slot
     # (GHA schedule lag) and skips if database/collect_slots.json already has it.
-    - cron: "17 3-16 * * *"
+    - cron: "17 5-16 * * *"
 
 permissions:
   actions: write

@@ -4,10 +4,9 @@ from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 KYIV = ZoneInfo("Europe/Kyiv")
-# Vacancies aren't posted more often than this, so two checks a day cover it.
-# The 06:00 slot leaves about two hours of GitHub Actions schedule lag before
-# the morning consumer reads the hand-over feed.
-COLLECT_HOURS = (6, 15)
+# Two checks a day. Each slot is placed so that its digest is ready shortly
+# before the 09:00 and 15:00 Kyiv review windows begin.
+COLLECT_HOURS = (8, 14)
 COLLECT_KICK_LAG_MINUTES = 15
 BUSINESS_HOUR_START = COLLECT_HOURS[0]
 BUSINESS_HOUR_END = COLLECT_HOURS[-1]

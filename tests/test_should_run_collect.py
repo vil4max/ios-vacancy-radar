@@ -19,7 +19,7 @@ def test_should_run_collect_skips_when_slot_already_done(
     monkeypatch.setattr(
         should_run_collect,
         "_as_kyiv",
-        lambda now=None: datetime(2026, 8, 4, 15, 30, tzinfo=KYIV),
+        lambda now=None: datetime(2026, 8, 4, 17, 30, tzinfo=KYIV),
     )
     monkeypatch.setattr(should_run_collect, "due_collect_slot", lambda now=None: 15)
 
@@ -35,7 +35,7 @@ def test_should_run_collect_runs_when_slot_is_due(
     monkeypatch.setattr(
         should_run_collect,
         "_as_kyiv",
-        lambda now=None: datetime(2026, 8, 4, 15, 30, tzinfo=KYIV),
+        lambda now=None: datetime(2026, 8, 4, 17, 30, tzinfo=KYIV),
     )
     monkeypatch.setattr(should_run_collect, "due_collect_slot", lambda now=None: 15)
 
@@ -49,11 +49,11 @@ def test_should_run_collect_skips_before_first_slot(monkeypatch, capsys) -> None
     monkeypatch.setattr(
         should_run_collect,
         "_as_kyiv",
-        lambda: datetime(2026, 8, 4, 5, 30, tzinfo=KYIV),
+        lambda: datetime(2026, 8, 4, 7, 30, tzinfo=KYIV),
     )
 
     assert should_run_collect.main() == 1
-    assert "before Kyiv 06:00" in capsys.readouterr().out
+    assert "before Kyiv 08:00" in capsys.readouterr().out
 
 
 def test_should_run_collect_reports_read_failure_as_error(monkeypatch, capsys) -> None:

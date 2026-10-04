@@ -17,12 +17,12 @@ def test_mark_collect_slot_marks_the_due_slot(tmp_path: Path, monkeypatch) -> No
     monkeypatch.setattr(
         mark_collect_slot,
         "_as_kyiv",
-        lambda now=None: datetime(2026, 8, 4, 15, 20, tzinfo=KYIV),
+        lambda now=None: datetime(2026, 8, 4, 14, 20, tzinfo=KYIV),
     )
 
     assert mark_collect_slot.main() == 0
     text = output.read_text(encoding="utf-8")
-    assert "marked_slot=15" in text
+    assert "marked_slot=14" in text
     assert "kyiv_day=2026-08-04" in text
 
 
@@ -41,4 +41,4 @@ def test_mark_collect_slot_no_due_slot_before_window(tmp_path: Path, monkeypatch
     text = output.read_text(encoding="utf-8")
     assert "marked_slot=" in text
     assert "marked_slot=6" not in text
-    assert "marked_slot=15" not in text
+    assert "marked_slot=14" not in text

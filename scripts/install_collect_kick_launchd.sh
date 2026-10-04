@@ -59,7 +59,7 @@ EOF
     launchctl bootstrap "gui/$(id -u)" "${PLIST_PATH}"
     launchctl enable "gui/$(id -u)/${LABEL}" 2>/dev/null || true
     echo "Installed ${PLIST_PATH}"
-    echo "Checks every 10 minutes; Python gates dispatch to overdue Kyiv slots between 06:15 and 21:00."
+    echo "Checks every 10 minutes; Python gates dispatch to overdue Kyiv slots between 08:15 and 21:00."
     echo "Log: ~/Library/Logs/ios-vacancy-radar-collect-lag-catchup.log"
     ;;
   uninstall)
