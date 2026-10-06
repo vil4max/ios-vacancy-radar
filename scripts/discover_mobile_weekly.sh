@@ -11,8 +11,8 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 LOG_DIR="${HOME}/Library/Logs"
 LOG_FILE="${RADAR_DISCOVERY_LOG:-${LOG_DIR}/ios-vacancy-radar-discovery.log}"
 PYTHON="${RADAR_PYTHON:-${ROOT}/.venv/bin/python}"
-KIT="${DEV_ROOT:-${HOME}/Developer/Personal}/agent-tools/agent-engineering-kit"
-SCAN="${KIT}/features/policy/private-data-scan.py"
+# The private-data scanner lives outside this repository; the operator points to it.
+SCAN="${RADAR_PRIVATE_SCAN:-}"
 DRY_RUN="${RADAR_DISCOVERY_DRY_RUN:-0}"
 ALLOWED_FILES=(
   "database/company_discovered.json"
@@ -41,7 +41,7 @@ for tool in git curl; do
   command -v "${tool}" >/dev/null 2>&1 || { log "ERROR: ${tool} not found"; exit 1; }
 done
 [[ -x "${PYTHON}" ]] || { log "ERROR: python not found at ${PYTHON}"; exit 1; }
-[[ -f "${SCAN}" ]] || { log "ERROR: private-data scan not found at ${SCAN}"; exit 1; }
+[[ -n "${SCAN}" && -f "${SCAN}" ]] || { log "ERROR: set RADAR_PRIVATE_SCAN to the private-data scanner (got '${SCAN}')"; exit 1; }
 
 # DOU blocks clients that read too fast; a blocked address must wait, not retry.
 dou_status="$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 -A 'Mozilla/5.0' https://jobs.dou.ua/companies/ || true)"
