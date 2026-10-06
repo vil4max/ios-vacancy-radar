@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Find public ATS job-board APIs behind watchlist career pages.
 
-Discovery only: it prints candidates for owner review and never edits the
+Discovery only: it prints candidates for maintainer review and never edits the
 watchlist. Public ATS APIs are published for job syndication, so they remain
 reachable when a marketing site rejects datacenter traffic.
 """

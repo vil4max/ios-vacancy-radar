@@ -288,7 +288,7 @@ def process_new_vacancies(
         marked = sum(mark_seen(seen, vacancy, first_seen=now) for vacancy in fresh)
         return 0, marked, True
 
-    # Order matters: a vacancy is marked seen only after the owner was told and
+    # Order matters: a vacancy is marked seen only after the digest was sent and
     # the hand-over succeeded, so a failure at either step is retried next run.
     try:
         notify_hourly_inbox(fresh, stats=stats)

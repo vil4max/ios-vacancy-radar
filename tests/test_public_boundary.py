@@ -4,9 +4,8 @@ Committed state must never carry personal application decisions or mail
 content, and committed docs must never carry personal pipeline facts (interview
 outcomes, funnel counts, rejections by company). Commit messages are checked
 too: they are published with the tree and cannot be edited once pushed. See
-docs/operations.md, the AGENTS.md boundary rules, and the 2026-09-15 privacy
-audit. Private career storage owns that content; this repository only collects
-public vacancies.
+docs/operations.md. A private store owns that content; this repository only
+collects public vacancies.
 """
 from __future__ import annotations
 
@@ -31,7 +30,7 @@ _PERSONAL_DOC_MARKERS: tuple[tuple[str, re.Pattern[str]], ...] = (
         r"(?i)\bmy (?:interview|application|rejection|resume|cv|offer)\b"
     )),
     ("re-apply advice tied to a past attempt", re.compile(r"(?i)\bdo not re-apply\b")),
-    # The owner's own pay is the costliest leak. The markers require personal
+    # A person's own pay is the costliest leak. The markers require personal
     # framing: a salary printed in a public posting is a public vacancy fact,
     # and the policy vocabulary ("compensation expectations" in a rule, DOU's
     # compensation rating) is not data either.
@@ -59,7 +58,7 @@ _PERSONAL_DOC_MARKERS: tuple[tuple[str, re.Pattern[str]], ...] = (
 
 _MD_DIRS = ("reports", "docs")
 
-# Identity markers are matched by shape, not by value: naming the owner's real
+# Identity markers are matched by shape, not by value: naming a real
 # address or board id here would publish the very thing the guard defends.
 _IDENTITY_MARKERS: tuple[tuple[str, re.Pattern[str]], ...] = (
     (

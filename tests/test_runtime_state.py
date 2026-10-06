@@ -28,7 +28,7 @@ def commit(root, message="test: change"):
 
 
 def isolate_git(tmp_path, monkeypatch):
-    # Fixture repositories must not inherit the owner's hooks or an enclosing push's repository.
+    # Fixture repositories must not inherit the user's hooks or an enclosing push's repository.
     for name in git(tmp_path, "rev-parse", "--local-env-vars").splitlines():
         monkeypatch.delenv(name, raising=False)
     config = tmp_path / "gitconfig"

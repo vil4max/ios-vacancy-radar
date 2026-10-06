@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 # Weekly mobile-employer discovery: run, verify, commit and push to main.
 #
-# The owner granted this job standing permission (2026-09-22) to commit and
-# push its own output: only the three discovery data files, and only after
-# ruff, the tests and the private-data scan pass. Anything else aborts the run
-# without publishing. It works in a throwaway worktree at origin/main, so the
-# main checkout and other sessions' worktrees are never touched.
+# The job commits and pushes its own output: only the three discovery data
+# files, and only after ruff, the tests and the private-data scan pass.
+# Anything else aborts the run without publishing. It works in a throwaway
+# worktree at origin/main, so the main checkout is never touched.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -108,8 +107,7 @@ checked more than 90 days ago) and changed only the discovery data files.
 
 Validation: ruff check passed; pytest passed (${tests});
 private-data-scan.py passed on the outgoing commit (pre-push hook).
-Published by the weekly discovery job under the owner's standing
-permission of 2026-09-22.
+Published by the weekly discovery job.
 EOF
 
 if [[ "${DRY_RUN}" == "1" ]]; then

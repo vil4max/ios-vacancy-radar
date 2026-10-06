@@ -1,6 +1,6 @@
 """Telegram digest: a short notice, not a report.
 
-The digest tells the owner that something new was found and whether the run was
+The digest tells the reader that something new was found and whether the run was
 healthy. Everything else -- labels in full, descriptions, per-source reasons and
 counters -- goes to the hand-over feed and the collection diagnostics, so this
 message stays readable on a phone.
