@@ -1,6 +1,6 @@
 # Reviewed false positives for the PUBLIC ios-vacancy-radar repository.
 # Each rule is a Python regex matched against "path:text". Keep rules narrow:
-# they describe the collector's own vocabulary, never owner data.
+# they describe the collector's own vocabulary, never personal data.
 # This file quotes the flagged words in its rules; it is reviewed by definition.
 ^\.agents/private-data-allow\.txt:
 # A public employer's career site or page is a source the collector reads.
@@ -18,7 +18,7 @@
 ^collector/mobile_discovery\.py:.*(?:"career"|career\[|вакансі)
 # Discovery tests: the row key and a synthetic benefit text.
 ^tests/test_mobile_discovery\.py:.*(?:\["career"\]|Mobile communication compensation)
-# Reviewed 2026-09-30 for the new owner-marker set: the collector's own vocabulary, never owner data.
+# The collector's own vocabulary, never personal data.
 # CI concurrency group name.
 ^\.github/workflows/collect\.yml:.*career-state-writer
 # Collector and script code: employer career-page URLs, token lists, Ukrainian vacancy words, state temp-dir prefix.

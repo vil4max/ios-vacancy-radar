@@ -60,8 +60,8 @@ Why the collector labels instead of filtering is recorded in
 ## State and the public boundary
 
 This repository is public. It holds the search mechanism, not search results
-and not anything personal; [AGENTS.md](AGENTS.md) is the binding statement of
-that boundary and `tests/test_public_boundary.py` enforces it.
+and not anything personal; `tests/test_public_boundary.py` enforces that
+boundary.
 
 | File | Holds | Lives |
 | --- | --- | --- |
