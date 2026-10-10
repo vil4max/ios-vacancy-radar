@@ -2049,7 +2049,8 @@
       "company_site_url": null,
       "career_url": "https://blynk.io/platform/device-authentification-and-provisioning",
       "career_url_source": "discovery",
-      "enabled": true
+      "enabled": false,
+      "disabled_reason": "2026-10-10: the discovered address is a product page and blynk.io/careers returns 404; re-enable after a careers page is verified"
     },
     {
       "name": "Boosty Labs",
@@ -2815,8 +2816,8 @@
       "survey_count": null,
       "dou_company_url": "https://jobs.dou.ua/companies/novapay/",
       "company_site_url": null,
-      "career_url": "https://novapay.ua/vacancy/analitik-viddilu-kontroliu-ta-upravli/",
-      "career_url_source": "discovery",
+      "career_url": "https://novapay.ua/vakansii/",
+      "career_url_source": "manual",
       "enabled": true
     },
     {
