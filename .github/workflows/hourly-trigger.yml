@@ -20,10 +20,10 @@ concurrency:
 jobs:
   trigger:
     if: vars.COLLECT_SCHEDULE_ENABLED == '1'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Refresh schedule state
         run: |
@@ -32,7 +32,7 @@ jobs:
           git checkout origin/main -- database/collect_slots.json
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 

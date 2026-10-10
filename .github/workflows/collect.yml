@@ -16,12 +16,11 @@ jobs:
   collect:
     permissions:
       contents: write
-      actions: write
     concurrency:
       group: career-state-writer-${{ github.repository }}
       cancel-in-progress: false
       queue: max
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
       # Search results -- the discovery history and the hand-over feed -- live in
@@ -31,7 +30,7 @@ jobs:
       STATE_ROOT: state
       HAS_STATE_REPO: ${{ secrets.STATE_REPO != '' && secrets.STATE_REPO_TOKEN != '' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -43,7 +42,7 @@ jobs:
           fi
 
       - name: Check out the private state store
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: ${{ secrets.STATE_REPO }}
           token: ${{ secrets.STATE_REPO_TOKEN }}
@@ -54,7 +53,7 @@ jobs:
         run: mkdir -p database "$STATE_ROOT/database"
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
@@ -93,7 +92,7 @@ jobs:
 
       - name: Upload collection diagnostics
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: collect-diagnostics-${{ github.run_id }}-${{ github.run_attempt }}
           path: diagnostics/collect.json
@@ -110,7 +109,7 @@ jobs:
 
       - name: Upload collection recovery state
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: collect-recovery-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
