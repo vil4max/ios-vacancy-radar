@@ -61,6 +61,31 @@ jobs:
             exit "$status"
           fi
 
+      # The local catch-up agent starts slots on time only while the Mac is
+      # awake; a slot still unstarted an hour later is reported, not silent.
+      - name: Alert on late collect slots
+        if: github.event_name == 'schedule'
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          set -euo pipefail
+          message="$(python3 scripts/report_late_slots.py)"
+          if [ -z "${message}" ]; then
+            echo "No late slots"
+            exit 0
+          fi
+          echo "::warning title=Collection schedule::${message}"
+          if [ -z "${TELEGRAM_TOKEN}" ] || [ -z "${TELEGRAM_CHAT_ID}" ]; then
+            echo "TELEGRAM_* missing — skip late-slot alert"
+            exit 0
+          fi
+          text="⏰ ${message}"
+          curl -fsS -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${text}" \
+            -d "disable_web_page_preview=true" >/dev/null
+
       - name: Trigger Collect iOS Jobs
         id: dispatch_collect
         if: steps.gate.outputs.skip_gate != 'true'
@@ -87,3 +112,21 @@ jobs:
             attempt=$((attempt + 1))
             delay=$((delay * 2))
           done
+
+      - name: Notify failure on Telegram
+        if: failure()
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          set -euo pipefail
+          if [ -z "${TELEGRAM_TOKEN}" ] || [ -z "${TELEGRAM_CHAT_ID}" ]; then
+            echo "TELEGRAM_* missing — skip failure alert"
+            exit 0
+          fi
+          text="$(printf '⚠️ Collect Schedule Trigger failed\n%s/%s/actions/runs/%s' \
+            "${GITHUB_SERVER_URL}" "${GITHUB_REPOSITORY}" "${GITHUB_RUN_ID}")"
+          curl -fsS -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${text}" \
+            -d "disable_web_page_preview=true" >/dev/null

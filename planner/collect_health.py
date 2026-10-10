@@ -26,3 +26,17 @@ def report_overdue_slots(path: Path, now: datetime | None = None) -> None:
     if summary:
         with Path(summary).open("a", encoding="utf-8") as stream:
             stream.write(message + "\n")
+
+
+LATE_ALERT_MINUTES = 60
+
+
+def late_slots(path: Path, now: datetime | None = None, *, minutes: int = LATE_ALERT_MINUTES) -> list[tuple[int, int]]:
+    """Today's uncompleted slots that started at least `minutes` ago, with their lag in minutes."""
+    stamp = _as_kyiv(now)
+    late: list[tuple[int, int]] = []
+    for hour in overdue_slots(path, stamp):
+        lag = int((stamp - stamp.replace(hour=hour, minute=0, second=0, microsecond=0)).total_seconds() // 60)
+        if lag >= minutes:
+            late.append((hour, lag))
+    return late

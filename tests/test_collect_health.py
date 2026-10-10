@@ -55,3 +55,13 @@ def test_label_counts_describe_handed_over_vacancies_only() -> None:
         "junior": 1,
         "location_needs_check": 1,
     }
+
+
+def test_late_slots_report_only_slots_an_hour_past_their_start(tmp_path):
+    from planner.collect_health import late_slots
+
+    path = tmp_path / 'slots.json'
+    assert late_slots(path, datetime(2026, 9, 9, 8, 59, tzinfo=KYIV)) == []
+    assert late_slots(path, datetime(2026, 9, 9, 9, 35, tzinfo=KYIV)) == [(8, 95)]
+    mark_slot_completed(path, '2026-09-09', 8)
+    assert late_slots(path, datetime(2026, 9, 9, 9, 35, tzinfo=KYIV)) == []
