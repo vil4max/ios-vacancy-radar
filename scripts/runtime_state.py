@@ -60,6 +60,12 @@ def merge_state(base, local, remote, path: str, keys: tuple[str, ...] = ()):
         if not all(type(item) is expected_type for item in items):
             raise StateConflict(f"Invalid claim value: {path}")
         return sorted(set(items))
+    # A deletion must remove the whole value; recursing into a deleted dict
+    # would keep its nested dicts as empty stubs.
+    if local is MISSING and (remote is MISSING or remote == base):
+        return MISSING
+    if remote is MISSING and local == base:
+        return MISSING
     if all(isinstance(v, dict) for v in values):
         result = {}
         for key in sorted(set().union(*(v.keys() for v in values))):

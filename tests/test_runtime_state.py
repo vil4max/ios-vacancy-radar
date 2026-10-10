@@ -210,6 +210,26 @@ def test_invalid_claim_values_rejected():
         state.merge_state([], [{}], [], "database/collect_slots.json", ("days", "2026-09-19", "slots"))
 
 
+def _feed(*keys):
+    return {"schema_version": 1, "vacancies": {
+        key: {"title": "iOS Engineer", "first_seen": "2026-09-01T09:00:00+00:00", "advertised_locations": [],
+              "labels": {"level": "senior", "work_authorization": []}}
+        for key in keys}}
+
+
+def test_pruned_feed_record_is_removed_not_left_as_a_stub():
+    base = _feed("https://example.com/jobs/old", "https://example.com/jobs/kept")
+    local = _feed("https://example.com/jobs/kept", "https://example.com/jobs/new")
+    merged = state.merge_state(base, local, base, "database/vacancy_feed.json")
+    assert merged == local
+
+
+def test_record_pruned_on_both_sides_is_removed():
+    base = _feed("https://example.com/jobs/old")
+    merged = state.merge_state(base, _feed(), _feed(), "database/vacancy_feed.json")
+    assert merged == _feed()
+
+
 def test_public_state_strips_application_decisions_from_seen():
     legacy = {"https://acme.example/job": {"title": "iOS", "company": "Acme", "disposition": "applied",
                                            "applied_at": "2026-09-01"}}
