@@ -457,6 +457,15 @@ def posting_language(text: str) -> str:
     return "uk" if ukrainian >= russian else "ru"
 
 
+def _workable_from_kyiv(vacancy: Vacancy) -> bool | None:
+    """None when the posting states neither a location nor remote work: the
+    admission rule lets such a role through, but the label must not claim it."""
+    mode = (vacancy.remote or "").strip().lower()
+    if not (vacancy.location or "").strip() and mode != "remote":
+        return None
+    return is_work_mode_eligible(vacancy.location, vacancy.remote)
+
+
 def vacancy_labels(vacancy: Vacancy) -> dict[str, Any]:
     """Signals for the downstream decision. They are facts about the posting;
     the collector attaches them and does not act on them."""
@@ -465,7 +474,7 @@ def vacancy_labels(vacancy: Vacancy) -> dict[str, Any]:
         "junior": not is_target_level(vacancy.title),
         "level": title_level(vacancy.title),
         "work_mode": (vacancy.remote or "unknown").strip().lower() or "unknown",
-        "workable_from_kyiv": is_work_mode_eligible(vacancy.location, vacancy.remote),
+        "workable_from_kyiv": _workable_from_kyiv(vacancy),
         "location_needs_check": location_attention(vacancy.location, vacancy.remote),
         "work_authorization": list(work_authorization_blockers(vacancy.description or "")),
     }

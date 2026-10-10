@@ -161,3 +161,12 @@ def test_hirify_link_version_parameter_does_not_create_a_second_key() -> None:
 
     assert canonicalize_url("https://hirify.me/jobs/100001-ios?v=3") == "https://hirify.me/jobs/100001-ios"
     assert canonicalize_url("https://example.com/jobs?v=3") == "https://example.com/jobs?v=3"
+
+
+def test_workable_from_kyiv_is_unknown_without_location_or_remote() -> None:
+    from parser.normalize import vacancy_labels
+
+    assert vacancy_labels(make_vacancy(location=None, remote="unknown"))["workable_from_kyiv"] is None
+    assert vacancy_labels(make_vacancy(location=None, remote="remote"))["workable_from_kyiv"] is True
+    assert vacancy_labels(make_vacancy(location="Kyiv, Ukraine", remote="onsite"))["workable_from_kyiv"] is True
+    assert vacancy_labels(make_vacancy(location="Limassol, Cyprus", remote="onsite"))["workable_from_kyiv"] is False

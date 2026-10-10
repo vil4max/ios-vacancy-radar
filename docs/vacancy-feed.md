@@ -79,6 +79,8 @@ is git-ignored here.
 - `labels.topic` is `native_ios`, `cross_platform`, `apple_platform` or
   `ios_in_description`; see [search topics](search-tracks.md). Only
   `native_ios` entries are announced in the Telegram digest.
+- `labels.workable_from_kyiv` is null when the posting states neither a
+  location nor remote work; treat it as unknown, not as workable.
 - `labels.level` is parsed from the title: junior, middle, senior, lead, staff,
   principal or unknown. The highest tier named wins, and head and architect
   titles sit with lead.

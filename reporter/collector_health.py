@@ -29,7 +29,8 @@ def label_counts(vacancies: list[Vacancy]) -> dict[str, int]:
         flags = {
             f"topic_{labels['topic']}": True,
             "junior": labels["junior"],
-            "not_workable_from_kyiv": not labels["workable_from_kyiv"],
+            "not_workable_from_kyiv": labels["workable_from_kyiv"] is False,
+            "workable_from_kyiv_unknown": labels["workable_from_kyiv"] is None,
             "location_needs_check": labels["location_needs_check"],
             "work_authorization": bool(labels["work_authorization"]),
         }
