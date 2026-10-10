@@ -22,6 +22,7 @@ TELEGRAM_CHANNELS: tuple[str, ...] = (
 )
 
 _LOOKBACK = 100
+_CATCHUP_LIMIT = 3000
 _HIRIFY_CHANNEL = "hirifyme_bot"
 _HIRIFY_JOB_URL = re.compile(
     r"https?://(?:www\.)?hirify\.me/jobs/(\d+)[^\s]*",
@@ -232,7 +233,18 @@ def _is_title_noise(line: str) -> bool:
     return False
 
 
+_TITLE_SCAN_LINES = 8
+# A stack line such as "Swift, SwiftUI" passes the topic check but is not a
+# title; a title names the role.
+_ROLE_WORD = re.compile(
+    r"\b(?:developer|engineer|programmer|lead|architect|dev|розробник|розробниця|"
+    r"інженер|разработчик|программист|инженер)\b",
+    re.IGNORECASE,
+)
+
+
 def extract_title(text: str) -> str:
+    candidates: list[str] = []
     for raw_line in text.splitlines():
         line = raw_line.strip()
         if not line:
@@ -245,8 +257,16 @@ def extract_title(text: str) -> str:
             continue
         cleaned = _strip_line_noise(line)
         if cleaned:
-            return cleaned[:160]
-    return "iOS / Swift vacancy"
+            candidates.append(cleaned[:160])
+        if len(candidates) >= _TITLE_SCAN_LINES:
+            break
+    # Posts often open with a greeting or the employer's pitch; the title is the
+    # first line that names the role. The topic gate reads only the title, so
+    # taking the opening line would drop such a post.
+    for candidate in candidates:
+        if _ROLE_WORD.search(candidate) and is_target_job(candidate):
+            return candidate
+    return candidates[0] if candidates else "iOS / Swift vacancy"
 
 
 def extract_apply_url(text: str) -> str | None:
@@ -389,6 +409,7 @@ def _source_ok(
     scanned: int,
     checkpoint: int | None = None,
     skipped: int = 0,
+    cursor_read: bool = False,
 ) -> SourceResult:
     return SourceResult(
         source_id=f"telegram:{channel}",
@@ -402,7 +423,7 @@ def _source_ok(
         # it every channel turns degraded and the pipeline stops advancing cursors.
         items_scanned=scanned,
         # A cursor-based channel legitimately reads nothing when no posts arrived.
-        empty_is_healthy=channel == _HIRIFY_CHANNEL,
+        empty_is_healthy=cursor_read or channel == _HIRIFY_CHANNEL,
         checkpoint=checkpoint,
         items_skipped=skipped,
     )
@@ -455,13 +476,16 @@ async def _fetch_channel_jobs(
     skipped = 0
     if channel == _HIRIFY_CHANNEL and after_message_id is None:
         messages = await client.get_messages(channel, limit=1)
-    elif channel == _HIRIFY_CHANNEL:
+    elif after_message_id is not None:
+        # Oldest first and bounded: a backlog larger than the bound is read on
+        # the next runs from the advanced cursor instead of being skipped.
         messages = [
             message
             async for message in client.iter_messages(
                 channel,
                 min_id=after_message_id,
                 reverse=True,
+                limit=_CATCHUP_LIMIT,
             )
         ]
     else:
@@ -519,11 +543,12 @@ async def _collect_channels(
                 jobs, checkpoint, scanned, skipped = await _fetch_channel_jobs(
                     client,
                     channel,
-                    after_message_id=cursors.get(channel) if channel == _HIRIFY_CHANNEL else None,
+                    after_message_id=cursors.get(channel),
                 )
                 results.append(
                     _source_ok(
-                        channel, jobs, started, scanned=scanned, checkpoint=checkpoint, skipped=skipped
+                        channel, jobs, started, scanned=scanned, checkpoint=checkpoint, skipped=skipped,
+                        cursor_read=cursors.get(channel) is not None,
                     )
                 )
             except Exception as error:  # noqa: BLE001

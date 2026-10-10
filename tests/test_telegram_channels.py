@@ -356,7 +356,7 @@ def test_hirify_reads_only_messages_after_checkpoint() -> None:
     jobs, checkpoint, _, _ = asyncio.run(
         _fetch_channel_jobs(client, "hirifyme_bot", after_message_id=501)
     )
-    assert client.calls == [{"min_id": 501, "reverse": True}]
+    assert client.calls == [{"min_id": 501, "reverse": True, "limit": 3000}]
     assert len(jobs) == 1
     assert checkpoint == 502
 
@@ -463,3 +463,30 @@ def test_unknown_company_stays_empty_instead_of_the_channel_name() -> None:
     job = job_from_message("itfreelancers", 50, ITFREELANCERS_IOS)
     assert job is not None
     assert job["company"] == ""
+
+
+def test_channel_with_a_cursor_reads_every_message_since_it() -> None:
+    client = _FakeClient([_FakeMessage(900 + offset, "Hello") for offset in range(150)])
+    _, checkpoint, scanned, _ = asyncio.run(_fetch_channel_jobs(client, "itrecruit_ua", after_message_id=899))
+
+    assert client.calls[-1]["min_id"] == 899
+    assert client.calls[-1]["reverse"] is True
+    assert scanned == 150
+    assert checkpoint == 1049
+
+
+def test_channel_without_a_cursor_reads_the_recent_window() -> None:
+    client = _FakeClient([_FakeMessage(900, "Hello")])
+    asyncio.run(_fetch_channel_jobs(client, "itrecruit_ua"))
+
+    assert client.calls[-1] == {"limit": 100}
+
+
+def test_extract_title_skips_an_opening_line_that_is_not_the_role() -> None:
+    text = "Привіт! Шукаємо в команду фахівця\nSenior iOS Developer\nSwift, SwiftUI, remote"
+
+    assert extract_title(text) == "Senior iOS Developer"
+
+
+def test_extract_title_falls_back_to_the_first_line() -> None:
+    assert extract_title("Mobile team is hiring\nSwift, SwiftUI") == "Mobile team is hiring"
