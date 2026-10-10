@@ -9,7 +9,12 @@ JOB_SCRIPT="${ROOT}/scripts/discover_mobile_weekly.sh"
 BASH_BIN="$(command -v bash)"
 GIT_BIN="$(command -v git)"
 CURL_BIN="$(command -v curl)"
-PATH_VALUE="$(dirname "${BASH_BIN}"):$(dirname "${GIT_BIN}"):$(dirname "${CURL_BIN}"):/usr/bin:/bin"
+# The job needs a Python with the pinned dependencies and the external
+# private-data scanner; launchd starts it with an empty environment, so both
+# paths are written into the plist at install time.
+PYTHON_PATH="${RADAR_PYTHON:-${ROOT}/.venv/bin/python}"
+SCAN_PATH="${RADAR_PRIVATE_SCAN:-}"
+PATH_VALUE="$(dirname "${PYTHON_PATH}"):$(dirname "${GIT_BIN}"):$(dirname "${CURL_BIN}"):$(dirname "${BASH_BIN}"):/usr/bin:/bin"
 # Saturday 10:00 local time: outside the collection slots; launchd runs a missed
 # slot when the Mac wakes.
 WEEKDAY="${RADAR_DISCOVERY_WEEKDAY:-6}"
@@ -26,6 +31,14 @@ fi
 
 case "$1" in
   install)
+    if [[ ! -x "${PYTHON_PATH}" ]]; then
+      echo "No Python at ${PYTHON_PATH}: create ${ROOT}/.venv with requirements-dev.lock or set RADAR_PYTHON" >&2
+      exit 1
+    fi
+    if [[ -z "${SCAN_PATH}" || ! -f "${SCAN_PATH}" ]]; then
+      echo "Set RADAR_PRIVATE_SCAN to the private-data scanner before installing" >&2
+      exit 1
+    fi
     chmod +x "${JOB_SCRIPT}"
     mkdir -p "${PLIST_DIR}"
     cat >"${PLIST_PATH}" <<EOF
@@ -48,6 +61,10 @@ case "$1" in
     <string>${PATH_VALUE}</string>
     <key>LANG</key>
     <string>en_US.UTF-8</string>
+    <key>RADAR_PYTHON</key>
+    <string>${PYTHON_PATH}</string>
+    <key>RADAR_PRIVATE_SCAN</key>
+    <string>${SCAN_PATH}</string>
   </dict>
   <key>StartCalendarInterval</key>
   <dict>
