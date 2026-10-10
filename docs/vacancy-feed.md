@@ -73,7 +73,7 @@ is git-ignored here.
   equal titles from unknown employers do not prove one opening, so they are
   neither merged with each other nor with a known company's role.
 - `source` names where the entry came from: `company` for a career page or ATS
-  board, `dou` for the jobs.dou.ua RSS feeds, `telegram` for a Telegram channel,
+  board, `dou` for the jobs.dou.ua RSS feeds, `djinni` for the Djinni iOS RSS feed, `telegram` for a Telegram channel,
   `hirify.me` for Hirify, and `findmyremote.ai` for the findmyremote.ai listing.
   New values may appear without a version change.
 - `labels.topic` is `native_ios`, `cross_platform`, `apple_platform` or

@@ -9,6 +9,7 @@ from collector import (
     bespoke,
     companies,
     company_watchlist,
+    djinni_rss,
     dou_rss,
     epam,
     findmyremote,
@@ -18,7 +19,7 @@ from collector import (
 from collector.types import STATUS_FAILED, SourceResult
 
 _NETWORK_MODULES = (
-    ats_boards, companies, company_watchlist, generic, bespoke, dou_rss, epam, hirify, findmyremote,
+    ats_boards, companies, company_watchlist, generic, bespoke, dou_rss, djinni_rss, epam, hirify, findmyremote,
 )
 
 
@@ -118,6 +119,7 @@ def test_registry_reads_aggregators_only_through_their_public_feeds() -> None:
 
     assert "collector.dou_rss" in module_names
     assert "collector.dou" not in module_names
+    assert "collector.djinni_rss" in module_names
     assert "collector.djinni" not in module_names
 
 
