@@ -4,16 +4,19 @@ The collector gathers native iOS engineering vacancies and hands them over. It
 does not decide whether a role suits anyone; it attaches labels that describe
 each vacancy.
 
-The only gate is the topic. A collected iOS role must name a native Apple
-platform or language in its title; equivalent word order, punctuation and
-explicit technology titles such as Senior Swift Engineer are accepted.
-Cross-platform and QA titles are outside the topic.
+The only gate is the topic: an Apple-platform role. The title names iOS, Swift
+or another Apple platform, or a mobile or software engineering title comes with
+a description that asks for Apple core technologies. QA, SDET and test
+automation titles are outside the topic. The `topic` label says how close a
+handed-over vacancy is to native iOS; only `native_ios` roles appear in the
+Telegram digest, while the feed carries every on-topic vacancy.
 
 Everything else is a label, not a filter (`vacancy_labels` in
 `parser/normalize.py`):
 
 | Label | Meaning |
 | --- | --- |
+| `topic` | `native_ios` (a native iOS title), `cross_platform` (iOS together with Android, React Native, KMM or Flutter), `apple_platform` (macOS, visionOS or another Apple title without iOS), or `ios_in_description` (a mobile or engineering title whose description asks for Apple core technologies) |
 | `junior` | The title is junior-only: junior, jr, intern, internship, trainee or their Ukrainian and Russian equivalents, with no senior-level word beside it |
 | `work_mode` | remote, hybrid, onsite or unknown |
 | `workable_from_kyiv` | Remote, or a Kyiv office |

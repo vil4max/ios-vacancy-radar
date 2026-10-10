@@ -29,8 +29,11 @@ that is outside this repository.
    records with a canonical URL and a stable identity.
 3. **Deduplicate** — `parser/deduplicate.py` collapses one role advertised in
    several places, and `role_family_key` recognises a re-post of the same role.
-4. **Topic gate** — `is_inbox_candidate` keeps a vacancy only if it is on topic:
-   a native iOS title. This is the only filter.
+4. **Topic gate** — `is_handover_candidate` keeps a vacancy only if it is an
+   Apple-platform role, by title or by description. This is the only filter.
+   The `topic` label separates native iOS titles (`is_inbox_candidate`, the
+   Telegram digest) from cross-platform, other Apple and body-only matches,
+   which reach the feed only.
 5. **Label** — `vacancy_labels` attaches facts about the posting: level, work
    mode, location and work-authorization requirements. Labels never remove a
    vacancy. See [search topics](docs/search-tracks.md).

@@ -28,6 +28,7 @@ is git-ignored here.
       "role_key": "example engineering | ios engineer",
       "repeat_of_seen_role": false,
       "labels": {
+        "topic": "native_ios",
         "junior": false,
         "level": "senior",
         "work_mode": "remote",
@@ -75,6 +76,9 @@ is git-ignored here.
   board, `dou` for the jobs.dou.ua RSS feeds, `telegram` for a Telegram channel,
   `hirify.me` for Hirify, and `findmyremote.ai` for the findmyremote.ai listing.
   New values may appear without a version change.
+- `labels.topic` is `native_ios`, `cross_platform`, `apple_platform` or
+  `ios_in_description`; see [search topics](search-tracks.md). Only
+  `native_ios` entries are announced in the Telegram digest.
 - `labels.level` is parsed from the title: junior, middle, senior, lead, staff,
   principal or unknown. The highest tier named wins, and head and architect
   titles sit with lead.

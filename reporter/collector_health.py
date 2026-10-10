@@ -6,7 +6,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-from parser.normalize import Vacancy, is_inbox_candidate, is_primary_ios_role, vacancy_labels
+from parser.normalize import Vacancy, is_handover_candidate, ios_topic, is_primary_ios_role, vacancy_labels
 
 
 def rejection_counts(vacancies: list[Vacancy]) -> dict[str, int]:
@@ -14,6 +14,8 @@ def rejection_counts(vacancies: list[Vacancy]) -> dict[str, int]:
     for vacancy in vacancies:
         if not is_primary_ios_role(vacancy.title):
             counts["outside_primary_ios"] = counts.get("outside_primary_ios", 0) + 1
+        if ios_topic(vacancy) is None:
+            counts["off_topic"] = counts.get("off_topic", 0) + 1
     return counts
 
 
@@ -21,10 +23,11 @@ def label_counts(vacancies: list[Vacancy]) -> dict[str, int]:
     """How many handed-over vacancies carry each downstream signal."""
     counts: dict[str, int] = {}
     for vacancy in vacancies:
-        if not is_inbox_candidate(vacancy):
+        if not is_handover_candidate(vacancy):
             continue
         labels = vacancy_labels(vacancy)
         flags = {
+            f"topic_{labels['topic']}": True,
             "junior": labels["junior"],
             "not_workable_from_kyiv": not labels["workable_from_kyiv"],
             "location_needs_check": labels["location_needs_check"],

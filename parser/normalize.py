@@ -391,10 +391,29 @@ def vacancy_title_marks(vacancy: Vacancy) -> str:
 
 
 def is_inbox_candidate(vacancy: Vacancy) -> bool:
-    """Topic gate only: a native iOS role. The collector gathers and hands over;
-    level, work mode and work authorization label a vacancy (vacancy_labels)
-    and never drop it."""
+    """A native iOS role: what the Telegram digest lists. Level, work mode and
+    work authorization label a vacancy (vacancy_labels) and never drop it."""
     return is_primary_ios_role(vacancy.title)
+
+
+def ios_topic(vacancy: Vacancy) -> str | None:
+    """How a vacancy relates to iOS, or None when it is off topic. Only native
+    iOS roles reach the digest; every on-topic vacancy reaches the feed, so a
+    macOS role or a "Mobile Engineer" whose body asks for Swift is not lost."""
+    title = vacancy.title or ""
+    if is_primary_ios_role(title):
+        return "native_ios"
+    if not is_ios_job(title, vacancy.description):
+        return None
+    if _CROSS_PLATFORM_TITLE.search(title):
+        return "cross_platform"
+    if is_ios_job(title):
+        return "apple_platform"
+    return "ios_in_description"
+
+
+def is_handover_candidate(vacancy: Vacancy) -> bool:
+    return ios_topic(vacancy) is not None
 
 
 _LEVELS: tuple[tuple[str, re.Pattern[str]], ...] = (
@@ -434,6 +453,7 @@ def vacancy_labels(vacancy: Vacancy) -> dict[str, Any]:
     """Signals for the downstream decision. They are facts about the posting;
     the collector attaches them and does not act on them."""
     return {
+        "topic": ios_topic(vacancy) or "off_topic",
         "junior": not is_target_level(vacancy.title),
         "level": title_level(vacancy.title),
         "work_mode": (vacancy.remote or "unknown").strip().lower() or "unknown",

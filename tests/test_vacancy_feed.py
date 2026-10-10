@@ -142,3 +142,15 @@ def test_role_repeat_reaches_the_feed_but_not_the_digest(tmp_path, monkeypatch) 
     entries = load_feed(feed_path)["vacancies"]
     assert entries["https://nimbusly.example/jobs/2"]["repeat_of_seen_role"] is True
     assert entries["https://other.example/jobs/3"]["repeat_of_seen_role"] is False
+
+
+def test_topic_label_separates_native_ios_from_other_apple_roles() -> None:
+    from parser.normalize import ios_topic
+
+    assert ios_topic(make_vacancy(title="Senior iOS Engineer")) == "native_ios"
+    assert ios_topic(make_vacancy(title="iOS/Android Developer")) == "cross_platform"
+    assert ios_topic(make_vacancy(title="Senior macOS Engineer")) == "apple_platform"
+    assert ios_topic(make_vacancy(
+        title="Senior Mobile Engineer", description="We build our app in Swift and SwiftUI with UIKit."
+    )) == "ios_in_description"
+    assert ios_topic(make_vacancy(title="Senior Backend Engineer", description="Go and Postgres")) is None

@@ -16,7 +16,10 @@ not belong in a general-purpose public collector.
 ## Decision
 
 The collector gathers open vacancies, deduplicates them, attaches labels, and
-hands them over. The only filter is the topic: a native iOS title. Level, work
+hands them over. The only filter is the topic: an Apple-platform role, named in
+the title or asked for in the description. Since 2026-10-10 the narrower
+"native iOS title" check is a `topic` label too: it selects what the Telegram
+digest lists, and the feed carries every on-topic vacancy. Level, work
 mode, location and work-authorization requirements become labels
 (`vacancy_labels`) that travel with the vacancy in the Telegram digest and in
 the hand-over feed.

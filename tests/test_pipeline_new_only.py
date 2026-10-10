@@ -51,7 +51,7 @@ def test_second_identical_run_sends_zero_created(monkeypatch) -> None:
     assert alerts == [1, 0]
 
 
-def test_pipeline_excludes_cross_platform_and_foreign_location_from_inbox(monkeypatch) -> None:
+def test_pipeline_keeps_cross_platform_and_repeats_out_of_the_digest_only(monkeypatch) -> None:
     delivered: list[list[str]] = []
 
     def fake_hourly(fresh, *, stats, now=None):
@@ -59,15 +59,16 @@ def test_pipeline_excludes_cross_platform_and_foreign_location_from_inbox(monkey
 
     monkeypatch.setattr("scripts.run_pipeline.notify_hourly_inbox", fake_hourly)
     vacancies = [
-        make_vacancy(title="iOS Developer with Android", location="United States"),
-        make_vacancy(title="Senior iOS Engineer", location="Buenos Aires"),
-        make_vacancy(title="Senior iOS Engineer", location="Ukraine"),
+        make_vacancy(title="iOS Developer with Android", location="United States", url="https://example.com/job/1"),
+        make_vacancy(title="Senior iOS Engineer", location="Buenos Aires", url="https://example.com/job/2"),
+        make_vacancy(title="Senior iOS Engineer", location="Ukraine", url="https://example.com/job/3"),
     ]
 
     sent, marked, notify_ok = process_new_vacancies(vacancies, {}, seed_only=False)
 
-    assert sent == 1
-    assert marked == 1
+    # All three reach the feed; the digest lists only the first native iOS role.
+    assert sent == 3
+    assert marked == 3
     assert notify_ok is True
     assert delivered == [["Senior iOS Engineer"]]
 

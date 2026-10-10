@@ -50,6 +50,7 @@ def test_label_counts_describe_handed_over_vacancies_only() -> None:
     # An office abroad is not workable and needs no check; the off-topic role is
     # not handed over, so it is not counted at all.
     assert label_counts(vacancies) == {
+        "topic_native_ios": 2,
         "not_workable_from_kyiv": 1,
         "junior": 1,
         "location_needs_check": 1,

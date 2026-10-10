@@ -41,7 +41,7 @@ from storage.telegram_cursors import (
 )
 from integrations.notify import CollectReportStats, SourceFailure
 from parser.deduplicate import deduplicate_with_report
-from parser.normalize import Vacancy, is_inbox_candidate, normalize_many, role_family_key
+from parser.normalize import Vacancy, is_handover_candidate, is_inbox_candidate, normalize_many, role_family_key
 from reporter.hourly import notify_hourly_inbox
 from reporter.collector_health import label_counts, rejection_counts, safe_error, write_collect_diagnostics
 
@@ -200,6 +200,7 @@ def collect_vacancies(
             "raw": len(raw_jobs), "normalized": len(vacancies), "unique_roles": len(unique),
             "duplicates_collapsed": removed,
             "inbox_eligible": sum(is_inbox_candidate(item) for item in unique),
+            "handover_eligible": sum(is_handover_candidate(item) for item in unique),
         },
         "rejections": rejection_counts(unique),
         "labels": label_counts(unique),
@@ -272,11 +273,11 @@ def process_new_vacancies(
     failed = tuple(failed_source_names or ())
     health = source_health or {}
 
-    active = [vacancy for vacancy in vacancies if is_inbox_candidate(vacancy)]
+    active = [vacancy for vacancy in vacancies if is_handover_candidate(vacancy)]
     fresh = select_fresh(active, seen, seen_gate=seen_gate_enabled())
     repeats = role_repeats(fresh, seen) if seen_gate_enabled() else []
     repeat_ids = {id(vacancy) for vacancy in repeats}
-    digest = [vacancy for vacancy in fresh if id(vacancy) not in repeat_ids]
+    digest = [vacancy for vacancy in fresh if id(vacancy) not in repeat_ids and is_inbox_candidate(vacancy)]
 
     stats = CollectReportStats(
         found=len(active),
