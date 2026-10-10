@@ -15,7 +15,7 @@ from collector.companies import collect_all
 from collector.results import is_access_blocked
 from collector.types import STATUS_DEGRADED, STATUS_FAILED, SourceResult
 from config.settings import seen_gate_enabled
-from storage.vacancy_feed import append_feed, load_feed, prune_feed, save_feed
+from storage.vacancy_feed import append_feed, feed_key, load_feed, prune_feed, save_feed
 from storage.seen import (
     default_seen_path,
     load_seen,
@@ -209,23 +209,39 @@ def collect_vacancies(
 
 
 def select_fresh(vacancies: list[Vacancy], seen: dict, *, seen_gate: bool) -> list[Vacancy]:
+    """Every vacancy whose URL was not reported before. A role family seen under
+    another URL does not hide it: a distinct opening in the same family must
+    still reach the consumer."""
     if not seen_gate:
         return list(vacancies)
     fresh: list[Vacancy] = []
-    known_roles = seen_roles(seen)
+    taken: set[str] = set()
     for vacancy in vacancies:
         key = seen_key(vacancy)
-        # An unknown employer cannot match a role reported under another post.
-        role = role_family_key(vacancy.company, vacancy.title) if vacancy.company.strip() else None
-        if not key or key in seen or (role is not None and role in known_roles):
+        if not key or key in seen or key in taken:
             continue
+        taken.add(key)
         fresh.append(vacancy)
-        if role is not None:
-            known_roles.add(role)
     return fresh
 
 
-def hand_over(fresh: list[Vacancy], *, first_seen: str) -> bool:
+def role_repeats(fresh: list[Vacancy], seen: dict) -> list[Vacancy]:
+    """Fresh vacancies whose role family was already reported, or appeared
+    earlier in this run under another URL."""
+    known_roles = seen_roles(seen)
+    repeats: list[Vacancy] = []
+    for vacancy in fresh:
+        # An unknown employer cannot match a role reported under another post.
+        if not vacancy.company.strip():
+            continue
+        role = role_family_key(vacancy.company, vacancy.title)
+        if role in known_roles:
+            repeats.append(vacancy)
+        known_roles.add(role)
+    return repeats
+
+
+def hand_over(fresh: list[Vacancy], *, first_seen: str, repeats: frozenset[str] = frozenset()) -> bool:
     """Append the new vacancies to the downstream feed. The feed is a search
     result, so it exists only when FEED_PATH points into the private store."""
     raw = os.environ.get("FEED_PATH", "").strip()
@@ -234,7 +250,7 @@ def hand_over(fresh: list[Vacancy], *, first_seen: str) -> bool:
     try:
         path = Path(raw)
         feed = load_feed(path)
-        append_feed(feed, fresh, first_seen=first_seen)
+        append_feed(feed, fresh, first_seen=first_seen, repeats=repeats)
         prune_feed(feed)
         save_feed(path, feed)
     except (OSError, ValueError) as error:
@@ -258,11 +274,14 @@ def process_new_vacancies(
 
     active = [vacancy for vacancy in vacancies if is_inbox_candidate(vacancy)]
     fresh = select_fresh(active, seen, seen_gate=seen_gate_enabled())
+    repeats = role_repeats(fresh, seen) if seen_gate_enabled() else []
+    repeat_ids = {id(vacancy) for vacancy in repeats}
+    digest = [vacancy for vacancy in fresh if id(vacancy) not in repeat_ids]
 
     stats = CollectReportStats(
         found=len(active),
         seen_total=len(seen),
-        new_count=len(fresh),
+        new_count=len(digest),
         duplicates_removed=duplicates_removed,
         failed_source_names=failed,
         sites_ok=int(health.get("sites_ok", 0) or 0),
@@ -291,11 +310,11 @@ def process_new_vacancies(
     # Order matters: a vacancy is marked seen only after the digest was sent and
     # the hand-over succeeded, so a failure at either step is retried next run.
     try:
-        notify_hourly_inbox(fresh, stats=stats)
+        notify_hourly_inbox(digest, stats=stats)
     except Exception as error:
         print(f"Telegram send failed: {safe_error(str(error))}", file=sys.stderr)
         return 0, 0, False
-    if not hand_over(fresh, first_seen=now):
+    if not hand_over(fresh, first_seen=now, repeats=frozenset(feed_key(vacancy) for vacancy in repeats)):
         return 0, 0, False
 
     marked = sum(mark_seen(seen, vacancy, first_seen=now) for vacancy in fresh)

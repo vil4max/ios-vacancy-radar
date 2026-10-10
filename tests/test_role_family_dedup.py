@@ -26,7 +26,7 @@ def test_role_family_keeps_distinct_roles_apart() -> None:
     )
 
 
-def test_hirify_mirror_of_seen_ats_posting_is_not_new() -> None:
+def test_hirify_mirror_of_seen_ats_posting_is_a_repeat() -> None:
     seen: dict = {}
     mark_seen(seen, make_vacancy(
         company="Nimbusly", title="iOS Developer", url="https://nimbusly.example-ats.io/vacancy/ios-developer-2",
@@ -34,10 +34,12 @@ def test_hirify_mirror_of_seen_ats_posting_is_not_new() -> None:
     mirror = make_vacancy(
         company="Nimbusly", title="Senior IOS Developer (AI)", url="https://hirify.me/jobs/100001-senior-ios-developer-ai",
     )
-    assert run_pipeline.select_fresh([mirror], seen, seen_gate=True) == []
+    fresh = run_pipeline.select_fresh([mirror], seen, seen_gate=True)
+    assert fresh == [mirror]
+    assert run_pipeline.role_repeats(fresh, seen) == [mirror]
 
 
-def test_repost_under_new_hirify_id_is_not_new() -> None:
+def test_same_family_under_a_new_url_is_handed_over_as_a_repeat() -> None:
     seen: dict = {}
     mark_seen(seen, make_vacancy(
         company="Quartzo", title="Senior Staff iOS Engineer (Lending)", url="https://hirify.me/jobs/200001-senior-staff-ios-engineer-lending",
@@ -46,7 +48,10 @@ def test_repost_under_new_hirify_id_is_not_new() -> None:
         company="Quartzo", title="Senior Staff iOS Engineer (Wallet)", url="https://hirify.me/jobs/200002-senior-staff-ios-engineer-wallet",
     )
     other_company = make_vacancy(company="Other Co", url="https://hirify.me/jobs/200003-senior-ios-developer")
-    assert run_pipeline.select_fresh([repost, other_company], seen, seen_gate=True) == [other_company]
+    fresh = run_pipeline.select_fresh([repost, other_company], seen, seen_gate=True)
+    # A team qualifier can name a distinct opening, so the repeat is not dropped.
+    assert fresh == [repost, other_company]
+    assert run_pipeline.role_repeats(fresh, seen) == [repost]
 
 
 def test_unknown_company_post_is_fresh_despite_a_seen_title() -> None:
@@ -54,4 +59,14 @@ def test_unknown_company_post_is_fresh_despite_a_seen_title() -> None:
     first = make_vacancy(company="", url="https://t.me/mobile_jobs/2", source="telegram")
     second = make_vacancy(company="", url="https://t.me/itrecruit_ua/3", source="telegram")
 
-    assert run_pipeline.select_fresh([first, second], seen, seen_gate=True) == [first, second]
+    fresh = run_pipeline.select_fresh([first, second], seen, seen_gate=True)
+    assert fresh == [first, second]
+    assert run_pipeline.role_repeats(fresh, seen) == []
+
+
+def test_second_url_of_one_role_in_a_run_is_a_repeat() -> None:
+    first = make_vacancy(company="Nimbusly", title="iOS Developer", url="https://nimbusly.example/jobs/1")
+    second = make_vacancy(company="Nimbusly", title="Senior iOS Developer", url="https://nimbusly.example/jobs/2")
+    fresh = run_pipeline.select_fresh([first, second], {}, seen_gate=True)
+    assert fresh == [first, second]
+    assert run_pipeline.role_repeats(fresh, {}) == [second]

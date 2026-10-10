@@ -10,12 +10,14 @@ from scripts import run_pipeline
 from tests.conftest import make_vacancy
 
 
-def test_next_city_variant_is_not_new():
+def test_next_city_variant_is_a_repeat_not_a_digest_item():
     first = make_vacancy(url="https://example.com/kyiv")
     other = make_vacancy(url="https://example.com/remote")
     seen = {}
     mark_seen(seen, first)
-    assert run_pipeline.select_fresh([other], seen, seen_gate=True) == []
+    fresh = run_pipeline.select_fresh([other], seen, seen_gate=True)
+    assert fresh == [other]
+    assert run_pipeline.role_repeats(fresh, seen) == [other]
 
 
 def test_diagnostics_redact_credentials_and_urls(monkeypatch):

@@ -35,7 +35,9 @@ that is outside this repository.
    mode, location and work-authorization requirements. Labels never remove a
    vacancy. See [search topics](docs/search-tracks.md).
 6. **Seen gate** — `storage/seen.py` holds what was already reported, so a
-   vacancy is announced once.
+   vacancy URL is handed over once. A new URL whose role family was reported
+   before still goes to the feed, marked `repeat_of_seen_role`, and is left out
+   of the Telegram digest.
 7. **Deliver** — `scripts/run_pipeline.py` sends the Telegram digest, appends the
    new vacancies to the [vacancy feed](docs/vacancy-feed.md), and only then marks
    them seen. A failure at either step leaves them unmarked, so the next run

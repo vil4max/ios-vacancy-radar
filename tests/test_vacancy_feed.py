@@ -6,6 +6,7 @@ from datetime import datetime, timedelta, timezone
 import pytest
 
 from parser.normalize import normalize_many
+from storage.seen import mark_seen
 from storage.vacancy_feed import append_feed, load_feed, prune_feed, save_feed
 from scripts import run_pipeline
 from scripts import runtime_state as state
@@ -119,3 +120,25 @@ def test_unknown_company_has_no_role_key(tmp_path) -> None:
     entry = feed["vacancies"]["https://t.me/mobile_jobs/7"]
     assert entry["company"] == ""
     assert entry["role_key"] is None
+
+
+def test_role_repeat_reaches_the_feed_but_not_the_digest(tmp_path, monkeypatch) -> None:
+    feed_path = tmp_path / "feed.json"
+    monkeypatch.setenv("FEED_PATH", str(feed_path))
+    digests: list[list[str]] = []
+    monkeypatch.setattr(
+        "scripts.run_pipeline.notify_hourly_inbox",
+        lambda fresh, *, stats, now=None: digests.append([vacancy.url for vacancy in fresh]),
+    )
+    seen: dict = {}
+    mark_seen(seen, make_vacancy(company="Nimbusly", title="iOS Developer", url="https://nimbusly.example/jobs/1"))
+    repeat = make_vacancy(company="Nimbusly", title="Senior iOS Developer (Wallet)", url="https://nimbusly.example/jobs/2")
+    new_role = make_vacancy(company="Other Co", title="iOS Developer", url="https://other.example/jobs/3")
+
+    sent, marked, ok = run_pipeline.process_new_vacancies([repeat, new_role], seen, seed_only=False)
+
+    assert (sent, marked, ok) == (2, 2, True)
+    assert digests == [["https://other.example/jobs/3"]]
+    entries = load_feed(feed_path)["vacancies"]
+    assert entries["https://nimbusly.example/jobs/2"]["repeat_of_seen_role"] is True
+    assert entries["https://other.example/jobs/3"]["repeat_of_seen_role"] is False

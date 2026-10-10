@@ -26,6 +26,7 @@ is git-ignored here.
       "published_at": null,
       "first_seen": "2026-01-01T09:00:00+00:00",
       "role_key": "example engineering | ios engineer",
+      "repeat_of_seen_role": false,
       "labels": {
         "junior": false,
         "level": "senior",
@@ -57,8 +58,15 @@ is git-ignored here.
   of keys it has handled. It must not write into this file: the collector owns
   it, and a concurrent edit is a merge conflict for the publisher.
 - `role_key` is the deduplication key of the role. One role can arrive from
-  several sources under different URLs; entries that share a `role_key` describe
-  the same opening, so one description per key is enough to read.
+  several sources under different URLs; entries that share a `role_key` usually
+  describe the same opening, but the key drops team qualifiers and seniority, so
+  two openings of one family can share it.
+- `repeat_of_seen_role` is true when the URL is new but its role family was
+  reported before, or appeared earlier in the same run under another URL: a
+  repost, a mirror on another board, a city variant, or a distinct opening the
+  family key cannot tell apart. The Telegram digest leaves such entries out; the
+  feed keeps every vacancy with a new URL, so the consumer sees all of them and
+  decides which are duplicates.
 - `company` is an empty string when the source did not name the employer, as in
   a Telegram post without a company line. Such an entry has `role_key: null`:
   equal titles from unknown employers do not prove one opening, so they are

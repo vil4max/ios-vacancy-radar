@@ -29,7 +29,11 @@ def _plain_text(description: str | None) -> str:
     return BeautifulSoup(description or "", "html.parser").get_text("\n", strip=True)
 
 
-def feed_entry(vacancy: Vacancy, *, first_seen: str) -> dict[str, Any]:
+def feed_key(vacancy: Vacancy) -> str:
+    return vacancy.canonical_url or vacancy.identity_key
+
+
+def feed_entry(vacancy: Vacancy, *, first_seen: str, repeat_of_seen_role: bool = False) -> dict[str, Any]:
     text = _plain_text(vacancy.description)
     return {
         "company": vacancy.company,
@@ -44,6 +48,10 @@ def feed_entry(vacancy: Vacancy, *, first_seen: str) -> dict[str, Any]:
         # one description per role_key instead of one per URL. Without a known
         # company there is no role to share, so the key is null.
         "role_key": " | ".join(role_family_key(vacancy.company, vacancy.title)) if vacancy.company.strip() else None,
+        # A new URL whose role family was reported before: a repost, a mirror,
+        # a city variant or a distinct opening in the same family. The digest
+        # leaves it out; the feed keeps it so the consumer still decides it.
+        "repeat_of_seen_role": repeat_of_seen_role,
         "labels": vacancy_labels(vacancy),
         "language": posting_language(f"{vacancy.title} {text}"),
         "description": text[:DESCRIPTION_LIMIT],
@@ -60,13 +68,15 @@ def load_feed(path: Path) -> dict[str, Any]:
     return {"schema_version": SCHEMA_VERSION, "vacancies": vacancies if isinstance(vacancies, dict) else {}}
 
 
-def append_feed(feed: dict[str, Any], vacancies: list[Vacancy], *, first_seen: str) -> int:
+def append_feed(
+    feed: dict[str, Any], vacancies: list[Vacancy], *, first_seen: str, repeats: frozenset[str] = frozenset()
+) -> int:
     added = 0
     for vacancy in vacancies:
-        key = vacancy.canonical_url or vacancy.identity_key
+        key = feed_key(vacancy)
         if not key or key in feed["vacancies"]:
             continue
-        feed["vacancies"][key] = feed_entry(vacancy, first_seen=first_seen)
+        feed["vacancies"][key] = feed_entry(vacancy, first_seen=first_seen, repeat_of_seen_role=key in repeats)
         added += 1
     return added
 
