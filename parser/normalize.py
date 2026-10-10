@@ -23,6 +23,12 @@ _TRACKING_QUERY_KEYS = {
     "utm_reader",
 }
 
+# Per-host tracking keys that are too generic to strip everywhere: hirify.me
+# appends ?v= to bot links, so one posting would otherwise get a second key.
+_HOST_TRACKING_QUERY_KEYS = {
+    "hirify.me": {"v"},
+}
+
 _HOST_ALIASES = {
     "people.andersenlab.com": "people-andersenlab.com",
 }
@@ -51,6 +57,8 @@ def canonicalize_url(raw: str) -> str:
         if lowered_key.startswith("utm_"):
             continue
         if lowered_key in _TRACKING_QUERY_KEYS:
+            continue
+        if lowered_key in _HOST_TRACKING_QUERY_KEYS.get(host.removeprefix("www."), ()):
             continue
         query_items.append((key, value))
 

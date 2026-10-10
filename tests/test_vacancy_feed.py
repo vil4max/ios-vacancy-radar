@@ -154,3 +154,10 @@ def test_topic_label_separates_native_ios_from_other_apple_roles() -> None:
         title="Senior Mobile Engineer", description="We build our app in Swift and SwiftUI with UIKit."
     )) == "ios_in_description"
     assert ios_topic(make_vacancy(title="Senior Backend Engineer", description="Go and Postgres")) is None
+
+
+def test_hirify_link_version_parameter_does_not_create_a_second_key() -> None:
+    from parser.normalize import canonicalize_url
+
+    assert canonicalize_url("https://hirify.me/jobs/100001-ios?v=3") == "https://hirify.me/jobs/100001-ios"
+    assert canonicalize_url("https://example.com/jobs?v=3") == "https://example.com/jobs?v=3"
