@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+
 from integrations.notify import CollectReportStats
 from parser.normalize import normalize_many
 from scripts.run_pipeline import process_new_vacancies
@@ -73,8 +75,10 @@ def test_pipeline_keeps_cross_platform_and_repeats_out_of_the_digest_only(monkey
     assert delivered == [["Senior iOS Engineer"]]
 
 
-def test_seed_only_marks_without_sending(monkeypatch) -> None:
+def test_seed_only_marks_and_feeds_without_sending(monkeypatch, tmp_path) -> None:
     calls: list[int] = []
+    feed_path = tmp_path / "feed.json"
+    monkeypatch.setenv("FEED_PATH", str(feed_path))
 
     def fake_hourly(fresh, *, stats, now=None):
         calls.append(1)
@@ -85,11 +89,12 @@ def test_seed_only_marks_without_sending(monkeypatch) -> None:
     seen: dict = {}
 
     sent_count, marked, notify_ok = process_new_vacancies(vacancies, seen, seed_only=True)
-    assert sent_count == 0
+    assert sent_count == 1
     assert marked == 1
     assert notify_ok is True
     assert calls == []
     assert "https://example.com/jobs/seed" in seen
+    assert "https://example.com/jobs/seed" in json.loads(feed_path.read_text(encoding="utf-8"))["vacancies"]
 
 
 def test_same_url_different_description_does_not_recount(monkeypatch) -> None:

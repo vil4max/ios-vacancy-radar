@@ -305,8 +305,12 @@ def process_new_vacancies(
     )
 
     if seed_only:
+        # Seeding silences the digest only; a vacancy marked seen without a
+        # feed entry would never reach the consumer.
+        if not hand_over(fresh, first_seen=now, repeats=frozenset(feed_key(vacancy) for vacancy in repeats)):
+            return 0, 0, False
         marked = sum(mark_seen(seen, vacancy, first_seen=now) for vacancy in fresh)
-        return 0, marked, True
+        return len(fresh), marked, True
 
     # Order matters: a vacancy is marked seen only after the digest was sent and
     # the hand-over succeeded, so a failure at either step is retried next run.
