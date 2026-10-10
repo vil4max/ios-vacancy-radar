@@ -1,12 +1,12 @@
 # iOS Vacancy Radar
 
-Collect public vacancies, label them, send a Telegram digest, and hand them over through a feed file. See [architecture](ARCHITECTURE.md) for how the parts fit. The collector gathers native iOS/Swift Engineer and Developer roles from official company career pages and ATS endpoints and hands them over with labels (level, work mode, location, work authorization); it does not judge whether a role fits. Optional Telegram sources supplement company coverage.
+Collect public vacancies, label them, send a Telegram digest, and hand them over through a feed file. See [architecture](ARCHITECTURE.md) for how the parts fit. The collector gathers iOS and other Apple-platform engineering roles from official company career pages, ATS endpoints and public job-board feeds and hands them over with labels (topic, level, work mode, location, work authorization); the Telegram digest lists the native iOS roles; it does not judge whether a role fits. Optional Telegram sources supplement company coverage.
 
 The tool does not manage candidate profiles, personal salary targets, fit scores, applications, interviews, recruiter correspondence, or email reports.
 
 ## Delivery
 
-New vacancies are appended to the [vacancy feed](docs/vacancy-feed.md) in a private store for a consumer outside this repository. Telegram receives new vacancy links and collection health at the configured Kyiv collection slots (06:00 and 15:00). A failed delivery does not complete the collection slot.
+New vacancies are appended to the [vacancy feed](docs/vacancy-feed.md) in a private store for a consumer outside this repository. Telegram receives new vacancy links and collection health at the configured Kyiv collection slots (08:00 and 14:00). A failed delivery does not complete the collection slot.
 
 Public runtime state contains source baselines, collection slots, and Telegram source cursors. Search results — the discovery history and the hand-over feed — are written only to a private repository; see [operations](docs/operations.md). Never store credentials in this repository.
 
