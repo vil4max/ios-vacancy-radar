@@ -29,3 +29,7 @@ __pycache__/
 # Search results live only in the private store; a local run may create them.
 /database/seen.json
 /database/vacancy_feed.json
+
+# Cloudflare Wrangler local state
+/dispatcher/.wrangler/
+/dispatcher/node_modules/

@@ -1,0 +1,13 @@
+name = "ios-vacancy-radar-dispatcher"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = false
+
+# Every 10 minutes from 04:00 to 18:59 UTC covers the Kyiv 08:00 and 14:00
+# slots in both EEST and EET and the catch-up window until 21:00 Kyiv. The
+# Worker itself decides whether a slot is due.
+[triggers]
+crons = ["*/10 4-18 * * *"]
+
+[observability]
+enabled = true
