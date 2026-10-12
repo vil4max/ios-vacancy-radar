@@ -76,7 +76,9 @@ def classify_degraded(
     for result in results:
         if result.status != STATUS_HEALTHY:
             continue
-        if result.items_scanned == 0 and result.empty_is_healthy:
+        # A cursor read scans only what arrived since the last run, so its
+        # volume measures channel traffic, not parser health.
+        if result.empty_is_healthy:
             continue
         best = best_scanned(baseline, result.source_id)
         previous_empty_runs = empty_runs(baseline, result.source_id)

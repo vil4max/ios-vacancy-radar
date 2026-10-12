@@ -134,6 +134,14 @@ def test_classify_degraded_accepts_authoritative_empty_source() -> None:
     assert result.status == "healthy"
 
 
+def test_classify_degraded_ignores_a_low_volume_cursor_read() -> None:
+    result = _result("telegram:example_channel", scanned=6, name="Telegram @example_channel")
+    result.empty_is_healthy = True
+
+    assert classify_degraded([result], {result.source_id: {"best_scanned": 100}}) == []
+    assert result.status == "healthy"
+
+
 def test_classify_degraded_flags_third_consecutive_empty_run() -> None:
     results = [_result("company:new@new.com", scanned=0, name="New")]
     baseline = {"company:new@new.com": {"best_scanned": 0, "empty_runs": 2}}
