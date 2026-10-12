@@ -2,6 +2,11 @@ name: Collect iOS Jobs
 
 on:
   workflow_dispatch:
+    inputs:
+      telegram_backfill_since:
+        description: "One-time Telegram backfill: re-read channels (except Hirify) from this UTC day, YYYY-MM-DD"
+        required: false
+        default: ""
   # Scheduled Kyiv 08/14 via .github/workflows/hourly-trigger.yml
 
 permissions:
@@ -81,6 +86,7 @@ jobs:
           TELEGRAM_SESSION: ${{ secrets.TELEGRAM_SESSION }}
           SEED_SEEN_ONLY: ${{ vars.SEED_SEEN_ONLY }}
           CAREER_AGENT_SEEN_GATE: ${{ vars.CAREER_AGENT_SEEN_GATE }}
+          TELEGRAM_BACKFILL_SINCE: ${{ inputs.telegram_backfill_since }}
         run: |
           echo "COLLECT_STARTED_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
           python3 scripts/run_pipeline.py

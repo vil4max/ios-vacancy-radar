@@ -4,6 +4,8 @@ GitHub Actions runs the collector through `collect.yml`. `hourly-trigger.yml` di
 
 The collector reads public company career pages, ATS endpoints, the public jobs.dou.ua RSS feeds and the first page of one findmyremote.ai listing (robots.txt respected; see [collector coverage](collector-coverage.md)). Optional Telegram sources need separate reader credentials. Missing optional reader access is reported independently of company coverage: each Telegram source is marked degraded, the run status becomes degraded, and the digest names the channels on a "Telegram без ключей" line.
 
+Every Telegram channel is read from its stored cursor. For a one-time catch-up, dispatch `Collect iOS Jobs` with the `telegram_backfill_since` input (`YYYY-MM-DD`, UTC): the channels other than Hirify are re-read from that day, up to 20000 messages each, the seen history drops what was already handed over, and the cursors never move backwards. Hirify has always been read from its cursor, so it is not re-read.
+
 A @hirifyme_bot message that looks like a vacancy but carries no hirify.me job link is skipped rather than failing the channel. The reader cursor moves past it, so the `skipped` count in the collection diagnostics is the only record; a growing count means the bot changed its message format.
 
 A degraded findmyremote.ai source means the listing page no longer matches the parser. Compare the live page's job cards with `tests/fixtures/findmyremote_listing.html`, fix `collector/findmyremote.py` and the fixture together, and do not add requests to other paths of the site to compensate.

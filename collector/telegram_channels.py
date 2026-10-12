@@ -23,6 +23,9 @@ TELEGRAM_CHANNELS: tuple[str, ...] = (
 
 _LOOKBACK = 100
 _CATCHUP_LIMIT = 3000
+# A one-time backfill re-reads weeks of a busy channel; the seen history drops
+# what was already handed over.
+_BACKFILL_LIMIT = 20000
 _HIRIFY_CHANNEL = "hirifyme_bot"
 _HIRIFY_JOB_URL = re.compile(
     r"https?://(?:www\.)?hirify\.me/jobs/(\d+)[^\s]*",
@@ -470,11 +473,22 @@ async def _fetch_channel_jobs(
     channel: str,
     *,
     after_message_id: int | None = None,
+    backfill_since: datetime | None = None,
 ) -> tuple[list[dict[str, Any]], int | None, int, int]:
     """Return jobs, the new checkpoint, messages read and messages skipped."""
     jobs: list[dict[str, Any]] = []
     skipped = 0
-    if channel == _HIRIFY_CHANNEL and after_message_id is None:
+    if backfill_since is not None and channel != _HIRIFY_CHANNEL:
+        messages = [
+            message
+            async for message in client.iter_messages(
+                channel,
+                offset_date=backfill_since,
+                reverse=True,
+                limit=_BACKFILL_LIMIT,
+            )
+        ]
+    elif channel == _HIRIFY_CHANNEL and after_message_id is None:
         messages = await client.get_messages(channel, limit=1)
     elif after_message_id is not None:
         # Oldest first and bounded: a backlog larger than the bound is read on
@@ -498,6 +512,8 @@ async def _fetch_channel_jobs(
         ),
         default=after_message_id,
     )
+    if latest_message_id is not None and after_message_id is not None:
+        latest_message_id = max(latest_message_id, after_message_id)
     scanned = sum(
         1 for message in messages if message is not None and getattr(message, "id", None)
     )
@@ -525,6 +541,14 @@ async def _fetch_channel_jobs(
     return jobs, latest_message_id, scanned, skipped
 
 
+def backfill_start() -> datetime | None:
+    """TELEGRAM_BACKFILL_SINCE (YYYY-MM-DD, UTC) re-reads channels from that day."""
+    raw = os.environ.get("TELEGRAM_BACKFILL_SINCE", "").strip()
+    if not raw:
+        return None
+    return datetime.strptime(raw, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+
+
 async def _collect_channels(
     channels: tuple[str, ...],
     cursors: dict[str, int],
@@ -535,6 +559,7 @@ async def _collect_channels(
     api_id = int(os.environ["TELEGRAM_API_ID"].strip())
     api_hash = os.environ["TELEGRAM_API_HASH"].strip()
     session = os.environ["TELEGRAM_SESSION"].strip()
+    backfill_since = backfill_start()
     results: list[SourceResult] = []
     async with TelegramClient(StringSession(session), api_id, api_hash) as client:
         for channel in channels:
@@ -544,11 +569,12 @@ async def _collect_channels(
                     client,
                     channel,
                     after_message_id=cursors.get(channel),
+                    backfill_since=backfill_since,
                 )
                 results.append(
                     _source_ok(
                         channel, jobs, started, scanned=scanned, checkpoint=checkpoint, skipped=skipped,
-                        cursor_read=cursors.get(channel) is not None,
+                        cursor_read=cursors.get(channel) is not None or backfill_since is not None,
                     )
                 )
             except Exception as error:  # noqa: BLE001

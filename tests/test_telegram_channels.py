@@ -490,3 +490,34 @@ def test_extract_title_skips_an_opening_line_that_is_not_the_role() -> None:
 
 def test_extract_title_falls_back_to_the_first_line() -> None:
     assert extract_title("Mobile team is hiring\nSwift, SwiftUI") == "Mobile team is hiring"
+
+
+def test_backfill_reads_a_channel_from_the_given_day_and_keeps_the_cursor() -> None:
+    since = datetime(2026, 9, 20, tzinfo=timezone.utc)
+    client = _FakeClient([_FakeMessage(800 + offset, "Hello") for offset in range(5)])
+    _, checkpoint, scanned, _ = asyncio.run(
+        _fetch_channel_jobs(client, "itrecruit_ua", after_message_id=900, backfill_since=since)
+    )
+
+    assert client.calls[-1] == {"offset_date": since, "reverse": True, "limit": 20000}
+    assert scanned == 5
+    # Re-reading old messages must not move the cursor backwards.
+    assert checkpoint == 900
+
+
+def test_backfill_leaves_hirify_on_its_cursor() -> None:
+    client = _FakeClient([])
+    asyncio.run(_fetch_channel_jobs(
+        client, "hirifyme_bot", after_message_id=501, backfill_since=datetime(2026, 9, 20, tzinfo=timezone.utc)
+    ))
+
+    assert client.calls[-1]["min_id"] == 501
+
+
+def test_backfill_start_parses_a_utc_day(monkeypatch) -> None:
+    from collector.telegram_channels import backfill_start
+
+    monkeypatch.delenv("TELEGRAM_BACKFILL_SINCE", raising=False)
+    assert backfill_start() is None
+    monkeypatch.setenv("TELEGRAM_BACKFILL_SINCE", "2026-09-20")
+    assert backfill_start() == datetime(2026, 9, 20, tzinfo=timezone.utc)
