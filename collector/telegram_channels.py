@@ -23,9 +23,10 @@ TELEGRAM_CHANNELS: tuple[str, ...] = (
 
 _LOOKBACK = 100
 _CATCHUP_LIMIT = 3000
-# A one-time backfill re-reads weeks of a busy channel; the seen history drops
+# A one-time backfill re-reads weeks of a busy channel, newest first so that a
+# hit bound loses the oldest posts, not the recent ones; the seen history drops
 # what was already handed over.
-_BACKFILL_LIMIT = 20000
+_BACKFILL_LIMIT = 30000
 _HIRIFY_CHANNEL = "hirifyme_bot"
 _HIRIFY_JOB_URL = re.compile(
     r"https?://(?:www\.)?hirify\.me/jobs/(\d+)[^\s]*",
@@ -479,15 +480,12 @@ async def _fetch_channel_jobs(
     jobs: list[dict[str, Any]] = []
     skipped = 0
     if backfill_since is not None and channel != _HIRIFY_CHANNEL:
-        messages = [
-            message
-            async for message in client.iter_messages(
-                channel,
-                offset_date=backfill_since,
-                reverse=True,
-                limit=_BACKFILL_LIMIT,
-            )
-        ]
+        messages = []
+        async for message in client.iter_messages(channel, limit=_BACKFILL_LIMIT):
+            published = _message_published_at(message)
+            if published is not None and published < backfill_since:
+                break
+            messages.append(message)
     elif channel == _HIRIFY_CHANNEL and after_message_id is None:
         messages = await client.get_messages(channel, limit=1)
     elif after_message_id is not None:

@@ -492,14 +492,17 @@ def test_extract_title_falls_back_to_the_first_line() -> None:
     assert extract_title("Mobile team is hiring\nSwift, SwiftUI") == "Mobile team is hiring"
 
 
-def test_backfill_reads_a_channel_from_the_given_day_and_keeps_the_cursor() -> None:
-    since = datetime(2026, 9, 20, tzinfo=timezone.utc)
-    client = _FakeClient([_FakeMessage(800 + offset, "Hello") for offset in range(5)])
+def test_backfill_reads_newest_first_down_to_the_given_day_and_keeps_the_cursor() -> None:
+    since = datetime(2026, 8, 27, 9, 0, tzinfo=timezone.utc)
+    newer = [_FakeMessage(805 - offset, "Hello") for offset in range(5)]
+    older = _FakeMessage(700, "Hello")
+    older.date = datetime(2026, 8, 26, tzinfo=timezone.utc)
+    client = _FakeClient([*newer, older])
     _, checkpoint, scanned, _ = asyncio.run(
         _fetch_channel_jobs(client, "itrecruit_ua", after_message_id=900, backfill_since=since)
     )
 
-    assert client.calls[-1] == {"offset_date": since, "reverse": True, "limit": 20000}
+    assert client.calls[-1] == {"limit": 30000}
     assert scanned == 5
     # Re-reading old messages must not move the cursor backwards.
     assert checkpoint == 900
