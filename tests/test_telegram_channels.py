@@ -580,3 +580,12 @@ def test_labelled_fields_give_title_and_company() -> None:
 
 def test_vacancy_word_is_not_part_of_the_title() -> None:
     assert extract_title("Вакансия iOS Developer\nSwift, SwiftUI") == "iOS Developer"
+
+
+def test_old_posts_are_dropped_outside_a_backfill() -> None:
+    from collector.telegram_channels import _is_recent
+
+    now = datetime(2026, 10, 13, tzinfo=timezone.utc)
+    assert _is_recent("2026-10-01T09:00:00+00:00", now) is True
+    assert _is_recent("2026-08-01T09:00:00+00:00", now) is False
+    assert _is_recent(None, now) is True

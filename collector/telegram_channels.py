@@ -4,7 +4,7 @@ import asyncio
 import os
 import re
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Any
 from urllib.parse import urlsplit
 
@@ -31,6 +31,10 @@ _CATCHUP_LIMIT = 3000
 # hit bound loses the oldest posts, not the recent ones; the seen history drops
 # what was already handed over.
 _BACKFILL_LIMIT = 30000
+# A newly added channel starts with its last 100 posts, which in a digest
+# channel reach months back to long-closed roles; outside a backfill only
+# recent posts are kept.
+_MAX_POST_AGE = timedelta(days=30)
 _HIRIFY_CHANNEL = "hirifyme_bot"
 _HIRIFY_JOB_URL = re.compile(
     r"https?://(?:www\.)?hirify\.me/jobs/(\d+)[^\s]*",
@@ -621,7 +625,19 @@ async def _fetch_channel_jobs(
             # One malformed bot message must not fail the channel; the cursor
             # moves past it, so the count is the only trace it leaves.
             skipped += 1
+    if backfill_since is None and channel != _HIRIFY_CHANNEL:
+        jobs = [job for job in jobs if _is_recent(job.get("published_at"))]
     return jobs, latest_message_id, scanned, skipped
+
+
+def _is_recent(published_at: str | None, now: datetime | None = None) -> bool:
+    if not published_at:
+        return True
+    try:
+        stamp = datetime.fromisoformat(published_at)
+    except ValueError:
+        return True
+    return stamp >= (now or datetime.now(timezone.utc)) - _MAX_POST_AGE
 
 
 def backfill_start() -> datetime | None:
