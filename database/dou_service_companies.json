@@ -362,7 +362,7 @@
       "compensation_score": 75.8,
       "survey_count": 111,
       "dou_company_url": "https://jobs.dou.ua/companies/techmagic/",
-      "enabled": false,
+      "enabled": true,
       "company_site_url": "https://www.techmagic.co/career/vacancies",
       "career_url": "https://www.techmagic.co/career/vacancies",
       "career_url_source": "override"
