@@ -524,3 +524,59 @@ def test_backfill_start_parses_a_utc_day(monkeypatch) -> None:
     assert backfill_start() is None
     monkeypatch.setenv("TELEGRAM_BACKFILL_SINCE", "2026-09-20")
     assert backfill_start() == datetime(2026, 9, 20, tzinfo=timezone.utc)
+
+
+def test_digest_post_yields_one_job_per_link() -> None:
+    from collector.telegram_channels import jobs_from_digest
+
+    text = (
+        "Roles found\n"
+        "Senior iOS Engineer @ Example Engineering\n"
+        "Locations: Limassol, Cyprus\n"
+        "Senior Android Engineer @ Example Engineering\n"
+        "- iOS Developer - Remote at Example Labs\n"
+    )
+    links = []
+    for anchor, url in (
+        ("Senior iOS Engineer", "https://example.com/jobs/1"),
+        ("Senior Android Engineer", "https://example.com/jobs/2"),
+        ("iOS Developer - Remote at Example Labs", "https://example.com/jobs/3"),
+    ):
+        start = text.index(anchor)
+        links.append((start, start + len(anchor), url))
+
+    jobs = jobs_from_digest("findmyremote_mobile", 7, text, links)
+
+    assert [(job["title"], job["company"], job["url"]) for job in jobs] == [
+        ("Senior iOS Engineer", "Example Engineering", "https://example.com/jobs/1"),
+        ("iOS Developer - Remote", "Example Labs", "https://example.com/jobs/3"),
+    ]
+    assert jobs[0]["location"] == "Limassol, Cyprus"
+
+
+def test_entity_offsets_count_utf16_units_before_a_link() -> None:
+    from collector.telegram_channels import _text_url_spans
+
+    text = "🗓 Senior iOS Engineer"
+    entity = type("Entity", (), {"url": "https://example.com/jobs/1", "offset": 3, "length": 19})()
+    message = type("Message", (), {"entities": [entity]})()
+
+    start, end, _ = _text_url_spans(message, text)[0]
+    assert text[start:end] == "Senior iOS Engineer"
+
+
+def test_labelled_fields_give_title_and_company() -> None:
+    text = (
+        "Published time: 2026-10-07\n"
+        "Company name: Example Engineering\n"
+        "Title: Senior iOS Engineer\n"
+        "Job description: Build the app in Swift and SwiftUI.\n"
+    )
+    job = job_from_message("remote_mobile_jobs", 9, text)
+
+    assert job is not None
+    assert (job["title"], job["company"]) == ("Senior iOS Engineer", "Example Engineering")
+
+
+def test_vacancy_word_is_not_part_of_the_title() -> None:
+    assert extract_title("Вакансия iOS Developer\nSwift, SwiftUI") == "iOS Developer"

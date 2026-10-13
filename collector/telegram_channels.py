@@ -19,6 +19,10 @@ TELEGRAM_CHANNELS: tuple[str, ...] = (
     "itfreelancers",
     "mobile_jobs",
     "hirifyme_bot",
+    "ios_swift_jobs_vakansii",
+    "remote_job_ios",
+    "remote_mobile_jobs",
+    "findmyremote_mobile",
 )
 
 _LOOKBACK = 100
@@ -109,6 +113,7 @@ _VACANCY_PHRASES: tuple[str, ...] = (
     "send your resume",
     "send your cv",
     "send dm",
+    "job description:",
 )
 
 _TITLE_NOISE: tuple[str, ...] = (
@@ -129,7 +134,7 @@ _SKIP_APPLY_HOSTS = (
 
 # Labelled fields name the employer outright; they win over hiring phrases.
 _COMPANY_FIELD_PATTERNS: tuple[re.Pattern[str], ...] = (
-    re.compile(r"(?im)^[^\w#]*company\s*[:\-]\s*(.+)$"),
+    re.compile(r"(?im)^[^\w#]*company(?:\s+name)?\s*[:\-]\s*(.+)$"),
     re.compile(r"(?im)^[^\w#]*компані[яя]\s*[:\-]\s*(.+)$"),
     re.compile(r"(?im)^[^\w#]*компания\s*[:\-]\s*(.+)$"),
     re.compile(r"(?im)^[^\w#]*название\s+компании\s*[:\-]\s*(.+)$"),
@@ -247,7 +252,14 @@ _ROLE_WORD = re.compile(
 )
 
 
+_VACANCY_PREFIX = re.compile(r"(?i)^(?:вакансия|вакансія|vacancy)\s*[:\-–—]?\s+")
+_TITLE_FIELD = re.compile(r"(?im)^[^\w#]*(?:title|position|job title)\s*:\s*(.+)$")
+
+
 def extract_title(text: str) -> str:
+    labelled = _TITLE_FIELD.search(text)
+    if labelled and _strip_line_noise(labelled.group(1)):
+        return _strip_line_noise(labelled.group(1))[:160]
     candidates: list[str] = []
     for raw_line in text.splitlines():
         line = raw_line.strip()
@@ -259,7 +271,7 @@ def extract_title(text: str) -> str:
             continue
         if _is_title_noise(line):
             continue
-        cleaned = _strip_line_noise(line)
+        cleaned = _VACANCY_PREFIX.sub("", _strip_line_noise(line))
         if cleaned:
             candidates.append(cleaned[:160])
         if len(candidates) >= _TITLE_SCAN_LINES:
@@ -291,6 +303,68 @@ def _preferred_apply_url(urls: list[str]) -> str | None:
         if _HIRIFY_JOB_URL.match(url):
             return url
     return extract_apply_url("\n".join(cleaned))
+
+
+# Channels that post a digest: several vacancies per message, each a link
+# whose text is the title, followed by " @ Company" or ending in " at Company".
+_DIGEST_CHANNELS: frozenset[str] = frozenset({"remote_job_ios", "findmyremote_mobile"})
+_DIGEST_LOCATION = re.compile(r"(?im)^\W*locations?\s*:\s*(.+)$")
+
+
+def _text_url_spans(message: Any, text: str) -> list[tuple[int, int, str]]:
+    """Link entities as (start, end, url) in Python string indices.
+
+    Telegram counts entity offsets in UTF-16 code units, so an emoji before a
+    link would shift a naive slice.
+    """
+    encoded = text.encode("utf-16-le")
+    spans: list[tuple[int, int, str]] = []
+    for entity in getattr(message, "entities", None) or ():
+        url = getattr(entity, "url", None)
+        offset = getattr(entity, "offset", None)
+        length = getattr(entity, "length", None)
+        if not isinstance(url, str) or not isinstance(offset, int) or not isinstance(length, int):
+            continue
+        start = len(encoded[: offset * 2].decode("utf-16-le", errors="ignore"))
+        end = len(encoded[: (offset + length) * 2].decode("utf-16-le", errors="ignore"))
+        spans.append((start, end, url.strip()))
+    return sorted(spans)
+
+
+def jobs_from_digest(
+    channel: str,
+    message_id: int,
+    text: str,
+    links: list[tuple[int, int, str]],
+    *,
+    published_at: datetime | None = None,
+) -> list[dict[str, Any]]:
+    jobs: list[dict[str, Any]] = []
+    for index, (start, end, url) in enumerate(links):
+        title = re.sub(r"\s+", " ", text[start:end]).strip(" -–—")
+        line_end = text.find("\n", end)
+        rest = text[end: line_end if line_end >= 0 else len(text)]
+        company = ""
+        after = re.match(r"\s*@\s*(.+)", rest)
+        if after:
+            company = after.group(1).strip()
+        elif " at " in title:
+            title, company = (part.strip() for part in title.rsplit(" at ", 1))
+        if not title or not is_target_job(title):
+            continue
+        block_end = links[index + 1][0] if index + 1 < len(links) else len(text)
+        location = _DIGEST_LOCATION.search(text[end:block_end])
+        jobs.append({
+            "company": company,
+            "title": title,
+            "url": url,
+            "source": "telegram",
+            "source_job_id": f"{channel}:{message_id}:{index}",
+            "location": location.group(1).strip() if location else None,
+            "description": "",
+            "published_at": published_at.isoformat() if published_at else None,
+        })
+    return jobs
 
 
 def _message_urls(message: Any, text: str) -> list[str]:
@@ -520,9 +594,20 @@ async def _fetch_channel_jobs(
     for message in messages:
         if message is None or not getattr(message, "id", None):
             continue
-        text = (message.message or "").strip()
-        if not text and getattr(message, "raw_text", None):
-            text = str(message.raw_text).strip()
+        text = message.message or ""
+        if not text.strip() and getattr(message, "raw_text", None):
+            text = str(message.raw_text)
+        if channel in _DIGEST_CHANNELS:
+            # Entity offsets index the unstripped text.
+            jobs.extend(jobs_from_digest(
+                channel,
+                int(message.id),
+                text,
+                _text_url_spans(message, text),
+                published_at=_message_published_at(message),
+            ))
+            continue
+        text = text.strip()
         job = job_from_message(
             channel,
             int(message.id),
