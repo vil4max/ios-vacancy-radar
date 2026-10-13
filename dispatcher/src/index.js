@@ -42,13 +42,23 @@ export function dueSlot(date, slots) {
   return done.includes(slot) ? null : { day, slot };
 }
 
+const TOKEN_SHAPE = /^(?:github_pat_|ghp_)[A-Za-z0-9_]+$/;
+
+// A wrong clipboard paste must fail here: sent as a header, the runtime would
+// echo the value into the Worker logs.
+export function githubToken(env) {
+  const token = String(env.GITHUB_TOKEN ?? "").trim();
+  if (!TOKEN_SHAPE.test(token)) throw new Error("GITHUB_TOKEN secret is not a GitHub token");
+  return token;
+}
+
 async function github(env, path, init = {}) {
+  const token = githubToken(env);
   const response = await fetch(`${API}${path}`, {
     ...init,
     headers: {
       Accept: "application/vnd.github+json",
-      // A pasted secret often carries a trailing newline, which GitHub rejects.
-      Authorization: `Bearer ${String(env.GITHUB_TOKEN ?? "").trim()}`,
+      Authorization: `Bearer ${token}`,
       "User-Agent": "ios-vacancy-radar-dispatcher",
       "X-GitHub-Api-Version": "2022-11-28",
       ...init.headers,

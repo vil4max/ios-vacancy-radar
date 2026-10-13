@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { dueSlot, kyivClock, tick } from "../src/index.js";
+import { dueSlot, githubToken, kyivClock, tick } from "../src/index.js";
 
 const EMPTY = { days: {} };
 
@@ -38,12 +38,18 @@ function fakeGitHub({ slots = EMPTY, active = 0 } = {}) {
 
 test("tick dispatches a due slot once no run is active", async () => {
   const calls = fakeGitHub();
-  assert.equal(await tick({ GITHUB_TOKEN: "test" }, new Date("2026-07-15T05:20:00Z")), "dispatched: 2026-07-15 slot 8");
+  assert.equal(await tick({ GITHUB_TOKEN: "github_pat_test" }, new Date("2026-07-15T05:20:00Z")), "dispatched: 2026-07-15 slot 8");
   assert.equal(calls.filter((call) => call.method === "POST").length, 1);
 });
 
 test("tick skips while a Collect run is active", async () => {
   const calls = fakeGitHub({ active: 1 });
-  assert.match(await tick({ GITHUB_TOKEN: "test" }, new Date("2026-07-15T05:20:00Z")), /^skip: Collect already active/);
+  assert.match(await tick({ GITHUB_TOKEN: "github_pat_test" }, new Date("2026-07-15T05:20:00Z")), /^skip: Collect already active/);
   assert.equal(calls.filter((call) => call.method === "POST").length, 0);
+});
+
+test("a value that is not a GitHub token is refused before any request", () => {
+  assert.equal(githubToken({ GITHUB_TOKEN: " github_pat_ABC_123\n" }), "github_pat_ABC_123");
+  assert.throws(() => githubToken({ GITHUB_TOKEN: "Some pasted text" }), /not a GitHub token/);
+  assert.throws(() => githubToken({}), /not a GitHub token/);
 });
