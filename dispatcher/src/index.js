@@ -47,7 +47,8 @@ async function github(env, path, init = {}) {
     ...init,
     headers: {
       Accept: "application/vnd.github+json",
-      Authorization: `Bearer ${env.GITHUB_TOKEN}`,
+      // A pasted secret often carries a trailing newline, which GitHub rejects.
+      Authorization: `Bearer ${String(env.GITHUB_TOKEN ?? "").trim()}`,
       "User-Agent": "ios-vacancy-radar-dispatcher",
       "X-GitHub-Api-Version": "2022-11-28",
       ...init.headers,
