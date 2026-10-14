@@ -170,3 +170,35 @@ def test_workable_from_kyiv_is_unknown_without_location_or_remote() -> None:
     assert vacancy_labels(make_vacancy(location=None, remote="remote"))["workable_from_kyiv"] is True
     assert vacancy_labels(make_vacancy(location="Kyiv, Ukraine", remote="onsite"))["workable_from_kyiv"] is True
     assert vacancy_labels(make_vacancy(location="Limassol, Cyprus", remote="onsite"))["workable_from_kyiv"] is False
+
+
+def test_ai_track_skips_the_apple_gate_and_the_digest() -> None:
+    from parser.normalize import is_handover_candidate, is_inbox_candidate, normalize_raw, vacancy_labels
+
+    ai = normalize_raw({
+        "company": "Example Engineering", "title": "Senior ML Engineer",
+        "url": "https://example.com/jobs/ml", "source": "dou", "track": "ai",
+    })
+    ios = normalize_raw({
+        "company": "Example Engineering", "title": "Senior iOS Engineer",
+        "url": "https://example.com/jobs/ios", "source": "dou",
+    })
+
+    assert ai is not None and is_handover_candidate(ai) and not is_inbox_candidate(ai)
+    assert vacancy_labels(ai)["track"] == "ai"
+    assert vacancy_labels(ios)["track"] == "ios" and is_inbox_candidate(ios)
+    assert normalize_raw({"company": "Example", "title": "Senior ML Engineer", "url": "https://example.com/x"}) is None
+
+
+def test_dou_ai_feed_keeps_every_item_with_the_ai_track() -> None:
+    from pathlib import Path
+
+    from collector.dou_rss import parse_feed
+
+    xml = (Path(__file__).parent / "fixtures" / "dou_rss_ios.xml").read_text(encoding="utf-8")
+    ai_jobs, scanned = parse_feed(xml, track="ai")
+    ios_jobs, _ = parse_feed(xml)
+
+    assert len(ai_jobs) >= len(ios_jobs)
+    assert {job["track"] for job in ai_jobs} == {"ai"}
+    assert {job["track"] for job in ios_jobs} == {"ios"}

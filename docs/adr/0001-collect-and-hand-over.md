@@ -19,7 +19,9 @@ The collector gathers open vacancies, deduplicates them, attaches labels, and
 hands them over. The only filter is the topic: an Apple-platform role, named in
 the title or asked for in the description. Since 2026-10-10 the narrower
 "native iOS title" check is a `topic` label too: it selects what the Telegram
-digest lists, and the feed carries every on-topic vacancy. Level, work
+digest lists, and the feed carries every on-topic vacancy. Since 2026-10-14
+the DOU AI/ML category is a second track: its entries are handed over with
+`labels.track: ai` without the Apple topic check, and stay out of the digest. Level, work
 mode, location and work-authorization requirements become labels
 (`vacancy_labels`) that travel with the vacancy in the Telegram digest and in
 the hand-over feed.

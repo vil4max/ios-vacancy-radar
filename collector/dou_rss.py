@@ -20,10 +20,13 @@ from parser.normalize import is_target_job
 
 IOS_FEED_URL = "https://jobs.dou.ua/vacancies/feeds/?category=iOS/macOS"
 AI_FEED_URL = "https://jobs.dou.ua/vacancies/feeds/?search=AI"
+AIML_FEED_URL = "https://jobs.dou.ua/vacancies/feeds/?category=AI/ML"
 IOS_SOURCE_ID = "dou-ios-rss"
 AI_SOURCE_ID = "dou-ai-rss"
+AIML_SOURCE_ID = "dou-aiml-rss"
 IOS_SOURCE_NAME = "DOU iOS/macOS"
 AI_SOURCE_NAME = "DOU AI (mobile)"
+AIML_SOURCE_NAME = "DOU AI/ML"
 
 # The AI search is broad; only roles close to Apple platforms are kept from it.
 _AI_TITLE_FILTER = re.compile(r"(?i)(?<![a-z])(?:mobile|ios|swift|swiftui|apple|macos)(?![a-z])")
@@ -124,8 +127,13 @@ def parse_feed(
     xml_text: str,
     *,
     title_filter: Callable[[str], bool] | None = None,
+    track: str = "ios",
 ) -> tuple[list[dict[str, Any]], int]:
-    """Return target jobs and the number of feed items read."""
+    """Return target jobs and the number of feed items read.
+
+    An "ai" feed is a whole DOU category, so every item is kept and marked
+    with the track instead of passing the iOS topic check.
+    """
     root = ET.fromstring(xml_text)
     items = root.findall("./channel/item")
     jobs: list[dict[str, Any]] = []
@@ -135,8 +143,9 @@ def parse_feed(
             continue
         if title_filter is not None and not title_filter(job["title"]):
             continue
-        if not is_target_job(job["title"], job["description"]):
+        if track == "ios" and not is_target_job(job["title"], job["description"]):
             continue
+        job["track"] = track
         jobs.append(job)
     return jobs, len(items)
 
@@ -150,10 +159,11 @@ def _collect(
     source_id: str,
     url: str,
     title_filter: Callable[[str], bool] | None,
+    track: str = "ios",
 ) -> SourceResult:
     started = time.perf_counter()
     try:
-        jobs, scanned = parse_feed(fetch_text(url), title_filter=title_filter)
+        jobs, scanned = parse_feed(fetch_text(url), title_filter=title_filter, track=track)
     except Exception as error:  # noqa: BLE001
         return source_failed(name, url, error, started, source_id=source_id)
     return source_ok(name, url, jobs, started, scanned=scanned, source_id=source_id)
@@ -165,3 +175,7 @@ def collect_dou_ios_rss() -> SourceResult:
 
 def collect_dou_ai_rss() -> SourceResult:
     return _collect(AI_SOURCE_NAME, AI_SOURCE_ID, AI_FEED_URL, is_mobile_ai_title)
+
+
+def collect_dou_aiml_rss() -> SourceResult:
+    return _collect(AIML_SOURCE_NAME, AIML_SOURCE_ID, AIML_FEED_URL, None, track="ai")

@@ -28,6 +28,7 @@ is git-ignored here.
       "role_key": "example engineering | ios engineer",
       "repeat_of_seen_role": false,
       "labels": {
+        "track": "ios",
         "topic": "native_ios",
         "junior": false,
         "level": "senior",
@@ -76,6 +77,10 @@ is git-ignored here.
   board, `dou` for the jobs.dou.ua RSS feeds, `djinni` for the Djinni iOS RSS feed, `telegram` for a Telegram channel,
   `hirify.me` for Hirify, and `findmyremote.ai` for the findmyremote.ai listing.
   New values may appear without a version change.
+- `labels.track` is `ios` for the Apple-platform search and `ai` for entries
+  from the DOU AI/ML category. An `ai` entry is not checked against the iOS
+  topic, so its `topic` is usually `off_topic`; it never appears in the
+  Telegram digest.
 - `labels.topic` is `native_ios`, `cross_platform`, `apple_platform` or
   `ios_in_description`; see [search topics](search-tracks.md). Only
   `native_ios` entries are announced in the Telegram digest.

@@ -102,6 +102,9 @@ class Vacancy:
     identity_strategy: str = ""
     advertised_locations: tuple[str, ...] = ()
     russian_company: bool = False
+    # "ios" for the Apple-platform search; "ai" for sources read as a whole AI
+    # category, which skip the Apple topic gate and stay out of the digest.
+    track: str = "ios"
     hash: str = field(default="", init=False)
 
     def __post_init__(self) -> None:
@@ -401,7 +404,7 @@ def vacancy_title_marks(vacancy: Vacancy) -> str:
 def is_inbox_candidate(vacancy: Vacancy) -> bool:
     """A native iOS role: what the Telegram digest lists. Level, work mode and
     work authorization label a vacancy (vacancy_labels) and never drop it."""
-    return is_primary_ios_role(vacancy.title)
+    return vacancy.track == "ios" and is_primary_ios_role(vacancy.title)
 
 
 def ios_topic(vacancy: Vacancy) -> str | None:
@@ -421,7 +424,7 @@ def ios_topic(vacancy: Vacancy) -> str | None:
 
 
 def is_handover_candidate(vacancy: Vacancy) -> bool:
-    return ios_topic(vacancy) is not None
+    return vacancy.track == "ai" or ios_topic(vacancy) is not None
 
 
 _LEVELS: tuple[tuple[str, re.Pattern[str]], ...] = (
@@ -470,6 +473,7 @@ def vacancy_labels(vacancy: Vacancy) -> dict[str, Any]:
     """Signals for the downstream decision. They are facts about the posting;
     the collector attaches them and does not act on them."""
     return {
+        "track": vacancy.track,
         "topic": ios_topic(vacancy) or "off_topic",
         "junior": not is_target_level(vacancy.title),
         "level": title_level(vacancy.title),
@@ -512,7 +516,8 @@ def normalize_raw(raw: dict[str, Any]) -> Vacancy | None:
     if description is not None:
         description = str(description).strip() or None
 
-    if not is_ios_job(title, description):
+    track = str(raw.get("track") or "ios")
+    if track == "ios" and not is_ios_job(title, description):
         return None
 
     location = raw.get("location")
@@ -544,6 +549,7 @@ def normalize_raw(raw: dict[str, Any]) -> Vacancy | None:
         description=description,
         source_job_id=source_job_id,
         russian_company=bool(raw.get("russian_company")),
+        track=track,
     )
 
 
