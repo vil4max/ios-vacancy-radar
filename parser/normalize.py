@@ -264,6 +264,28 @@ def is_ios_job(title: str, description: str | None = None) -> bool:
     return False
 
 
+_KMP_TITLE = re.compile(r"(?i)(?<![a-z0-9])(?:kmp|kmm|kotlin\s+multi[- ]?platform)(?![a-z0-9])")
+_MOBILE_TITLE = re.compile(
+    r"(?i)(?<![a-z0-9])mobile\s+(?:app(?:lication)?\s+|software\s+)?(?:engineer|developer)(?![a-z0-9])"
+)
+# A platform in the title makes a "Mobile Engineer" a known track: iOS is
+# handled by is_ios_job, the others are outside the search.
+_OTHER_MOBILE_PLATFORM = re.compile(r"(?i)(?<![a-z0-9])(?:android|flutter|react\s+native|xamarin|unity)(?![a-z0-9])")
+
+
+def adjacent_topic(title: str) -> str | None:
+    """KMP and platform-neutral mobile titles: iOS-adjacent roles kept apart
+    from Android-only ones (owner decision, 2026-10-17)."""
+    text = title or ""
+    if _NON_IOS_ROLE_TITLE.search(text):
+        return None
+    if _KMP_TITLE.search(text):
+        return "kmp"
+    if _MOBILE_TITLE.search(text) and not _OTHER_MOBILE_PLATFORM.search(text):
+        return "mobile"
+    return None
+
+
 def is_target_level(title: str) -> bool:
     text = title or ""
     if _JUNIOR_TITLE.search(text) and not _SENIORISH_TITLE.search(text):
@@ -414,8 +436,11 @@ def ios_topic(vacancy: Vacancy) -> str | None:
     title = vacancy.title or ""
     if is_primary_ios_role(title):
         return "native_ios"
+    adjacent = adjacent_topic(title)
+    if adjacent == "kmp":
+        return adjacent
     if not is_ios_job(title, vacancy.description):
-        return None
+        return adjacent
     if _CROSS_PLATFORM_TITLE.search(title):
         return "cross_platform"
     if is_ios_job(title):
@@ -517,7 +542,7 @@ def normalize_raw(raw: dict[str, Any]) -> Vacancy | None:
         description = str(description).strip() or None
 
     track = str(raw.get("track") or "ios")
-    if track == "ios" and not is_ios_job(title, description):
+    if track == "ios" and not is_target_job(title, description):
         return None
 
     location = raw.get("location")
@@ -563,8 +588,9 @@ def normalize_many(raw_jobs: list[dict[str, Any]]) -> list[Vacancy]:
 
 
 def is_target_job(title: str, description: str | None = None) -> bool:
-    """Shared early collector gate."""
-    return is_ios_job(title, description)
+    """Shared early collector gate: an iOS role, or a KMP or platform-neutral
+    mobile title (adjacent_topic)."""
+    return is_ios_job(title, description) or adjacent_topic(title) is not None
 
 
 def required_text(description: str) -> str:

@@ -23,7 +23,7 @@ from collector.bespoke import (
     collect_zone3000,
 )
 from collector.djinni_rss import collect_djinni_ios_rss
-from collector.dou_rss import collect_dou_ai_rss, collect_dou_aiml_rss, collect_dou_ios_rss
+from collector.dou_rss import SEARCH_COLLECTORS, collect_dou_ai_rss, collect_dou_aiml_rss, collect_dou_ios_rss
 from collector.epam import collect_epam
 from collector.findmyremote import collect_findmyremote
 from collector.hirify import collect_hirify
@@ -83,6 +83,7 @@ def _python_collectors() -> list[Callable[[], SourceResult]]:
     ]
     board_collectors = [
         collect_hirify, collect_findmyremote, collect_dou_ios_rss, collect_dou_ai_rss, collect_dou_aiml_rss, collect_djinni_ios_rss,
+        *SEARCH_COLLECTORS,
     ]
     return bespoke_collectors + _watchlist_collectors() + board_collectors
 

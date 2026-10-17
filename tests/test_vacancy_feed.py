@@ -202,3 +202,25 @@ def test_dou_ai_feed_keeps_every_item_with_the_ai_track() -> None:
     assert len(ai_jobs) >= len(ios_jobs)
     assert {job["track"] for job in ai_jobs} == {"ai"}
     assert {job["track"] for job in ios_jobs} == {"ios"}
+
+
+def test_kmp_and_platform_neutral_mobile_titles_are_kept_apart_from_android() -> None:
+    from parser.normalize import ios_topic, is_inbox_candidate, normalize_raw
+
+    def topic(title: str, description: str = "") -> str | None:
+        vacancy = normalize_raw({
+            "company": "Example Engineering", "title": title,
+            "url": "https://example.com/jobs/" + title.replace(" ", "-"), "description": description,
+        })
+        return ios_topic(vacancy) if vacancy else None
+
+    assert topic("Senior Kotlin Multiplatform Developer") == "kmp"
+    assert topic("Senior Android Engineer (KMP)") == "kmp"
+    assert topic("Senior Mobile Engineer") == "mobile"
+    assert topic("Senior Mobile Engineer", "The app is built in Swift and SwiftUI.") == "ios_in_description"
+    assert topic("Senior iOS Engineer (KMP)") == "native_ios"
+    assert topic("Senior Android Engineer", "Kotlin and Compose") is None
+    assert topic("Senior Flutter Mobile Developer") is None
+    assert topic("Mobile QA Engineer") is None
+    kmp = normalize_raw({"company": "Example", "title": "KMP Engineer", "url": "https://example.com/kmp"})
+    assert kmp is not None and not is_inbox_candidate(kmp)

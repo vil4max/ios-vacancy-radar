@@ -81,8 +81,8 @@ is git-ignored here.
   from the DOU AI/ML category. An `ai` entry is not checked against the iOS
   topic, so its `topic` is usually `off_topic`; it never appears in the
   Telegram digest.
-- `labels.topic` is `native_ios`, `cross_platform`, `apple_platform` or
-  `ios_in_description`; see [search topics](search-tracks.md). Only
+- `labels.topic` is `native_ios`, `cross_platform`, `apple_platform`,
+  `ios_in_description`, `kmp` or `mobile`; see [search topics](search-tracks.md). Only
   `native_ios` entries are announced in the Telegram digest.
 - `labels.workable_from_kyiv` is null when the posting states neither a
   location nor remote work; treat it as unknown, not as workable.

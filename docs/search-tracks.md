@@ -16,7 +16,7 @@ Everything else is a label, not a filter (`vacancy_labels` in
 
 | Label | Meaning |
 | --- | --- |
-| `topic` | `native_ios` (a native iOS title), `cross_platform` (iOS together with Android, React Native, KMM or Flutter), `apple_platform` (macOS, visionOS or another Apple title without iOS), or `ios_in_description` (a mobile or engineering title whose description asks for Apple core technologies) |
+| `topic` | `native_ios` (a native iOS title), `cross_platform` (iOS together with Android, React Native, KMM or Flutter), `apple_platform` (macOS, visionOS or another Apple title without iOS), `ios_in_description` (a mobile or engineering title whose description asks for Apple core technologies), `kmp` (Kotlin Multiplatform, KMP or KMM in the title) or `mobile` (a mobile engineer or developer title that names no platform). Android-only, Flutter, React Native and QA titles stay outside the search |
 | `junior` | The title is junior-only: junior, jr, intern, internship, trainee or their Ukrainian and Russian equivalents, with no senior-level word beside it |
 | `work_mode` | remote, hybrid, onsite or unknown |
 | `workable_from_kyiv` | true for remote work or a Kyiv office, false for an office or hybrid role elsewhere, null when the posting states neither a location nor remote work |

@@ -160,13 +160,17 @@ def _collect(
     url: str,
     title_filter: Callable[[str], bool] | None,
     track: str = "ios",
+    *,
+    empty_is_healthy: bool = False,
 ) -> SourceResult:
     started = time.perf_counter()
     try:
         jobs, scanned = parse_feed(fetch_text(url), title_filter=title_filter, track=track)
     except Exception as error:  # noqa: BLE001
         return source_failed(name, url, error, started, source_id=source_id)
-    return source_ok(name, url, jobs, started, scanned=scanned, source_id=source_id)
+    return source_ok(
+        name, url, jobs, started, scanned=scanned, source_id=source_id, empty_is_healthy=empty_is_healthy
+    )
 
 
 def collect_dou_ios_rss() -> SourceResult:
@@ -179,3 +183,29 @@ def collect_dou_ai_rss() -> SourceResult:
 
 def collect_dou_aiml_rss() -> SourceResult:
     return _collect(AIML_SOURCE_NAME, AIML_SOURCE_ID, AIML_FEED_URL, None, track="ai")
+
+
+# Search feeds for iOS-adjacent roles (owner decision, 2026-10-17). A search
+# can legitimately return nothing, so an empty feed is not a broken source.
+SEARCH_FEEDS: tuple[tuple[str, str, str], ...] = (
+    ("dou-kmp-rss", "DOU search: KMP", "https://jobs.dou.ua/vacancies/feeds/?search=KMP"),
+    (
+        "dou-kotlin-multiplatform-rss",
+        "DOU search: Kotlin Multiplatform",
+        "https://jobs.dou.ua/vacancies/feeds/?search=Kotlin%20Multiplatform",
+    ),
+    ("dou-mobile-engineer-rss", "DOU search: Mobile Engineer", "https://jobs.dou.ua/vacancies/feeds/?search=Mobile%20Engineer"),
+)
+
+
+def _search_collector(source_id: str, name: str, url: str) -> Callable[[], SourceResult]:
+    def collect() -> SourceResult:
+        return _collect(name, source_id, url, None, empty_is_healthy=True)
+
+    collect.__name__ = "collect_" + source_id.replace("-", "_")
+    return collect
+
+
+SEARCH_COLLECTORS: tuple[Callable[[], SourceResult], ...] = tuple(
+    _search_collector(*feed) for feed in SEARCH_FEEDS
+)
